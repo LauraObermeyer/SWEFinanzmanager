@@ -3,7 +3,11 @@ package main.gui;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import main.event.GUIEvent;
 import main.event.IGUIEventListener;
@@ -22,6 +26,9 @@ public class BenutzerAnlegenGUI  implements IGUIEventSender {
     //CSVReader und Writer
     private CSVReader csvReader;
     private CSVWriter csvWriter;
+    private String benutzerFile = "resources/benutzer.csv";
+    private List<String[]> dateiInhalt;
+    private static final String[] header = {"Vorname", "Nachname", "EMail"};
 
     //Events
     private ArrayList<IGUIEventListener> listeners = new ArrayList<IGUIEventListener>();
@@ -95,6 +102,13 @@ public class BenutzerAnlegenGUI  implements IGUIEventSender {
 
     private void benutzerSpeichern() {
         //TODO: Benutzer speichern
+        try {
+            csvWriter = new CSVWriter(benutzerFile, true);
+            dateiInhalt = Collections.singletonList(new String[]{jtfVorname.getText(), jtfNachname.getText(), jtfEmail.getText()});
+            csvWriter.writeDataToFile(dateiInhalt, header);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
