@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import main.event.GUIEvent;
 import main.event.IGUIEventListener;
 import main.event.IGUIEventSender;
+import main.util.CSVReader;
+import main.util.CSVWriter;
 
 public class BenutzerAnlegenGUI  implements IGUIEventSender {
 
@@ -16,6 +18,10 @@ public class BenutzerAnlegenGUI  implements IGUIEventSender {
     private JPanel jpInputFields;
     private JLabel jlVorname, jlNachname, jpEmail;
     private JTextField jtfVorname, jtfNachname, jtfEmail;
+
+    //CSVReader und Writer
+    private CSVReader csvReader;
+    private CSVWriter csvWriter;
 
     //Events
     private ArrayList<IGUIEventListener> listeners = new ArrayList<IGUIEventListener>();
