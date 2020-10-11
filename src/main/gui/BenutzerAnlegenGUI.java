@@ -15,7 +15,7 @@ import main.event.IGUIEventSender;
 import main.util.CSVReader;
 import main.util.CSVWriter;
 
-public class BenutzerAnlegenGUI  implements IGUIEventSender {
+public class    BenutzerAnlegenGUI  implements IGUIEventSender {
 
     private JFrame jfBenutzerAnlegen;
     private JPanel jpButtons;
@@ -109,6 +109,8 @@ public class BenutzerAnlegenGUI  implements IGUIEventSender {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        new UebersichtsGUI();
     }
 
     @Override

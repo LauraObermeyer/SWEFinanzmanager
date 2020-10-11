@@ -1,15 +1,24 @@
 package main.gui;
 
+import main.app.StartApplikation;
 import main.event.GUIEvent;
 import main.event.IGUIEventListener;
+import main.util.CSVReader;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GUIController implements IGUIEventListener {
 
     // GUI Components
     private UebersichtsGUI uebersichtsGUI;
     private BenutzerAnlegenGUI benutzerAnlegenGUI;
+
+    // CSV Reader und Files
+    private CSVReader csvReaderBenutzer;
+    private String benutzerFile = StartApplikation.getBenutzerFile();
 
     public GUIController() throws Exception {
         if(neuerNutzer() == true){
@@ -20,6 +29,18 @@ public class GUIController implements IGUIEventListener {
     }
 
     private boolean neuerNutzer() {
+        csvReaderBenutzer = new CSVReader(benutzerFile);
+        // Liste für Inhalt der Raum-Datei
+        List<String[]> dateiInhalt = new ArrayList<>();
+        try {
+            dateiInhalt = csvReaderBenutzer.readData();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if(dateiInhalt.size() > 0) {
+            return false;
+        }
         return true;
     }
 
