@@ -101,7 +101,6 @@ public class    BenutzerAnlegenGUI  implements IGUIEventSender {
     }
 
     private void benutzerSpeichern() {
-        //TODO: Benutzer speichern
         try {
             csvWriter = new CSVWriter(benutzerFile, true);
             dateiInhalt = Collections.singletonList(new String[]{jtfVorname.getText(), jtfNachname.getText(), jtfEmail.getText()});
@@ -109,8 +108,6 @@ public class    BenutzerAnlegenGUI  implements IGUIEventSender {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        new UebersichtsGUI();
     }
 
     @Override

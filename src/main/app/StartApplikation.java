@@ -10,8 +10,6 @@ public class StartApplikation {
     private static String benutzerFile = "./resources/benutzer.csv";
 
     public static void main( String[] args ) throws Exception {
-        System.out.println("Test");
-
         new GUIController();
     }
 

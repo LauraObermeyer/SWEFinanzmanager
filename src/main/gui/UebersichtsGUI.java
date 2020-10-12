@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.IOException;
 import main.gui.AusgabenAnzeigenGUI;
 import main.gui.EinnahmenAnzeigenGUI;
+import main.gui.*;
+import main.model.Benutzer;
 
 public class UebersichtsGUI {
 
@@ -17,7 +19,11 @@ public class UebersichtsGUI {
     private JTabbedPane jtbTabbedPane;
     private JPanel jpTestPanel;
 
-    public UebersichtsGUI() {
+    private Benutzer benutzer;
+
+    public UebersichtsGUI(Benutzer benutzer) {
+        this.benutzer = benutzer;
+
         buildMainFrame();
         buildHeader();
         buildTabbedPane();
@@ -29,7 +35,7 @@ public class UebersichtsGUI {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
         jfMainFrame = new JFrame();
-        jfMainFrame.setTitle("SWE - Finanzverwalter");
+        jfMainFrame.setTitle("SWE-Finanzverwalter von " + benutzer.getVorname() + " " + benutzer.getNachname());
         jfMainFrame.setSize(screenSize.width, screenSize.height);
         jfMainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         jfMainFrame.setResizable(true);
