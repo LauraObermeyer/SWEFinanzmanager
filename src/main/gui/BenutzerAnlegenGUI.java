@@ -34,6 +34,10 @@ public class    BenutzerAnlegenGUI  implements IGUIEventSender {
     private ArrayList<IGUIEventListener> listeners = new ArrayList<IGUIEventListener>();
 
     public BenutzerAnlegenGUI() throws IOException {
+        buildGui();
+    }
+
+    private void buildGui() {
         jfBenutzerAnlegen = new JFrame("Benutzer anlegen");
         jfBenutzerAnlegen.setLayout(new BorderLayout(5,5));
 
@@ -49,7 +53,6 @@ public class    BenutzerAnlegenGUI  implements IGUIEventSender {
 
     private void buildBeschreibungstext() {
         JLabel jlBeschreibungstext = new JLabel("Gib die Daten deines neuen Nutzers an:");
-
         jfBenutzerAnlegen.add(jlBeschreibungstext, BorderLayout.NORTH);
     }
 
@@ -117,7 +120,6 @@ public class    BenutzerAnlegenGUI  implements IGUIEventSender {
 
         if(event.getMessage() == "Speichern") {
             benutzerSpeichern();
-
             // GUIController triggern
             listeners.forEach(listener -> listener.eventFired(event));
         }
@@ -139,7 +141,7 @@ public class    BenutzerAnlegenGUI  implements IGUIEventSender {
     }
 
     // Methode, um ArrayList<String> in String[] umzuwandeln
-    public static String[] GetStringArray(ArrayList<String> arr) {
+    public static String[] getStringArray(ArrayList<String> arr) {
         // String Array deklarieren und initalisieren
         String str[] = new String[arr.size()];
 
