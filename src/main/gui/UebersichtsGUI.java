@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import main.gui.AusgabenAnzeigenGUI;
+import main.gui.Ausgaben.AusgabenAnzeigenGUI;
 import main.gui.EinnahmenAnzeigenGUI;
 import main.gui.*;
 import main.model.Benutzer;

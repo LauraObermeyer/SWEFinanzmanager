@@ -1,7 +1,6 @@
 package main.model;
 
 import java.util.Date;
-import java.util.List;
 
 public class Eintrag {
     private String bezeichnung;
@@ -9,17 +8,27 @@ public class Eintrag {
     private Art art;
     private Kategorie kategorie;
     private Date datum;
-    private List<String> Produktliste; //TODO: Produkt als eigene Klasse modellieren?
+    private String produktliste; //TODO: Produkt als eigene Klasse modellieren?
     private Systemaenderung systemaenderung;
 
-    public Eintrag(String bezeichnung, String beschreibung, Art art, Kategorie kategorie, Date datum, List<String> produktliste) {
+    public Eintrag(String bezeichnung, String beschreibung, Art art, Kategorie kategorie, Date datum, String produktliste) {
         this.bezeichnung = bezeichnung;
         this.beschreibung = beschreibung;
         this.art = art;
         this.kategorie = kategorie;
         this.datum = datum;
-        Produktliste = produktliste;
+        this.produktliste = produktliste;
         this.systemaenderung = new Systemaenderung(); // systemaenderung wird bei Erstellen des Exponats automatisch mit aktuellem Zeitstempel erstellt
+    }
+
+    public static final String[] getAlleAttributnamen() {
+        String alleAttributnamen[] = {"Bezeichnung", "Beschreibung", "Art", "Kategorie", "Datum", "Produktliste", "Systemaenderung"};
+        return alleAttributnamen;
+    }
+
+    public static final String[] getAlleAttributnamenFürTabelle() {
+        String alleAttributnamen[] = {"Bezeichnung", "Beschreibung", "Art", "Kategorie", "Datum", "Produktliste", "Systemaenderung", "..."};
+        return alleAttributnamen;
     }
 
     public String getBezeichnung() {
@@ -62,12 +71,12 @@ public class Eintrag {
         this.datum = datum;
     }
 
-    public List<String> getProduktliste() {
-        return Produktliste;
+    public String getProduktliste() {
+        return produktliste;
     }
 
-    public void setProduktliste(List<String> produktliste) {
-        Produktliste = produktliste;
+    public void setProduktliste(String produktliste) {
+        this.produktliste = produktliste;
     }
 
     public Systemaenderung getSystemaenderung() {
