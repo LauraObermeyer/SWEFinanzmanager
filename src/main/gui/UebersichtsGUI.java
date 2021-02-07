@@ -1,14 +1,9 @@
 package main.gui;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import main.gui.Ausgaben.AusgabenAnzeigenGUI;
 import main.gui.EinnahmenAnzeigenGUI;
-import main.gui.*;
 import main.model.Benutzer;
 
 public class UebersichtsGUI {
@@ -61,7 +56,7 @@ public class UebersichtsGUI {
         jtbTabbedPane = new JTabbedPane (JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 
         // Panels hinzufügen
-        jtbTabbedPane.addTab("Ausgaben", new AusgabenAnzeigenGUI());
+        jtbTabbedPane.addTab("Ausgaben", new AusgabenAnzeigenGUI(benutzer));
 
         jtbTabbedPane.addTab("Einnahmen", new EinnahmenAnzeigenGUI());
 

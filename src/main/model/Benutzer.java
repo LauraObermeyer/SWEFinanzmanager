@@ -24,10 +24,6 @@ public class Benutzer {
         return nachname;
     }
 
-    public String getTitle() {
-        return "SWE-Finanzverwalter von " + this.getVorname() + " " + this.getNachname();
-    }
-
     public void setNachname(String nachname) {
         this.nachname = nachname;
     }
@@ -39,4 +35,9 @@ public class Benutzer {
     public void setEmail(EMail email) {
         this.email = email;
     }
+
+    public String getTitle() {
+        return "SWE-Finanzverwalter von " + this.getVorname() + " " + this.getNachname();
+    }
+
 }
