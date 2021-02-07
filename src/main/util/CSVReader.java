@@ -43,52 +43,48 @@ public class CSVReader {
     public final List<String[]> readData( int expectedColumns, char delimiter, char comment ) throws IOException {
         List<String[]> allLines = new ArrayList<String[]>();
 
-        BufferedReader reader = new BufferedReader( new InputStreamReader( new FileInputStream( this.csvFile ), "UTF8" ) );
-        try{
+        // Verwendung eines try-with-resources statements, um Dateiinhalt auszulesen
+        try (BufferedReader reader = new BufferedReader( new InputStreamReader( new FileInputStream( this.csvFile ), "UTF8" ))) {
             String line = "";
             String[] lineElements = null;
             int numLinesRead = 0;
 
-            while( line != null ){
+            while( line != null ) {
                 line = reader.readLine();
                 numLinesRead++;
-                if( line == null ) break;
+                if (line == null) break;
 
-                if( line.startsWith( ""+comment ) || line.length() == 0 ){
+                if (line.startsWith("" + comment) || line.length() == 0) {
                     continue;
                 }
 
-                lineElements = line.split( ""+delimiter );
-                if( expectedColumns > 0  && expectedColumns != lineElements.length ) {
-                    System.out.print( "csv-reader, file line number " + numLinesRead
+                lineElements = line.split("" + delimiter);
+                if (expectedColumns > 0 && expectedColumns != lineElements.length) {
+                    System.out.print("csv-reader, file line number " + numLinesRead
                             + ": different number of columns (exp: " + expectedColumns
                             + ", current: " + lineElements.length + ")!");
 
-                    String[] sArr = new String[ expectedColumns ];
-                    if( expectedColumns <= lineElements.length ) {
+                    String[] sArr = new String[expectedColumns];
+                    if (expectedColumns <= lineElements.length) {
 
-                        for( int i = 0 ; i < expectedColumns ; i++ ){
+                        for (int i = 0; i < expectedColumns; i++) {
                             sArr[i] = lineElements[i] == null ? "" : lineElements[i];
                         }
-                    }
-                    else if( expectedColumns > lineElements.length ) {
-                        System.arraycopy( lineElements, 0, sArr, 0, lineElements.length );
-                        for( int i = lineElements.length ; i < expectedColumns ; i++ ){
+                    } else if (expectedColumns > lineElements.length) {
+                        System.arraycopy(lineElements, 0, sArr, 0, lineElements.length);
+                        for (int i = lineElements.length; i < expectedColumns; i++) {
                             sArr[i] = "";
                         }
                     }
                     lineElements = sArr;
-                    System.out.println( " -> corrected to " + expectedColumns );
+                    System.out.println(" -> corrected to " + expectedColumns);
                 }
-                allLines.add( lineElements );
+                allLines.add(lineElements);
             }
         }
         catch( IOException e ){
             System.out.println(e.getMessage());
             throw e;
-        }
-        finally {
-            reader.close();
         }
 
         return allLines;
