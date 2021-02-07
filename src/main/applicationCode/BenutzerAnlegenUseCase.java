@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-public class BenutzerAnlegenLogik {
+public class BenutzerAnlegenUseCase {
 
     private static CSVReader csvReader;
     private static CSVWriter csvWriter;

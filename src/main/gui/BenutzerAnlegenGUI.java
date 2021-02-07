@@ -3,13 +3,10 @@ package main.gui;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import main.applicationCode.BenutzerAnlegenLogik;
+import main.applicationCode.BenutzerAnlegenUseCase;
 import main.event.GUIEvent;
 import main.event.IGUIEventListener;
 import main.event.IGUIEventSender;
@@ -120,7 +117,7 @@ public class BenutzerAnlegenGUI  implements IGUIEventSender {
         jfBenutzerAnlegen.dispose();
 
         if(event.getMessage() == "Speichern") {
-            BenutzerAnlegenLogik.benutzerSpeichern(jtfVorname, jtfNachname, jtfEmail);
+            BenutzerAnlegenUseCase.benutzerSpeichern(jtfVorname, jtfNachname, jtfEmail);
             // GUIController triggern
             listeners.forEach(listener -> listener.eventFired(event));
         }

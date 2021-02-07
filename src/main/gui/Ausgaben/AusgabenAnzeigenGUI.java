@@ -1,15 +1,11 @@
 package main.gui.Ausgaben;
 
-import main.applicationCode.AusgabenAnzeigenLogik;
+import main.adapter.AusgabenAnzeigenAdapter;
 import main.event.GUIEvent;
 import main.event.IGUIEventListener;
 import main.event.IGUIEventSender;
-import main.model.Art;
 import main.model.Benutzer;
 import main.model.Eintrag;
-import main.model.Kategorie;
-import main.util.CSVReader;
-import main.util.CSVWriter;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -17,12 +13,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class AusgabenAnzeigenGUI extends JPanel implements IGUIEventSender {
 
@@ -49,16 +41,16 @@ public class AusgabenAnzeigenGUI extends JPanel implements IGUIEventSender {
 
     public AusgabenAnzeigenGUI(Benutzer benutzer) {
         this.benutzer = benutzer;
-        AusgabenAnzeigenLogik.buildFileName(benutzer);
+        AusgabenAnzeigenAdapter.buildFileName(benutzer);
 
         this.setLayout(new BorderLayout());
-        buildExponatTabelle();
+        buildTabelle();
     }
 
-    private void buildExponatTabelle() {
+    private void buildTabelle() {
         jpTabelle = new JPanel(new BorderLayout());
 
-        String data[][] = AusgabenAnzeigenLogik.getAusgabenListe();
+        String data[][] = AusgabenAnzeigenAdapter.getAusgabenListe();
 
         // Spaltennamen holen
         String column[] = Eintrag.getAlleAttributnamenFürTabelle();

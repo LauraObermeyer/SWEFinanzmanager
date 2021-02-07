@@ -1,4 +1,4 @@
-package main.applicationCode;
+package main.adapter;
 
 import main.model.Art;
 import main.model.Benutzer;
@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class AusgabenAnzeigenLogik {
+public class AusgabenAnzeigenAdapter {
 
     private static CSVWriter csvWriter;
     private static CSVReader csvReader;
