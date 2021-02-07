@@ -24,6 +24,10 @@ public class Benutzer {
         return nachname;
     }
 
+    public String getTitle() {
+        return "SWE-Finanzverwalter von " + this.getVorname() + " " + this.getNachname();
+    }
+
     public void setNachname(String nachname) {
         this.nachname = nachname;
     }

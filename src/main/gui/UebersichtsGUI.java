@@ -33,9 +33,8 @@ public class UebersichtsGUI {
 
     private void buildMainFrame(){
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
         jfMainFrame = new JFrame();
-        jfMainFrame.setTitle("SWE-Finanzverwalter von " + benutzer.getVorname() + " " + benutzer.getNachname());
+        jfMainFrame.setTitle(benutzer.getTitle());
         jfMainFrame.setSize(screenSize.width, screenSize.height);
         jfMainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         jfMainFrame.setResizable(true);
@@ -59,12 +58,10 @@ public class UebersichtsGUI {
         /* Erzeugung eines JTabbedPane-Objektes
            JTabbedPane.TOP -> Tabs sind oberhalb der TabInhalte gesetzt
            JTabbedPane.SCROLL_TAB_LAYOUT -> Wenn zu viele Tabs vorhanden sind, dass nicht alle angezeigt werden können, wird automatisch eine Scrollbar eingefügt */
-        jtbTabbedPane = new JTabbedPane
-                (JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
+        jtbTabbedPane = new JTabbedPane (JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 
         // Panels hinzufügen
         jtbTabbedPane.addTab("Ausgaben", new AusgabenAnzeigenGUI());
-
 
         jtbTabbedPane.addTab("Einnahmen", new EinnahmenAnzeigenGUI());
 

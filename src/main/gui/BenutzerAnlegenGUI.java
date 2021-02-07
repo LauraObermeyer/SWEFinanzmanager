@@ -9,13 +9,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import main.applicationCode.BenutzerAnlegenLogik;
 import main.event.GUIEvent;
 import main.event.IGUIEventListener;
 import main.event.IGUIEventSender;
 import main.util.CSVReader;
 import main.util.CSVWriter;
 
-public class    BenutzerAnlegenGUI  implements IGUIEventSender {
+public class BenutzerAnlegenGUI  implements IGUIEventSender {
 
     private JFrame jfBenutzerAnlegen;
     private JPanel jpButtons;
@@ -103,7 +104,7 @@ public class    BenutzerAnlegenGUI  implements IGUIEventSender {
         jfBenutzerAnlegen.add(jpButtons, BorderLayout.SOUTH);
     }
 
-    private void benutzerSpeichern() {
+   /* private void benutzerSpeichern() {
         try {
             csvWriter = new CSVWriter(benutzerFile, true);
             dateiInhalt = Collections.singletonList(new String[]{jtfVorname.getText(), jtfNachname.getText(), jtfEmail.getText()});
@@ -111,7 +112,7 @@ public class    BenutzerAnlegenGUI  implements IGUIEventSender {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     @Override
     public void fireEvent(GUIEvent event) throws Exception {
@@ -119,7 +120,7 @@ public class    BenutzerAnlegenGUI  implements IGUIEventSender {
         jfBenutzerAnlegen.dispose();
 
         if(event.getMessage() == "Speichern") {
-            benutzerSpeichern();
+            BenutzerAnlegenLogik.benutzerSpeichern(jtfVorname, jtfNachname, jtfEmail);
             // GUIController triggern
             listeners.forEach(listener -> listener.eventFired(event));
         }
@@ -138,19 +139,5 @@ public class    BenutzerAnlegenGUI  implements IGUIEventSender {
     @Override
     public void removeListener(IGUIEventListener listener) {
         listeners.remove(listener);
-    }
-
-    // Methode, um ArrayList<String> in String[] umzuwandeln
-    public static String[] getStringArray(ArrayList<String> arr) {
-        // String Array deklarieren und initalisieren
-        String str[] = new String[arr.size()];
-
-        // ArrayList zu Array Umwandlung
-        for (int j = 0; j < arr.size(); j++) {
-            // Jeden Wert zum String-Array hinzuweisen
-            str[j] = arr.get(j);
-        }
-
-        return str;
     }
 }
