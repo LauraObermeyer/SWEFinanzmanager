@@ -20,7 +20,7 @@ public class AusgabenAnzeigenAdapter {
     private static CSVReader csvReader;
     private static String ausgabenFile;
 
-    // Liste aller Exponate (die werden in der Tabelle angezeigt)
+    // Liste aller Einträge (die werden in der Tabelle angezeigt)
     private static List<Eintrag> ausgaben;
 
     public static void buildFileName(Benutzer benutzer) {
@@ -74,5 +74,9 @@ public class AusgabenAnzeigenAdapter {
         }
 
         return data;
+    }
+
+    public static List<Eintrag> getAusgaben() {
+        return ausgaben;
     }
 }

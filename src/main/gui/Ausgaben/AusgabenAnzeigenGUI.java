@@ -68,13 +68,18 @@ public class AusgabenAnzeigenGUI extends JPanel implements IGUIEventSender {
 
         // Action Listener für Tabelle hinzufügen, damit Zeilen klickbar sind, um zur jeweiligen Exponat-Detailansicht zu gelangen
         jtAusgaben.getSelectionModel().addListSelectionListener(e -> {
-            clickedEintrag = ausgaben.get(jtAusgaben.getSelectedRow());
-            fireEvent(new GUIEvent("Exponat-Detailansicht-Öffnen", this));
+            clickedEintrag = AusgabenAnzeigenAdapter.getAusgaben().get(jtAusgaben.getSelectedRow());
+            fireEvent(new GUIEvent("DetailansichtOeffnen", this));
         });
 
         // Scrollpane mit Tabelle jtExponate zum Panel jpCenter hinzufügen
         jpTabelle.add(new JScrollPane(jtAusgaben), BorderLayout.CENTER);
         this.add(jpTabelle, BorderLayout.CENTER);
+    }
+
+    // Wenn auf eine Zeile der Tabelle geklickt wurde, liefert diese Methode den jeweiligen Eintrag
+    public Eintrag getClickedEintrag(){
+        return clickedEintrag;
     }
 
     @Override

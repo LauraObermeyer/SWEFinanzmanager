@@ -2,11 +2,19 @@ package main.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+
+import main.event.GUIEvent;
+import main.event.IGUIEventListener;
+import main.event.IGUIEventSender;
 import main.gui.Ausgaben.AusgabenAnzeigenGUI;
-import main.gui.EinnahmenAnzeigenGUI;
 import main.model.Benutzer;
 
-public class UebersichtsGUI {
+public class UebersichtsGUI  implements IGUIEventSender {
+
+    private ArrayList<IGUIEventListener> listeners = new ArrayList<>();
+
+    private AusgabenAnzeigenGUI ausgabenAnzeigenGUI;
 
     private JFrame jfMainFrame;
     private JPanel jpHeader;
@@ -18,6 +26,7 @@ public class UebersichtsGUI {
 
     public UebersichtsGUI(Benutzer benutzer) {
         this.benutzer = benutzer;
+        ausgabenAnzeigenGUI = new AusgabenAnzeigenGUI(benutzer);
 
         buildMainFrame();
         buildHeader();
@@ -56,14 +65,27 @@ public class UebersichtsGUI {
         jtbTabbedPane = new JTabbedPane (JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 
         // Panels hinzufügen
-        jtbTabbedPane.addTab("Ausgaben", new AusgabenAnzeigenGUI(benutzer));
+        jtbTabbedPane.addTab("Ausgaben", ausgabenAnzeigenGUI);
 
-        jtbTabbedPane.addTab("Einnahmen", new EinnahmenAnzeigenGUI());
+        jtbTabbedPane.addTab("Einnahmen", new main.gui.EinnahmenAnzeigenGUI());
 
         jfMainFrame.getContentPane().add(jtbTabbedPane, BorderLayout.CENTER);
     }
 
-    public void addListener(GUIController guiController) {
+    @Override
+    public void fireEvent(GUIEvent event) {
+        listeners.forEach( listeners -> listeners.eventFired(event));
     }
 
+    @Override
+    public void addListener(IGUIEventListener listener) {
+        listeners.add(listener);
+        ausgabenAnzeigenGUI.addListener(listener);
+    }
+
+    @Override
+    public void removeListener(IGUIEventListener listener) {
+        listeners.add(listener);
+        ausgabenAnzeigenGUI.removeListener(listener);
+    }
 }

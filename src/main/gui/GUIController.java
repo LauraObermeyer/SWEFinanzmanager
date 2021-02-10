@@ -71,8 +71,10 @@ public class GUIController implements IGUIEventListener {
             case "Abbrechen":
                 break;
             case "Speichern":
-                System.out.println("Test");
                 buildUebersichtsGUI();
+                break;
+            case "DetailansichtOeffnen":
+                System.out.println("Test");
                 break;
         }
     }
