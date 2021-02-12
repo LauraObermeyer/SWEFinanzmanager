@@ -25,13 +25,14 @@ public class GUIController implements IGUIEventListener {
     // Benutzer
     private Benutzer benutzer;
 
-    public GUIController() throws Exception {
-        if(neuerNutzer() == true){
-            benutzerAnlegenGUI = new BenutzerAnlegenGUI();
-            benutzerAnlegenGUI.addListener(this);
-        } else {
-            buildUebersichtsGUI();
-        }
+    public GUIController(BenutzerAnlegenGUI benutzerAnlegenGUI) throws Exception {
+        this.benutzerAnlegenGUI = benutzerAnlegenGUI;
+        benutzerAnlegenGUI.addListener(this);
+    }
+
+    public GUIController(UebersichtsGUI uebersichtsGUI) throws Exception {
+        this.uebersichtsGUI = uebersichtsGUI;
+        uebersichtsGUI.addListener(this);
     }
 
     private boolean neuerNutzer() {
@@ -71,7 +72,7 @@ public class GUIController implements IGUIEventListener {
             case "Abbrechen":
                 break;
             case "Speichern":
-                buildUebersichtsGUI();
+                StartApplikation.buildUebersichtsGUIfromController();
                 break;
             case "DetailansichtOeffnen":
                 System.out.println("Test");
@@ -88,5 +89,21 @@ public class GUIController implements IGUIEventListener {
         catch( Exception e ){
             e.printStackTrace();
         }
+    }
+
+    public UebersichtsGUI getUebersichtsGUI() {
+        return uebersichtsGUI;
+    }
+
+    public void setUebersichtsGUI(UebersichtsGUI uebersichtsGUI) {
+        this.uebersichtsGUI = uebersichtsGUI;
+    }
+
+    public BenutzerAnlegenGUI getBenutzerAnlegenGUI() {
+        return benutzerAnlegenGUI;
+    }
+
+    public void setBenutzerAnlegenGUI(BenutzerAnlegenGUI benutzerAnlegenGUI) {
+        this.benutzerAnlegenGUI = benutzerAnlegenGUI;
     }
 }
