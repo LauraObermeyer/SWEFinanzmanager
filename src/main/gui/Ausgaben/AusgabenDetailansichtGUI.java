@@ -1,4 +1,8 @@
 package main.gui.Ausgaben;
 
-public class AusgabenDetailansichtGUI {
+import main.event.IGUIEventSender;
+
+import javax.swing.*;
+
+public class AusgabenDetailansichtGUI  extends JPanel {
 }

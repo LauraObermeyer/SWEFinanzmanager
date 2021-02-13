@@ -4,10 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+import main.app.StartApplikation;
 import main.event.GUIEvent;
 import main.event.IGUIEventListener;
 import main.event.IGUIEventSender;
 import main.gui.Ausgaben.AusgabenAnzeigenGUI;
+import main.gui.Ausgaben.AusgabenDetailansichtGUI;
 import main.model.Benutzer;
 
 public class UebersichtsGUI  implements IGUIEventSender {
@@ -15,6 +17,7 @@ public class UebersichtsGUI  implements IGUIEventSender {
     private ArrayList<IGUIEventListener> listeners = new ArrayList<>();
 
     private AusgabenAnzeigenGUI ausgabenAnzeigenGUI;
+    private AusgabenDetailansichtGUI ausgabenDetailansichtGUI;
 
     private JFrame jfMainFrame;
     private JPanel jpHeader;
@@ -26,7 +29,7 @@ public class UebersichtsGUI  implements IGUIEventSender {
 
     public UebersichtsGUI(Benutzer benutzer) {
         this.benutzer = benutzer;
-        ausgabenAnzeigenGUI = new AusgabenAnzeigenGUI(benutzer);
+        ausgabenAnzeigenGUI = StartApplikation.buildAusgabenAnzeigenGUI();
 
         buildMainFrame();
         buildHeader();
@@ -67,9 +70,15 @@ public class UebersichtsGUI  implements IGUIEventSender {
         // Panels hinzufügen
         jtbTabbedPane.addTab("Ausgaben", ausgabenAnzeigenGUI);
 
+        //TODO: rausnehmen:
         jtbTabbedPane.addTab("Einnahmen", new main.gui.EinnahmenAnzeigenGUI());
 
         jfMainFrame.getContentPane().add(jtbTabbedPane, BorderLayout.CENTER);
+    }
+
+    public void buildExponatDetailansichtTab(){
+        ausgabenDetailansichtGUI = StartApplikation.buildAusgabenDetailansichtGUI();
+        jtbTabbedPane.setComponentAt(0, ausgabenDetailansichtGUI);
     }
 
     @Override

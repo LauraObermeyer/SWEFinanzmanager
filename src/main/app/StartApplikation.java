@@ -1,6 +1,8 @@
 package main.app;
 
 import main.event.GUIEvent;
+import main.gui.Ausgaben.AusgabenAnzeigenGUI;
+import main.gui.Ausgaben.AusgabenDetailansichtGUI;
 import main.gui.BenutzerAnlegenGUI;
 import main.gui.GUIController;
 import main.gui.UebersichtsGUI;
@@ -18,6 +20,8 @@ public class StartApplikation {
     // GUI Components
     private static UebersichtsGUI uebersichtsGUI;
     private static BenutzerAnlegenGUI benutzerAnlegenGUI;
+    private static AusgabenAnzeigenGUI ausgabenAnzeigenGUI;
+    private static AusgabenDetailansichtGUI ausgabenDetailansichtGUI;
 
     // CSV Reader und Files
     private static CSVReader csvReaderBenutzer;
@@ -25,7 +29,6 @@ public class StartApplikation {
     // Benutzer
     private static Benutzer benutzer;
 
-    private static String filePath;
     private static String benutzerFile = "./resources/benutzer.csv";
 
     public static void main( String[] args ) throws Exception {
@@ -36,10 +39,6 @@ public class StartApplikation {
             buildUebersichtsGUI();
             new GUIController(uebersichtsGUI);
         }
-    }
-
-    public static String getBenutzerFile() {
-        return benutzerFile;
     }
 
     private static boolean neuerNutzer() {
@@ -95,5 +94,15 @@ public class StartApplikation {
             Oder man macht es so, dass die GUIs doch nicht direkt in der Main Klasse instanziiert werden, sondern die Main Klasse eine weitere Plugin Klasse aufruft, die das übernimmt
             Dann könnten alle GUIs am selben Ort instanziiert werden
             Was meinst du ist schöner?*/
+    }
+
+    public static AusgabenAnzeigenGUI buildAusgabenAnzeigenGUI(){
+        ausgabenAnzeigenGUI = new AusgabenAnzeigenGUI(benutzer);
+        return ausgabenAnzeigenGUI;
+    }
+
+    public static AusgabenDetailansichtGUI buildAusgabenDetailansichtGUI(){
+        ausgabenDetailansichtGUI = new AusgabenDetailansichtGUI();
+        return ausgabenDetailansichtGUI;
     }
 }
