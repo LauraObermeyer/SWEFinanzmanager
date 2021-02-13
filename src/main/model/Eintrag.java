@@ -18,7 +18,7 @@ public class Eintrag {
         this.kategorie = kategorie;
         this.datum = datum;
         this.produktliste = produktliste;
-        this.systemaenderung = new Systemaenderung(); // systemaenderung wird bei Erstellen des Exponats automatisch mit aktuellem Zeitstempel erstellt
+        this.systemaenderung = new Systemaenderung(); // systemaenderung wird bei Erstellen des Eintrags automatisch mit aktuellem Zeitstempel erstellt
     }
 
     public static final String[] getAlleAttributnamen() {

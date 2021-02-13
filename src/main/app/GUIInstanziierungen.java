@@ -1,6 +1,5 @@
 package main.app;
 
-import main.event.GUIEvent;
 import main.gui.BenutzerAnlegenGUI;
 import main.gui.GUIController;
 import main.gui.UebersichtsGUI;
@@ -8,27 +7,26 @@ import main.model.Benutzer;
 import main.model.EMail;
 import main.util.CSVReader;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StartApplikation {
+public class GUIInstanziierungen {
 
     // GUI Components
-    private static UebersichtsGUI uebersichtsGUI;
-    private static BenutzerAnlegenGUI benutzerAnlegenGUI;
+    private UebersichtsGUI uebersichtsGUI;
+    private BenutzerAnlegenGUI benutzerAnlegenGUI;
 
     // CSV Reader und Files
-    private static CSVReader csvReaderBenutzer;
+    private CSVReader csvReaderBenutzer;
 
     // Benutzer
-    private static Benutzer benutzer;
+    private Benutzer benutzer;
 
-    private static String filePath;
-    private static String benutzerFile = "./resources/benutzer.csv";
+    private String filePath;
+    private String benutzerFile = "./resources/benutzer.csv";
 
-    public static void main( String[] args ) throws Exception {
+    public void main( String[] args ) throws Exception {
         if(neuerNutzer() == true){
             benutzerAnlegenGUI = new BenutzerAnlegenGUI();
             new GUIController(benutzerAnlegenGUI);
@@ -38,11 +36,11 @@ public class StartApplikation {
         }
     }
 
-    public static String getBenutzerFile() {
+    public String getBenutzerFile() {
         return benutzerFile;
     }
 
-    private static boolean neuerNutzer() {
+    private boolean neuerNutzer() {
         List<String[]> dateiInhalt = getBenutzerDateiinhalt();
 
         if(dateiInhalt.size() > 0) {
@@ -52,7 +50,7 @@ public class StartApplikation {
         return true;
     }
 
-    private static List<String[]> getBenutzerDateiinhalt(){
+    private List<String[]> getBenutzerDateiinhalt(){
         csvReaderBenutzer = new CSVReader(benutzerFile);
         // Liste für Inhalt der Raum-Datei
         List<String[]> dateiInhalt = new ArrayList<>();
@@ -64,17 +62,17 @@ public class StartApplikation {
         return dateiInhalt;
     }
 
-    private static void benutzerAnlegen(List<String[]> dateiInhalt) {
+    private void benutzerAnlegen(List<String[]> dateiInhalt) {
         benutzer = new Benutzer(dateiInhalt.get(0)[0], dateiInhalt.get(0)[1], emailAnlegen(dateiInhalt.get(0)[2]));
     }
 
-    private static EMail emailAnlegen(String emailString){
+    private EMail emailAnlegen(String emailString){
         String[] emailSplit1 = emailString.split("@");
         String[] emailSplit2 = emailSplit1[1].split("\\.");
         return new EMail(emailSplit1[0], emailSplit2[0], emailSplit2[1]);
     }
 
-    public static void buildUebersichtsGUI() {
+    public void buildUebersichtsGUI() {
         benutzerAnlegen(getBenutzerDateiinhalt());
         try{
             uebersichtsGUI = new UebersichtsGUI(benutzer);
@@ -84,16 +82,11 @@ public class StartApplikation {
         }
     }
 
-    public static void buildUebersichtsGUIfromController() {
+    public void buildUebersichtsGUIfromController() {
         buildUebersichtsGUI();
         //GUIController.setUebersichtsGUI(uebersichtsGUI);
-        /*TODO: Die Zeile hier drüber musste ich auskommentieren, weil setUebersichtsGUI nicht statisch ist und auch nicht statisch gemacht werden kann
-            Weil das die main Methode ist muss hier gefühlt alles static sein (vielleicht kann man das aber auch ändern?)
-            Im GUIController muss hier aber auf jeden Fall die neue Instanz der uebersichtsGUI geupdated (bzw. hinzugefügt) werden
-            Die erste Idee die ich dazu spontan habe, wäre doch eine weitere Klasse zu machen, die die GUIs instanziiert, welche nicht sofort am Anfang instanziiert werden
-            Weil die müsste dann nicht static sein, weils nicht die Main ist
-            Oder man macht es so, dass die GUIs doch nicht direkt in der Main Klasse instanziiert werden, sondern die Main Klasse eine weitere Plugin Klasse aufruft, die das übernimmt
-            Dann könnten alle GUIs am selben Ort instanziiert werden
-            Was meinst du ist schöner?*/
+        /*TODO: Achso, meine zweite Idee, mit einer weiteren Klasse GUIInstanziierungen funktioniert auch nicht wirklich
+            Weil in der Klasse müssts ja auch static sein, es sei denn wir erzeugen ein Objekt der Klasse
+            Aber das müssten wir dann überall mitgeben, was vllt auch nicht so schön ist*/
     }
 }

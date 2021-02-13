@@ -34,7 +34,7 @@ public class AusgabenAnzeigenAdapter {
         // Liste für Inhalt der Ausgaben-Datei
         List<String[]> dateiInhalt = new ArrayList<>();
 
-        // Exponate aus entsprechender csv-Datei auslesen
+        // Einträge aus entsprechender csv-Datei auslesen
         try {
             dateiInhalt = csvReader.readData();
         } catch (IOException e) {

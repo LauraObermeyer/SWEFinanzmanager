@@ -28,7 +28,7 @@ public class AusgabenAnzeigenGUI extends JPanel implements IGUIEventSender {
     private JTable jtAusgaben;
     private JPanel jpTabelle;
 
-    // Liste aller Exponate (die werden in der Tabelle angezeigt)
+    // Liste aller Einträge (die werden in der Tabelle angezeigt)
     List<Eintrag> ausgaben;
 
     // Suche
@@ -66,13 +66,13 @@ public class AusgabenAnzeigenGUI extends JPanel implements IGUIEventSender {
         centerRenderer.setHorizontalAlignment( JLabel.CENTER );
         jtAusgaben.getColumnModel().getColumn(7).setCellRenderer( centerRenderer );
 
-        // Action Listener für Tabelle hinzufügen, damit Zeilen klickbar sind, um zur jeweiligen Exponat-Detailansicht zu gelangen
+        // Action Listener für Tabelle hinzufügen, damit Zeilen klickbar sind, um zur jeweiligen Detailansicht zu gelangen
         jtAusgaben.getSelectionModel().addListSelectionListener(e -> {
             clickedEintrag = AusgabenAnzeigenAdapter.getAusgaben().get(jtAusgaben.getSelectedRow());
             fireEvent(new GUIEvent("DetailansichtOeffnen", this));
         });
 
-        // Scrollpane mit Tabelle jtExponate zum Panel jpCenter hinzufügen
+        // Scrollpane mit Tabelle zum Panel jpCenter hinzufügen
         jpTabelle.add(new JScrollPane(jtAusgaben), BorderLayout.CENTER);
         this.add(jpTabelle, BorderLayout.CENTER);
     }
