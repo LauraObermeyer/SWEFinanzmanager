@@ -8,6 +8,7 @@ import main.gui.GUIController;
 import main.gui.UebersichtsGUI;
 import main.model.Benutzer;
 import main.model.EMail;
+import main.model.Eintrag;
 import main.util.CSVReader;
 
 import java.io.File;
@@ -101,8 +102,8 @@ public class StartApplikation {
         return ausgabenAnzeigenGUI;
     }
 
-    public static AusgabenDetailansichtGUI buildAusgabenDetailansichtGUI(){
-        ausgabenDetailansichtGUI = new AusgabenDetailansichtGUI();
+    public static AusgabenDetailansichtGUI buildAusgabenDetailansichtGUI(Eintrag eintrag){
+        ausgabenDetailansichtGUI = new AusgabenDetailansichtGUI(eintrag);
         return ausgabenDetailansichtGUI;
     }
 }

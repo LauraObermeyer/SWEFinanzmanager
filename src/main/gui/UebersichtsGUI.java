@@ -11,6 +11,7 @@ import main.event.IGUIEventSender;
 import main.gui.Ausgaben.AusgabenAnzeigenGUI;
 import main.gui.Ausgaben.AusgabenDetailansichtGUI;
 import main.model.Benutzer;
+import main.model.Eintrag;
 
 public class UebersichtsGUI  implements IGUIEventSender {
 
@@ -77,7 +78,7 @@ public class UebersichtsGUI  implements IGUIEventSender {
     }
 
     public void buildExponatDetailansichtTab(){
-        ausgabenDetailansichtGUI = StartApplikation.buildAusgabenDetailansichtGUI();
+        ausgabenDetailansichtGUI = StartApplikation.buildAusgabenDetailansichtGUI(ausgabenAnzeigenGUI.getClickedEintrag());
         jtbTabbedPane.setComponentAt(0, ausgabenDetailansichtGUI);
     }
 
