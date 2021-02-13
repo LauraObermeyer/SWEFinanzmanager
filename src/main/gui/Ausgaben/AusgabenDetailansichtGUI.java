@@ -1,29 +1,22 @@
 package main.gui.Ausgaben;
 
-import main.adapter.AusgabenAnzeigenAdapter;
-import main.app.StartApplikation;
+import main.adapter.AusgabenDetailansichtAdapter;
 import main.event.GUIEvent;
 import main.event.IGUIEventListener;
 import main.event.IGUIEventSender;
 import main.model.Eintrag;
 import main.util.CSVReader;
 import main.util.CSVWriter;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 public class AusgabenDetailansichtGUI extends JPanel implements IGUIEventSender {
 
     // "eintrag" ist das Eintrag-Objekt, zu dem die Detailansicht gehört
     private Eintrag eintrag;
 
-    // Zurück-Button, um zur ExponatÜbersicht zurück zu kehren
+    // Zurück-Button, um zur Übersicht zurück zu kehren
     private JButton jbZurückButton;
 
     private JPanel jpTabHeader;
@@ -35,14 +28,14 @@ public class AusgabenDetailansichtGUI extends JPanel implements IGUIEventSender 
     private CSVReader csvReader;
     private CSVWriter csvWriter;
 
-    // Header für Exponat-Datei
+    // Header für Eintrags-Datei
     private static final String[] header = Eintrag.getAlleAttributnamen();
 
     public AusgabenDetailansichtGUI(Eintrag eintrag){
         this.eintrag = eintrag;
         this.setLayout(new BorderLayout());
 
-        // Methoden zum Aufbau der Exponat-Detailansicht aufrufen
+        // Methoden zum Aufbau der Detailansicht aufrufen
         buildTabHeader();
         buildEigenschaftenPanel();
         buildFooterButtons();
@@ -57,21 +50,21 @@ public class AusgabenDetailansichtGUI extends JPanel implements IGUIEventSender 
         // Komponenten linksbündig ausrichten
         jpTabHeaderLinks.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        // Zurück-Button, um zur ExponatÜbersicht zurück zu kehren
+        // Zurück-Button, um zur Übersicht zurück zu kehren
         jbZurückButton = new JButton("<");
 
-        // ActionListener für Zurück-Button, damit man zur Exponat-Übersicht zurück kehren kann
+        // ActionListener für Zurück-Button, damit man zur Übersicht zurück kehren kann
         jbZurückButton.addActionListener(e -> fireEvent(new GUIEvent("Zurück zu Übersicht", this)));
 
-        // linke Seite des Headers mit Name des Exponats und Inventarnummer
+        // linke Seite des Headers
         JPanel jpTextLinks = new JPanel();
         jpTextLinks.setLayout(new GridLayout(2, 1));
 
-        // Zurück-Button und linkes Text-Panel zum linken Teil des Headers der Exponat-Detailansicht hinzufügen
+        // Zurück-Button und linkes Text-Panel zum linken Teil des Headers der Detailansicht hinzufügen
         jpTabHeaderLinks.add(jbZurückButton);
         jpTabHeaderLinks.add(jpTextLinks);
 
-        // linken Teil des Headers zum Header der Exponat-Detailansicht hinzufügen
+        // linken Teil des Headers zum Header der Detailansicht hinzufügen
         // BorderLayout.WEST, da linker Teil des Headers links sein soll
         jpTabHeader.add(jpTabHeaderLinks, BorderLayout.WEST);
 
@@ -83,15 +76,15 @@ public class AusgabenDetailansichtGUI extends JPanel implements IGUIEventSender 
         jsTrennlinieTabHeader.setOrientation(SwingConstants.HORIZONTAL);
         jpTabHeader.add(jsTrennlinieTabHeader, BorderLayout.SOUTH);
 
-        // Bearbeiten- und Löschen-Button für linke Seite des des Headers der Exponat-Detailansicht bauen
+        // Bearbeiten- und Löschen-Button für linke Seite des des Headers der Detailansicht bauen
         buildHeaderButtons();
 
-        // Header der Exponat-Detailansicht zum Haupt-Panel hinzufügen
+        // Header der Detailansicht zum Haupt-Panel hinzufügen
         this.add(jpTabHeader, BorderLayout.NORTH);
     }
 
     private void buildHeaderButtons() {
-        // Bearbeiten- und Löschen-Button für linke Seite des des Headers der Exponat-Detailansicht bauen
+        // Bearbeiten- und Löschen-Button für linke Seite des des Headers der Detailansicht bauen
         JButton jbBearbeiten = new JButton("Bearbeiten");
         JButton jbLöschen = new JButton("Löschen");
 
@@ -106,18 +99,15 @@ public class AusgabenDetailansichtGUI extends JPanel implements IGUIEventSender 
     }
 
     private void buildEigenschaftenPanel() {
-        // in dem "jpEigenschaften"-Panel sollen die Eigenschaften des Exponats angezeigt werden
+        // in dem "jpEigenschaften"-Panel sollen die Eigenschaften des Eintrags angezeigt werden
         JPanel jpEigenschaften = new JPanel();
         // Layout des "jpEigenschaften"-Panel setzen
         jpEigenschaften.setLayout(new GridLayout(17, 1));
 
-        jpEigenschaften.add(new JLabel(Eintrag.getAlleAttributnamen()[0] + ": " + eintrag.getBezeichnung()));
-        jpEigenschaften.add(new JLabel(Eintrag.getAlleAttributnamen()[1] + ": " + eintrag.getBeschreibung()));
-        jpEigenschaften.add(new JLabel(Eintrag.getAlleAttributnamen()[2] + ": " + eintrag.getArt()));
-        jpEigenschaften.add(new JLabel(Eintrag.getAlleAttributnamen()[3] + ": " + eintrag.getKategorie().getBezeichnung()));
-        jpEigenschaften.add(new JLabel(Eintrag.getAlleAttributnamen()[4] + ": " + eintrag.getDatum()));
-        jpEigenschaften.add(new JLabel(Eintrag.getAlleAttributnamen()[5] + ": " + eintrag.getProduktliste()));
-        jpEigenschaften.add(new JLabel(Eintrag.getAlleAttributnamen()[6] + ": " + eintrag.getSystemaenderung().getZeitstempel()));
+        String eigenschaften[] = AusgabenDetailansichtAdapter.getEigenschaften(eintrag);
+        for(int i = 0; i < eigenschaften.length; i++){
+            jpEigenschaften.add(new JLabel(eigenschaften[i]));
+        }
 
         // Eigenschafts-Panel zum Hauptpanel hinzufügen (links angeordnet, deshalb BorderLayout.WEST)
         this.add(jpEigenschaften, BorderLayout.WEST);
@@ -136,12 +126,12 @@ public class AusgabenDetailansichtGUI extends JPanel implements IGUIEventSender 
         this.add(jpButtons, BorderLayout.SOUTH);
     }
 
-    public Eintrag getExponat() {
+    public Eintrag getEintrag() {
         return eintrag;
     }
 
-    public void setExponat(Eintrag exponat) {
-        this.eintrag = exponat;
+    public void setEintrag(Eintrag eintrag) {
+        this.eintrag = eintrag;
     }
 
     @Override
