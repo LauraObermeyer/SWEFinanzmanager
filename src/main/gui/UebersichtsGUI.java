@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+import main.adapter.UebersichtsAdapter;
 import main.app.StartApplikation;
 import main.event.GUIEvent;
 import main.event.IGUIEventListener;
@@ -78,7 +79,7 @@ public class UebersichtsGUI  implements IGUIEventSender {
     }
 
     public void buildDetailansichtGUI(){
-        ausgabenDetailansichtGUI = StartApplikation.buildAusgabenDetailansichtGUI(ausgabenAnzeigenGUI.getClickedEintrag());
+        ausgabenDetailansichtGUI = UebersichtsAdapter.buildDetailansichtGUI(ausgabenAnzeigenGUI);
         jtbTabbedPane.setComponentAt(0, ausgabenDetailansichtGUI);
     }
 
@@ -87,7 +88,7 @@ public class UebersichtsGUI  implements IGUIEventSender {
     }
 
     public void refreshUebersichtsGUI(){
-        ausgabenAnzeigenGUI = StartApplikation.buildAusgabenAnzeigenGUI();
+        ausgabenAnzeigenGUI = UebersichtsAdapter.refreshUebersichtsGUI();
         jtbTabbedPane.setComponentAt(0, ausgabenAnzeigenGUI);
     }
 
