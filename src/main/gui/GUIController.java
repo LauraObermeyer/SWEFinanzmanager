@@ -30,14 +30,22 @@ public class GUIController implements IGUIEventListener {
                 StartApplikation.buildUebersichtsGUIfromController();
                 break;
             case "DetailansichtOeffnen":
-                System.out.println("Test");
                 buildDetailansichtGUI();
+                break;
+            case "ZurueckZuUebersicht":
+                buildUebersichtsGUI();
                 break;
         }
     }
 
     private void buildDetailansichtGUI() {
-        uebersichtsGUI.buildExponatDetailansichtTab();
+        uebersichtsGUI.buildDetailansichtGUI();
+        uebersichtsGUI.getAusgabenDetailansichtGUI().addListener(this);
+    }
+
+    private void buildUebersichtsGUI() {
+        uebersichtsGUI.refreshUebersichtsGUI();
+        uebersichtsGUI.addListener(this);
     }
 
     public UebersichtsGUI getUebersichtsGUI() {

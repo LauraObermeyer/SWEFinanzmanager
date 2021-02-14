@@ -77,9 +77,18 @@ public class UebersichtsGUI  implements IGUIEventSender {
         jfMainFrame.getContentPane().add(jtbTabbedPane, BorderLayout.CENTER);
     }
 
-    public void buildExponatDetailansichtTab(){
+    public void buildDetailansichtGUI(){
         ausgabenDetailansichtGUI = StartApplikation.buildAusgabenDetailansichtGUI(ausgabenAnzeigenGUI.getClickedEintrag());
         jtbTabbedPane.setComponentAt(0, ausgabenDetailansichtGUI);
+    }
+
+    public AusgabenDetailansichtGUI getAusgabenDetailansichtGUI() {
+        return ausgabenDetailansichtGUI;
+    }
+
+    public void refreshUebersichtsGUI(){
+        ausgabenAnzeigenGUI = StartApplikation.buildAusgabenAnzeigenGUI();
+        jtbTabbedPane.setComponentAt(0, ausgabenAnzeigenGUI);
     }
 
     @Override

@@ -54,7 +54,7 @@ public class AusgabenDetailansichtGUI extends JPanel implements IGUIEventSender 
         jbZurückButton = new JButton("<");
 
         // ActionListener für Zurück-Button, damit man zur Übersicht zurück kehren kann
-        jbZurückButton.addActionListener(e -> fireEvent(new GUIEvent("Zurück zu Übersicht", this)));
+        jbZurückButton.addActionListener(e -> fireEvent(new GUIEvent("ZurueckZuUebersicht", this)));
 
         // linke Seite des Headers
         JPanel jpTextLinks = new JPanel();

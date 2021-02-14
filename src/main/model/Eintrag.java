@@ -29,7 +29,7 @@ public class Eintrag {
     }
 
     public static final String[] getAlleAttributnamenFürTabelle() {
-        String alleAttributnamen[] = {"Bezeichnung", "Beschreibung", "Betrag", "Art", "Kategorie", "Datum", "Produktliste", "Systemaenderung", "..."};
+        String alleAttributnamen[] = {"Bezeichnung", "Beschreibung", "Betrag in €", "Art", "Kategorie", "Datum", "Produktliste", "Systemaenderung", "..."};
         return alleAttributnamen;
     }
 
