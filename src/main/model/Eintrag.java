@@ -5,15 +5,17 @@ import java.util.Date;
 public class Eintrag {
     private String bezeichnung;
     private String beschreibung;
+    private double betrag;
     private Art art;
     private Kategorie kategorie;
     private Date datum;
     private String produktliste; //TODO: Produkt als eigene Klasse modellieren?
     private Systemaenderung systemaenderung;
 
-    public Eintrag(String bezeichnung, String beschreibung, Art art, Kategorie kategorie, Date datum, String produktliste) {
+    public Eintrag(String bezeichnung, String beschreibung, double betrag, Art art, Kategorie kategorie, Date datum, String produktliste) {
         this.bezeichnung = bezeichnung;
         this.beschreibung = beschreibung;
+        this.betrag = betrag;
         this.art = art;
         this.kategorie = kategorie;
         this.datum = datum;
@@ -22,12 +24,12 @@ public class Eintrag {
     }
 
     public static final String[] getAlleAttributnamen() {
-        String alleAttributnamen[] = {"Bezeichnung", "Beschreibung", "Art", "Kategorie", "Datum", "Produktliste", "Systemaenderung"};
+        String alleAttributnamen[] = {"Bezeichnung", "Beschreibung", "Betrag", "Art", "Kategorie", "Datum", "Produktliste", "Systemaenderung"};
         return alleAttributnamen;
     }
 
     public static final String[] getAlleAttributnamenFürTabelle() {
-        String alleAttributnamen[] = {"Bezeichnung", "Beschreibung", "Art", "Kategorie", "Datum", "Produktliste", "Systemaenderung", "..."};
+        String alleAttributnamen[] = {"Bezeichnung", "Beschreibung", "Betrag", "Art", "Kategorie", "Datum", "Produktliste", "Systemaenderung", "..."};
         return alleAttributnamen;
     }
 
@@ -45,6 +47,14 @@ public class Eintrag {
 
     public void setBeschreibung(String beschreibung) {
         this.beschreibung = beschreibung;
+    }
+
+    public double getBetrag() {
+        return betrag;
+    }
+
+    public void setBetrag(double betrag) {
+        this.betrag = betrag;
     }
 
     public Art getArt() {

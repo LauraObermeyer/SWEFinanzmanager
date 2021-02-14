@@ -45,13 +45,13 @@ public class AusgabenAnzeigenAdapter {
         ausgaben = new ArrayList<>();
         for (int i = 0; i < dateiInhalt.size(); i++) {
             // Tabelleneinträge mit zu wenig Attributen und Eingaben überspringen
-            if (dateiInhalt.get(i).length == 7 && dateiInhalt.get(i)[2].equals("Ausgabe")) {
+            if (dateiInhalt.get(i).length == 8 && dateiInhalt.get(i)[3].equals("Ausgabe")) {
                 try {
                     String[] z = dateiInhalt.get(i); // Inhalt der aktuellen Zeile z
-                    Kategorie kategorie = new Kategorie(z[3]);
+                    Kategorie kategorie = new Kategorie(z[4]);
                     SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
-                    Date datum = formatter.parse(z[4]);
-                    ausgaben.add(new Eintrag(z[0], z[1], Art.valueOf("Ausgabe"), kategorie, datum, z[5]));
+                    Date datum = formatter.parse(z[5]);
+                    ausgaben.add(new Eintrag(z[0], z[1], Double.parseDouble(z[2]), Art.valueOf("Ausgabe"), kategorie, datum, z[6]));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
