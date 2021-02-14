@@ -1,6 +1,6 @@
-package main.gui.Ausgaben;
+package main.gui.Eintraege;
 
-import main.adapter.AusgabenDetailansichtAdapter;
+import main.adapter.EintraegeDetailansichtAdapter;
 import main.event.GUIEvent;
 import main.event.IGUIEventListener;
 import main.event.IGUIEventSender;
@@ -11,7 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class AusgabenDetailansichtGUI extends JPanel implements IGUIEventSender {
+public class EintraegeDetailansichtGUI extends JPanel implements IGUIEventSender {
 
     // "eintrag" ist das Eintrag-Objekt, zu dem die Detailansicht gehört
     private Eintrag eintrag;
@@ -31,7 +31,7 @@ public class AusgabenDetailansichtGUI extends JPanel implements IGUIEventSender 
     // Header für Eintrags-Datei
     private static final String[] header = Eintrag.getAlleAttributnamen();
 
-    public AusgabenDetailansichtGUI(Eintrag eintrag){
+    public EintraegeDetailansichtGUI(Eintrag eintrag){
         this.eintrag = eintrag;
         this.setLayout(new BorderLayout());
 
@@ -104,7 +104,7 @@ public class AusgabenDetailansichtGUI extends JPanel implements IGUIEventSender 
         // Layout des "jpEigenschaften"-Panel setzen
         jpEigenschaften.setLayout(new GridLayout(17, 1));
 
-        String eigenschaften[] = AusgabenDetailansichtAdapter.getEigenschaften(eintrag);
+        String eigenschaften[] = EintraegeDetailansichtAdapter.getEigenschaften(eintrag);
         for(int i = 0; i < eigenschaften.length; i++){
             jpEigenschaften.add(new JLabel(eigenschaften[i]));
         }

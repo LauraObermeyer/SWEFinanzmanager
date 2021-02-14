@@ -4,7 +4,7 @@ import main.model.Eintrag;
 
 import javax.swing.*;
 
-public class AusgabenDetailansichtAdapter {
+public class EintraegeDetailansichtAdapter {
 
     public static String[] getEigenschaften(Eintrag eintrag){
         String eigenschaften[] = new String[8];

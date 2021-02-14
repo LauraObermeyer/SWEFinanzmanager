@@ -9,17 +9,16 @@ import main.app.StartApplikation;
 import main.event.GUIEvent;
 import main.event.IGUIEventListener;
 import main.event.IGUIEventSender;
-import main.gui.Ausgaben.AusgabenAnzeigenGUI;
-import main.gui.Ausgaben.AusgabenDetailansichtGUI;
+import main.gui.Eintraege.EintraegeAnzeigenGUI;
+import main.gui.Eintraege.EintraegeDetailansichtGUI;
 import main.model.Benutzer;
-import main.model.Eintrag;
 
 public class UebersichtsGUI  implements IGUIEventSender {
 
     private ArrayList<IGUIEventListener> listeners = new ArrayList<>();
 
-    private AusgabenAnzeigenGUI ausgabenAnzeigenGUI;
-    private AusgabenDetailansichtGUI ausgabenDetailansichtGUI;
+    private EintraegeAnzeigenGUI eintraegeAnzeigenGUI;
+    private EintraegeDetailansichtGUI eintraegeDetailansichtGUI;
 
     private JFrame jfMainFrame;
     private JPanel jpHeader;
@@ -31,7 +30,7 @@ public class UebersichtsGUI  implements IGUIEventSender {
 
     public UebersichtsGUI(Benutzer benutzer) {
         this.benutzer = benutzer;
-        ausgabenAnzeigenGUI = StartApplikation.buildAusgabenAnzeigenGUI();
+        eintraegeAnzeigenGUI = StartApplikation.buildEintraegeAnzeigenGUI();
 
         buildMainFrame();
         buildHeader();
@@ -70,26 +69,26 @@ public class UebersichtsGUI  implements IGUIEventSender {
         jtbTabbedPane = new JTabbedPane (JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 
         // Panels hinzufügen
-        jtbTabbedPane.addTab("Ausgaben", ausgabenAnzeigenGUI);
+        jtbTabbedPane.addTab("Einträge", eintraegeAnzeigenGUI);
 
         //TODO: rausnehmen:
-        jtbTabbedPane.addTab("Einnahmen", new main.gui.EinnahmenAnzeigenGUI());
+        jtbTabbedPane.addTab("Statistiken", new main.gui.Statistiken.StatistikenAnzeigenGUI());
 
         jfMainFrame.getContentPane().add(jtbTabbedPane, BorderLayout.CENTER);
     }
 
     public void buildDetailansichtGUI(){
-        ausgabenDetailansichtGUI = UebersichtsAdapter.buildDetailansichtGUI(ausgabenAnzeigenGUI);
-        jtbTabbedPane.setComponentAt(0, ausgabenDetailansichtGUI);
+        eintraegeDetailansichtGUI = UebersichtsAdapter.buildDetailansichtGUI(eintraegeAnzeigenGUI);
+        jtbTabbedPane.setComponentAt(0, eintraegeDetailansichtGUI);
     }
 
-    public AusgabenDetailansichtGUI getAusgabenDetailansichtGUI() {
-        return ausgabenDetailansichtGUI;
+    public EintraegeDetailansichtGUI getAusgabenDetailansichtGUI() {
+        return eintraegeDetailansichtGUI;
     }
 
     public void refreshUebersichtsGUI(){
-        ausgabenAnzeigenGUI = UebersichtsAdapter.refreshUebersichtsGUI();
-        jtbTabbedPane.setComponentAt(0, ausgabenAnzeigenGUI);
+        eintraegeAnzeigenGUI = UebersichtsAdapter.refreshUebersichtsGUI();
+        jtbTabbedPane.setComponentAt(0, eintraegeAnzeigenGUI);
     }
 
     @Override
@@ -100,12 +99,12 @@ public class UebersichtsGUI  implements IGUIEventSender {
     @Override
     public void addListener(IGUIEventListener listener) {
         listeners.add(listener);
-        ausgabenAnzeigenGUI.addListener(listener);
+        eintraegeAnzeigenGUI.addListener(listener);
     }
 
     @Override
     public void removeListener(IGUIEventListener listener) {
         listeners.add(listener);
-        ausgabenAnzeigenGUI.removeListener(listener);
+        eintraegeAnzeigenGUI.removeListener(listener);
     }
 }

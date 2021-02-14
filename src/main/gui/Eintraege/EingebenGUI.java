@@ -1,4 +1,4 @@
-package main.gui.Ausgaben;
+package main.gui.Eintraege;
 
 import main.event.GUIEvent;
 import main.event.IGUIEventListener;

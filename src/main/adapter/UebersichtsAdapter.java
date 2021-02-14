@@ -1,8 +1,8 @@
 package main.adapter;
 
 import main.app.StartApplikation;
-import main.gui.Ausgaben.AusgabenAnzeigenGUI;
-import main.gui.Ausgaben.AusgabenDetailansichtGUI;
+import main.gui.Eintraege.EintraegeAnzeigenGUI;
+import main.gui.Eintraege.EintraegeDetailansichtGUI;
 
 public class UebersichtsAdapter {
 
@@ -12,11 +12,11 @@ public class UebersichtsAdapter {
         Sind Methodenaufrufe überhaupt Logik, also Adapter Sache?
      */
 
-    public static AusgabenDetailansichtGUI buildDetailansichtGUI(AusgabenAnzeigenGUI ausgabenAnzeigenGUI){
-        return StartApplikation.buildAusgabenDetailansichtGUI(ausgabenAnzeigenGUI.getClickedEintrag());
+    public static EintraegeDetailansichtGUI buildDetailansichtGUI(EintraegeAnzeigenGUI eintraegeAnzeigenGUI){
+        return StartApplikation.buildEintraegeDetailansichtGUI(eintraegeAnzeigenGUI.getClickedEintrag());
     }
 
-    public static AusgabenAnzeigenGUI refreshUebersichtsGUI(){
-        return StartApplikation.buildAusgabenAnzeigenGUI();
+    public static EintraegeAnzeigenGUI refreshUebersichtsGUI(){
+        return StartApplikation.buildEintraegeAnzeigenGUI();
     }
 }

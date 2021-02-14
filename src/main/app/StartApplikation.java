@@ -1,9 +1,8 @@
 package main.app;
 
-import main.event.GUIEvent;
-import main.gui.Ausgaben.AusgabenAnzeigenGUI;
-import main.gui.Ausgaben.AusgabenDetailansichtGUI;
-import main.gui.Ausgaben.EingebenGUI;
+import main.gui.Eintraege.EintraegeAnzeigenGUI;
+import main.gui.Eintraege.EintraegeDetailansichtGUI;
+import main.gui.Eintraege.EingebenGUI;
 import main.gui.BenutzerAnlegenGUI;
 import main.gui.GUIController;
 import main.gui.UebersichtsGUI;
@@ -12,7 +11,6 @@ import main.model.EMail;
 import main.model.Eintrag;
 import main.util.CSVReader;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +20,8 @@ public class StartApplikation {
     // GUI Components
     private static UebersichtsGUI uebersichtsGUI;
     private static BenutzerAnlegenGUI benutzerAnlegenGUI;
-    private static AusgabenAnzeigenGUI ausgabenAnzeigenGUI;
-    private static AusgabenDetailansichtGUI ausgabenDetailansichtGUI;
+    private static EintraegeAnzeigenGUI eintraegeAnzeigenGUI;
+    private static EintraegeDetailansichtGUI eintraegeDetailansichtGUI;
 
     // CSV Reader und Files
     private static CSVReader csvReaderBenutzer;
@@ -90,14 +88,14 @@ public class StartApplikation {
         return uebersichtsGUI;
     }
 
-    public static AusgabenAnzeigenGUI buildAusgabenAnzeigenGUI(){
-        ausgabenAnzeigenGUI = new AusgabenAnzeigenGUI(benutzer);
-        return ausgabenAnzeigenGUI;
+    public static EintraegeAnzeigenGUI buildEintraegeAnzeigenGUI(){
+        eintraegeAnzeigenGUI = new EintraegeAnzeigenGUI(benutzer);
+        return eintraegeAnzeigenGUI;
     }
 
-    public static AusgabenDetailansichtGUI buildAusgabenDetailansichtGUI(Eintrag eintrag){
-        ausgabenDetailansichtGUI = new AusgabenDetailansichtGUI(eintrag);
-        return ausgabenDetailansichtGUI;
+    public static EintraegeDetailansichtGUI buildEintraegeDetailansichtGUI(Eintrag eintrag){
+        eintraegeDetailansichtGUI = new EintraegeDetailansichtGUI(eintrag);
+        return eintraegeDetailansichtGUI;
     }
 
     public static EingebenGUI buildEingebenGUI() {

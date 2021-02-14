@@ -1,6 +1,6 @@
-package main.gui.Ausgaben;
+package main.gui.Eintraege;
 
-import main.adapter.AusgabenAnzeigenAdapter;
+import main.adapter.EintraegeAnzeigenAdapter;
 import main.event.GUIEvent;
 import main.event.IGUIEventListener;
 import main.event.IGUIEventSender;
@@ -16,7 +16,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AusgabenAnzeigenGUI extends JPanel implements IGUIEventSender {
+public class EintraegeAnzeigenGUI extends JPanel implements IGUIEventSender {
 
     // Benutzer
     private Benutzer benutzer;
@@ -39,9 +39,9 @@ public class AusgabenAnzeigenGUI extends JPanel implements IGUIEventSender {
     // Eintrag, der bei Klick auf die entsprechende Zeile in der Tabelle der DetailansichtGUI übergeben wird
     private Eintrag clickedEintrag;
 
-    public AusgabenAnzeigenGUI(Benutzer benutzer) {
+    public EintraegeAnzeigenGUI(Benutzer benutzer) {
         this.benutzer = benutzer;
-        AusgabenAnzeigenAdapter.buildFileName(benutzer);
+        EintraegeAnzeigenAdapter.buildFileName(benutzer);
 
         this.setLayout(new BorderLayout());
         buildTabelle();
@@ -51,7 +51,7 @@ public class AusgabenAnzeigenGUI extends JPanel implements IGUIEventSender {
     private void buildTabelle() {
         jpTabelle = new JPanel(new BorderLayout());
 
-        String data[][] = AusgabenAnzeigenAdapter.getAusgabenListe();
+        String data[][] = EintraegeAnzeigenAdapter.getEintragListe();
 
         // Spaltennamen holen
         String column[] = Eintrag.getAlleAttributnamenFürTabelle();
@@ -65,11 +65,11 @@ public class AusgabenAnzeigenGUI extends JPanel implements IGUIEventSender {
         // ">" in der letzten Spalte zentrieren, um anzudeuten, dass man auf die jeweiligen Zeilen klicken kann
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment( JLabel.CENTER );
-        jtAusgaben.getColumnModel().getColumn(7).setCellRenderer( centerRenderer );
+        jtAusgaben.getColumnModel().getColumn(6).setCellRenderer( centerRenderer );
 
         // Action Listener für Tabelle hinzufügen, damit Zeilen klickbar sind, um zur jeweiligen Detailansicht zu gelangen
         jtAusgaben.getSelectionModel().addListSelectionListener(e -> {
-            clickedEintrag = AusgabenAnzeigenAdapter.getAusgaben().get(jtAusgaben.getSelectedRow());
+            clickedEintrag = EintraegeAnzeigenAdapter.getEintraege().get(jtAusgaben.getSelectedRow());
             fireEvent(new GUIEvent("DetailansichtOeffnen", this));
         });
 

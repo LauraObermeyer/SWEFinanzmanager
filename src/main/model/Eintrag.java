@@ -23,13 +23,25 @@ public class Eintrag {
         this.systemaenderung = new Systemaenderung(); // systemaenderung wird bei Erstellen des Eintrags automatisch mit aktuellem Zeitstempel erstellt
     }
 
+    // Konstruktor zum Auslesen der csv Dateien. Die Systemaenderung wird übergeben
+    public Eintrag(String bezeichnung, String beschreibung, double betrag, Art art, Kategorie kategorie, Date datum, String produktliste, Systemaenderung systemaenderung) {
+        this.bezeichnung = bezeichnung;
+        this.beschreibung = beschreibung;
+        this.betrag = betrag;
+        this.art = art;
+        this.kategorie = kategorie;
+        this.datum = datum;
+        this.produktliste = produktliste;
+        this.systemaenderung = systemaenderung;
+    }
+
     public static final String[] getAlleAttributnamen() {
         String alleAttributnamen[] = {"Bezeichnung", "Beschreibung", "Betrag", "Art", "Kategorie", "Datum", "Produktliste", "Systemaenderung"};
         return alleAttributnamen;
     }
 
     public static final String[] getAlleAttributnamenFürTabelle() {
-        String alleAttributnamen[] = {"Bezeichnung", "Beschreibung", "Betrag in €", "Art", "Kategorie", "Datum", "Produktliste", "Systemaenderung", "..."};
+        String alleAttributnamen[] = {"Bezeichnung", "Betrag in €", "Art", "Kategorie", "Datum", "Produktliste", "..."};
         return alleAttributnamen;
     }
 

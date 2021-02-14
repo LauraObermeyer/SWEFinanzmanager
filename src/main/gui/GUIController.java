@@ -1,18 +1,17 @@
 package main.gui;
 
-import main.adapter.UebersichtsAdapter;
 import main.app.StartApplikation;
 import main.event.GUIEvent;
 import main.event.IGUIEventListener;
-import main.gui.Ausgaben.AusgabenDetailansichtGUI;
-import main.gui.Ausgaben.EingebenGUI;
+import main.gui.Eintraege.EintraegeDetailansichtGUI;
+import main.gui.Eintraege.EingebenGUI;
 
 public class GUIController implements IGUIEventListener {
 
     // GUI Components
     private UebersichtsGUI uebersichtsGUI;
     private BenutzerAnlegenGUI benutzerAnlegenGUI;
-    private AusgabenDetailansichtGUI ausgabenDetailansichtGUI;
+    private EintraegeDetailansichtGUI eintraegeDetailansichtGUI;
     private EingebenGUI eingebenGUI;
 
     public GUIController(BenutzerAnlegenGUI benutzerAnlegenGUI) throws Exception {
