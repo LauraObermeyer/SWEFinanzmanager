@@ -5,6 +5,7 @@ import main.app.StartApplikation;
 import main.event.GUIEvent;
 import main.event.IGUIEventListener;
 import main.gui.Ausgaben.AusgabenDetailansichtGUI;
+import main.gui.Ausgaben.EingebenGUI;
 
 public class GUIController implements IGUIEventListener {
 
@@ -12,6 +13,7 @@ public class GUIController implements IGUIEventListener {
     private UebersichtsGUI uebersichtsGUI;
     private BenutzerAnlegenGUI benutzerAnlegenGUI;
     private AusgabenDetailansichtGUI ausgabenDetailansichtGUI;
+    private EingebenGUI eingebenGUI;
 
     public GUIController(BenutzerAnlegenGUI benutzerAnlegenGUI) throws Exception {
         this.benutzerAnlegenGUI = benutzerAnlegenGUI;
@@ -36,6 +38,9 @@ public class GUIController implements IGUIEventListener {
             case "ZurueckZuUebersicht":
                 refreshUebersichtsGUI();
                 break;
+            case "EintragNeuAnlegen":
+                buildEingebenGUI();
+                break;
         }
     }
 
@@ -54,21 +59,8 @@ public class GUIController implements IGUIEventListener {
         uebersichtsGUI.addListener(this);
     }
 
-    public UebersichtsGUI getUebersichtsGUI() {
-        return uebersichtsGUI;
-    }
-
-    public void setUebersichtsGUI(UebersichtsGUI uebersichtsGUI) {
-        this.uebersichtsGUI = uebersichtsGUI;
-        uebersichtsGUI.addListener(this);
-    }
-
-    public BenutzerAnlegenGUI getBenutzerAnlegenGUI() {
-        return benutzerAnlegenGUI;
-    }
-
-    public void setBenutzerAnlegenGUI(BenutzerAnlegenGUI benutzerAnlegenGUI) {
-        this.benutzerAnlegenGUI = benutzerAnlegenGUI;
-        benutzerAnlegenGUI.addListener(this);
+    private void buildEingebenGUI() {
+        eingebenGUI = StartApplikation.buildEingebenGUI();
+        eingebenGUI.addListener(this);
     }
 }

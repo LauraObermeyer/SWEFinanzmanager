@@ -45,6 +45,7 @@ public class AusgabenAnzeigenGUI extends JPanel implements IGUIEventSender {
 
         this.setLayout(new BorderLayout());
         buildTabelle();
+        buildButtons();
     }
 
     private void buildTabelle() {
@@ -75,6 +76,20 @@ public class AusgabenAnzeigenGUI extends JPanel implements IGUIEventSender {
         // Scrollpane mit Tabelle zum Panel jpCenter hinzufügen
         jpTabelle.add(new JScrollPane(jtAusgaben), BorderLayout.CENTER);
         this.add(jpTabelle, BorderLayout.CENTER);
+    }
+
+    private void buildButtons() {
+        JPanel jpSouth = new JPanel(new FlowLayout());
+
+        // Buttons für Fußzeile erstellen
+        JButton jbNeuAnlegen = new JButton("Neuen Eintrag anlegen");
+
+        // ActionListener für Buttons hinzufügen
+        jbNeuAnlegen.addActionListener(e -> fireEvent(new GUIEvent("EintragNeuAnlegen", this)));
+
+        // Buttons zum Panel hinzufügen
+        jpSouth.add(jbNeuAnlegen, BorderLayout.SOUTH);
+        this.add(jpSouth, BorderLayout.SOUTH);
     }
 
     // Wenn auf eine Zeile der Tabelle geklickt wurde, liefert diese Methode den jeweiligen Eintrag

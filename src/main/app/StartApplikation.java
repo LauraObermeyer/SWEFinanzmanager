@@ -3,6 +3,7 @@ package main.app;
 import main.event.GUIEvent;
 import main.gui.Ausgaben.AusgabenAnzeigenGUI;
 import main.gui.Ausgaben.AusgabenDetailansichtGUI;
+import main.gui.Ausgaben.EingebenGUI;
 import main.gui.BenutzerAnlegenGUI;
 import main.gui.GUIController;
 import main.gui.UebersichtsGUI;
@@ -97,5 +98,9 @@ public class StartApplikation {
     public static AusgabenDetailansichtGUI buildAusgabenDetailansichtGUI(Eintrag eintrag){
         ausgabenDetailansichtGUI = new AusgabenDetailansichtGUI(eintrag);
         return ausgabenDetailansichtGUI;
+    }
+
+    public static EingebenGUI buildEingebenGUI() {
+        return new EingebenGUI();
     }
 }
