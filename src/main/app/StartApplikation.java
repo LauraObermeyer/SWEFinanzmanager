@@ -84,17 +84,9 @@ public class StartApplikation {
         }
     }
 
-    public static void buildUebersichtsGUIfromController() {
+    public static UebersichtsGUI buildUebersichtsGUIfromController() {
         buildUebersichtsGUI();
-        //GUIController.setUebersichtsGUI(uebersichtsGUI);
-        /*TODO: Die Zeile hier drüber musste ich auskommentieren, weil setUebersichtsGUI nicht statisch ist und auch nicht statisch gemacht werden kann
-            Weil das die main Methode ist muss hier gefühlt alles static sein (vielleicht kann man das aber auch ändern?)
-            Im GUIController muss hier aber auf jeden Fall die neue Instanz der uebersichtsGUI geupdated (bzw. hinzugefügt) werden
-            Die erste Idee die ich dazu spontan habe, wäre doch eine weitere Klasse zu machen, die die GUIs instanziiert, welche nicht sofort am Anfang instanziiert werden
-            Weil die müsste dann nicht static sein, weils nicht die Main ist
-            Oder man macht es so, dass die GUIs doch nicht direkt in der Main Klasse instanziiert werden, sondern die Main Klasse eine weitere Plugin Klasse aufruft, die das übernimmt
-            Dann könnten alle GUIs am selben Ort instanziiert werden
-            Was meinst du ist schöner?*/
+        return uebersichtsGUI;
     }
 
     public static AusgabenAnzeigenGUI buildAusgabenAnzeigenGUI(){

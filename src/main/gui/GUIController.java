@@ -27,13 +27,13 @@ public class GUIController implements IGUIEventListener {
             case "Abbrechen":
                 break;
             case "Speichern":
-                StartApplikation.buildUebersichtsGUIfromController();
+                buildUebersichtsGUI();
                 break;
             case "DetailansichtOeffnen":
                 buildDetailansichtGUI();
                 break;
             case "ZurueckZuUebersicht":
-                buildUebersichtsGUI();
+                refreshUebersichtsGUI();
                 break;
         }
     }
@@ -44,6 +44,11 @@ public class GUIController implements IGUIEventListener {
     }
 
     private void buildUebersichtsGUI() {
+        uebersichtsGUI = StartApplikation.buildUebersichtsGUIfromController();
+        uebersichtsGUI.addListener(this);
+    }
+
+    private void refreshUebersichtsGUI() {
         uebersichtsGUI.refreshUebersichtsGUI();
         uebersichtsGUI.addListener(this);
     }
