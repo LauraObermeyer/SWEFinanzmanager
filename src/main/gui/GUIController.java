@@ -40,6 +40,9 @@ public class GUIController implements IGUIEventListener {
             case "EintragNeuAnlegen":
                 buildEingebenGUI();
                 break;
+            case "Anlegen":
+                refreshUebersichtsGUI();
+                break;
         }
     }
 

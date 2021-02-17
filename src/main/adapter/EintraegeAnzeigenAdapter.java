@@ -104,6 +104,7 @@ public class EintraegeAnzeigenAdapter {
             tabellenInhalt[j][3] = String.valueOf(eintrag.getKategorie().getBezeichnung());
             tabellenInhalt[j][4] = String.valueOf(eintrag.getDatum());
             tabellenInhalt[j][5] = String.valueOf(eintrag.getProduktliste());
+            tabellenInhalt[j][6] = ">";
         }
 
         return tabellenInhalt;
