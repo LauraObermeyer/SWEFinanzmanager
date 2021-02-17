@@ -30,6 +30,8 @@ public class StartApplikation {
     private static Benutzer benutzer;
 
     private static String benutzerFile = "./resources/benutzer.csv";
+    private static String ausgabenFile;
+    private static String einnahmenFile;
 
     public static void main( String[] args ) throws Exception {
         if(neuerNutzer() == true){
@@ -100,5 +102,15 @@ public class StartApplikation {
 
     public static EingebenGUI buildEingebenGUI() {
         return new EingebenGUI();
+    }
+
+    public static String buildAusgabenFileName() {
+        ausgabenFile = "resources/ausgaben" + benutzer.getVorname() + benutzer.getNachname() + ".csv";
+        return ausgabenFile;
+    }
+
+    public static String buildEinnahmenFileName() {
+        einnahmenFile = "resources/einnahmen" + benutzer.getVorname() + benutzer.getNachname() + ".csv";
+        return einnahmenFile;
     }
 }

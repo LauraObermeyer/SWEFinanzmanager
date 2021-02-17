@@ -1,6 +1,6 @@
 package main.gui.Eintraege;
 
-import main.adapter.EingebenAdapter;
+import main.applicationCode.EingebenUseCase;
 import main.event.GUIEvent;
 import main.event.IGUIEventListener;
 import main.event.IGUIEventSender;
@@ -8,17 +8,18 @@ import main.event.IGUIEventSender;
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
 import java.awt.*;
-import java.io.IOException;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class EingebenGUI implements IGUIEventSender {
 
     private JFrame jfEingebenFrame;
     private JPanel jpCenter, jpSouth;
     private JLabel jlBezeichnung, jlBeschreibung, jlArt, jlBetrag, jlKategorie, jlDatum, jlProduktliste;
-    private JTextField jtfBezeichnung, jtfBeschreibung, jtfDatum, jtfProduktliste;
-    private JFormattedTextField jtfBetrag;
+    private JTextField jtfBezeichnung, jtfBeschreibung, jtfProduktliste;
+    private JFormattedTextField jtfBetrag, jtfDatum;
     private JComboBox<String> jcKategorie, jcArt;
 
     //Events
@@ -45,11 +46,13 @@ public class EingebenGUI implements IGUIEventSender {
     private void buildEingabefelder() {
         jpCenter = new JPanel(new GridLayout(7, 2));
 
-        //Formatter, damit in Betrags-Feld nur Float Zahlen eingetragen werden können
+        //Formatter, damit in Betrags-Feld nur Double Zahlen eingetragen werden können
         NumberFormat format = NumberFormat.getInstance();
-        NumberFormatter formatter = new NumberFormatter(format);
-        formatter.setValueClass(Float.class);
-        formatter.setAllowsInvalid(false);
+        NumberFormatter formatterDouble = new NumberFormatter(format);
+        formatterDouble.setValueClass(Double.class);
+        formatterDouble.setAllowsInvalid(false);
+        //Formatter für Datumsfeld
+        SimpleDateFormat formatterDatum = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
 
         jlBezeichnung = new JLabel("Bezeichnung:");
         jtfBezeichnung = new JTextField();
@@ -59,12 +62,12 @@ public class EingebenGUI implements IGUIEventSender {
         String[] art = { "Einnahme", "Ausgabe"};
         jcArt = new JComboBox<String>(art);
         jlBetrag = new JLabel("Betrag:");
-        jtfBetrag = new JFormattedTextField(formatter);
+        jtfBetrag = new JFormattedTextField(formatterDouble);
         jlKategorie = new JLabel("Kategorie:");
         String[] kategorien = { "Kategorie 1", "Kategorie 2", "Kategorie 3", "Kategorie 4", "Kategorie 5", "Kategorie 6"};
         jcKategorie = new JComboBox<String>(kategorien);
         jlDatum = new JLabel("Datum:");
-        jtfDatum = new JTextField();
+        jtfDatum = new JFormattedTextField(formatterDatum);
         jlProduktliste = new JLabel("Produktliste:");
         jtfProduktliste = new JTextField();
 
@@ -114,13 +117,37 @@ public class EingebenGUI implements IGUIEventSender {
     }
 
     private boolean checkIfAllFilled() {
+        if(jtfBezeichnung.getText().isEmpty() || jtfBeschreibung.getText().isEmpty() || jtfBetrag.getText().isEmpty() || jtfDatum.getText().isEmpty() || jtfProduktliste.getText().isEmpty()){
+            return false;
+        }
         return true;
+    }
+
+    private String[] getTextfelderInhalt() {
+        String[] textfelderInhalt = new String[7];
+        textfelderInhalt[0] = jtfBezeichnung.getText();
+        textfelderInhalt[1] = jtfBeschreibung.getText();
+        textfelderInhalt[2] = jcArt.getSelectedItem().toString();
+        textfelderInhalt[3] = jtfBetrag.getText();
+        textfelderInhalt[4] = jcKategorie.getSelectedItem().toString();
+        textfelderInhalt[5] = jtfDatum.getText();
+        textfelderInhalt[6] = jtfProduktliste.getText();
+
+        return textfelderInhalt;
     }
 
     @Override
     public void fireEvent(GUIEvent event) throws Exception  {
         if(event.getMessage() == "Anlegen") {
-            EingebenAdapter.anlegen();
+            if(checkIfAllFilled()){
+                EingebenUseCase.anlegen(getTextfelderInhalt());
+            }
+            else {
+            JOptionPane.showMessageDialog(null,
+                    "Es müssen alle Felder ausgefüllt werden, um einen neuen Eintrag anzulegen.",
+                    "Fehlende Attribute",
+                    JOptionPane.ERROR_MESSAGE);
+            }
         }
 
         if(event.getMessage() == "Abbrechen" || checkIfAllFilled()) {

@@ -40,6 +40,11 @@ public class Eintrag {
         return alleAttributnamen;
     }
 
+    public static final String[] getAlleAttributnamenFürFile() {
+        String alleAttributnamen[] = {"Bezeichnung", "Beschreibung", "Betrag", "Kategorie", "Datum", "Produktliste", "Systemaenderung"};
+        return alleAttributnamen;
+    }
+
     public static final String[] getAlleAttributnamenFürTabelle() {
         String alleAttributnamen[] = {"Bezeichnung", "Betrag in €", "Art", "Kategorie", "Datum", "Produktliste", "..."};
         return alleAttributnamen;
