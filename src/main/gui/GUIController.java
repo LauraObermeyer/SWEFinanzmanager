@@ -7,6 +7,9 @@ import main.event.GUIEvent;
 import main.event.IGUIEventListener;
 import main.gui.Eintraege.EintraegeDetailansichtGUI;
 import main.gui.Eintraege.EingebenGUI;
+import main.model.Eintrag;
+
+import java.util.Optional;
 
 public class GUIController implements IGUIEventListener {
 
@@ -40,7 +43,7 @@ public class GUIController implements IGUIEventListener {
                 refreshUebersichtsGUI();
                 break;
             case "EintragNeuAnlegen":
-                buildEingebenGUI();
+                buildEingebenGUI(true, Optional.empty());
                 break;
             case "Anlegen":
                 refreshUebersichtsGUI();
@@ -48,6 +51,9 @@ public class GUIController implements IGUIEventListener {
             case "Loeschen":
                 EintraegeDetailansichtUseCase.deleteEintrag(uebersichtsGUI.getAusgabenDetailansichtGUI().getEintrag());
                 refreshUebersichtsGUI();
+                break;
+            case "Bearbeiten":
+                buildEingebenGUI(false, Optional.of(uebersichtsGUI.getAusgabenDetailansichtGUI().getEintrag()));
                 break;
         }
     }
@@ -67,8 +73,8 @@ public class GUIController implements IGUIEventListener {
         uebersichtsGUI.addListener(this);
     }
 
-    private void buildEingebenGUI() {
-        eingebenGUI = StartApplikation.buildEingebenGUI();
+    private void buildEingebenGUI(boolean neuAnlegen, Optional<Eintrag> eintrag) {
+        eingebenGUI = StartApplikation.buildEingebenGUI(neuAnlegen, eintrag);
         eingebenGUI.addListener(this);
     }
 }

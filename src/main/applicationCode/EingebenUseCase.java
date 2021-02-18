@@ -25,7 +25,10 @@ public class EingebenUseCase {
     // Header für Datei
     private static final String[] header = Eintrag.getAlleAttributnamenFürFile();
 
-    public static void anlegen(String[] textfelderInhalt) {
+    public static void anlegen(String[] textfelderInhalt, boolean neuAnlegen, Eintrag eintrag) {
+        if(!neuAnlegen){
+            EintraegeDetailansichtUseCase.deleteEintrag(eintrag);
+        }
         ausgabenFile = StartApplikation.buildAusgabenFileName();
         einnahmenFile = StartApplikation.buildEinnahmenFileName();
 

@@ -38,7 +38,6 @@ public class EintraegeDetailansichtGUI extends JPanel implements IGUIEventSender
         // Methoden zum Aufbau der Detailansicht aufrufen
         buildTabHeader();
         buildEigenschaftenPanel();
-        buildFooterButtons();
     }
 
     private void buildTabHeader() {
@@ -111,19 +110,6 @@ public class EintraegeDetailansichtGUI extends JPanel implements IGUIEventSender
 
         // Eigenschafts-Panel zum Hauptpanel hinzufügen (links angeordnet, deshalb BorderLayout.WEST)
         this.add(jpEigenschaften, BorderLayout.WEST);
-    }
-
-    private void buildFooterButtons(){
-        JButton jbBearbeiten = new JButton("Import");
-        JButton jbLöschen = new JButton("Export");
-
-        jbBearbeiten.addActionListener(e -> fireEvent(new GUIEvent("Import", this)));
-        jbLöschen.addActionListener(e -> fireEvent(new GUIEvent("Export", this)));
-
-        JPanel jpButtons = new JPanel();
-        jpButtons.add(jbBearbeiten);
-        jpButtons.add(jbLöschen);
-        this.add(jpButtons, BorderLayout.SOUTH);
     }
 
     public Eintrag getEintrag() {

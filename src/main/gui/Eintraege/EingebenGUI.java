@@ -4,6 +4,7 @@ import main.applicationCode.EingebenUseCase;
 import main.event.GUIEvent;
 import main.event.IGUIEventListener;
 import main.event.IGUIEventSender;
+import main.model.Eintrag;
 
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
@@ -12,9 +13,13 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Optional;
 
 public class EingebenGUI implements IGUIEventSender {
 
+    private boolean neuAnlegen; // true, wenn neuer Eintrag angelegt werden soll; false, wenn bestehender Eintrag bearbeitet werden soll
+    // Zu bearbeitender Eintrag (wird nur gesetzt, wenn EingebenGUI zum Bearbeiten und nicht zum neu anlegen genutzt wird)
+    private Eintrag eintrag;
     private JFrame jfEingebenFrame;
     private JPanel jpCenter, jpSouth;
     private JLabel jlBezeichnung, jlBeschreibung, jlArt, jlBetrag, jlKategorie, jlDatum, jlProduktliste;
@@ -25,7 +30,9 @@ public class EingebenGUI implements IGUIEventSender {
     //Events
     private ArrayList<IGUIEventListener> listeners = new ArrayList<IGUIEventListener>();
 
-    public EingebenGUI() {
+    public EingebenGUI(boolean neuAnlegen, Optional<Eintrag> eintrag) {
+        this.neuAnlegen = neuAnlegen;
+
         jfEingebenFrame = new JFrame(this.getClass().getSimpleName());
         jfEingebenFrame.setTitle("Neuen Eintrag anlegen");
         jfEingebenFrame.setLayout(new BorderLayout(5,5));
@@ -36,6 +43,11 @@ public class EingebenGUI implements IGUIEventSender {
         buildBeschreibungstext();
         buildEingabefelder();
         buildButtons();
+
+        if (!neuAnlegen && eintrag.isPresent()) {
+            this.eintrag = eintrag.get();
+            textfelderVorausfuellen();
+        }
     }
 
     private void buildBeschreibungstext() {
@@ -63,8 +75,9 @@ public class EingebenGUI implements IGUIEventSender {
         jcArt = new JComboBox<String>(art);
         jlBetrag = new JLabel("Betrag:");
         jtfBetrag = new JFormattedTextField(formatterDouble);
+        //jtfBetrag = new JFormattedTextField(new DecimalFormat());
         jlKategorie = new JLabel("Kategorie:");
-        String[] kategorien = { "Kategorie 1", "Kategorie 2", "Kategorie 3", "Kategorie 4", "Kategorie 5", "Kategorie 6"};
+        String[] kategorien = { "Einkauf", "Kategorie 2", "Kategorie 3", "Kategorie 4", "Kategorie 5", "Kategorie 6"};
         jcKategorie = new JComboBox<String>(kategorien);
         jlDatum = new JLabel("Datum:");
         jtfDatum = new JFormattedTextField(formatterDatum);
@@ -89,10 +102,30 @@ public class EingebenGUI implements IGUIEventSender {
         jfEingebenFrame.add(jpCenter, BorderLayout.CENTER);
     }
 
+    private void textfelderVorausfuellen() {
+        jtfBezeichnung.setText(eintrag.getBezeichnung());
+        jtfBeschreibung.setText(eintrag.getBeschreibung());
+        if (eintrag.getArt().toString() == "Ausgabe"){
+            jcArt.setSelectedItem("Ausgabe");
+        }
+        jtfBetrag.setText(Double.toString(eintrag.getBetrag()));
+        // TODO: beim Bearbeiten wird das Komma beim Betrag verschoben
+        // TODO: set Kategorie
+        SimpleDateFormat formatterDatum = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
+        jtfDatum.setText(formatterDatum.format(eintrag.getDatum()));
+        jtfProduktliste.setText(eintrag.getProduktliste());
+    }
+
     private void buildButtons() {
         jpSouth = new JPanel(new FlowLayout());
 
-        JButton jbAnlegen = new JButton("Anlegen");
+        String buttonBeschriftung;
+        if(neuAnlegen) {
+            buttonBeschriftung = "Anlegen";
+        } else {
+            buttonBeschriftung = "Bearbeiten";
+        }
+        JButton jbAnlegen = new JButton(buttonBeschriftung);
         JButton jbAbbrechen = new JButton("Abbrechen");
 
         jbAnlegen.addActionListener(e -> {
@@ -140,7 +173,7 @@ public class EingebenGUI implements IGUIEventSender {
     public void fireEvent(GUIEvent event) throws Exception  {
         if(event.getMessage() == "Anlegen") {
             if(checkIfAllFilled()){
-                EingebenUseCase.anlegen(getTextfelderInhalt());
+                EingebenUseCase.anlegen(getTextfelderInhalt(), neuAnlegen, eintrag);
             }
             else {
             JOptionPane.showMessageDialog(null,

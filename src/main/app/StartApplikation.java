@@ -14,6 +14,7 @@ import main.util.CSVReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class StartApplikation {
 
@@ -100,8 +101,8 @@ public class StartApplikation {
         return eintraegeDetailansichtGUI;
     }
 
-    public static EingebenGUI buildEingebenGUI() {
-        return new EingebenGUI();
+    public static EingebenGUI buildEingebenGUI(boolean neuAnlegen, Optional<Eintrag> eintrag) {
+        return new EingebenGUI(neuAnlegen, eintrag);
     }
 
     public static String buildAusgabenFileName() {
