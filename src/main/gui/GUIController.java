@@ -1,6 +1,8 @@
 package main.gui;
 
+import main.adapter.EintraegeDetailansichtAdapter;
 import main.app.StartApplikation;
+import main.applicationCode.EintraegeDetailansichtUseCase;
 import main.event.GUIEvent;
 import main.event.IGUIEventListener;
 import main.gui.Eintraege.EintraegeDetailansichtGUI;
@@ -41,6 +43,10 @@ public class GUIController implements IGUIEventListener {
                 buildEingebenGUI();
                 break;
             case "Anlegen":
+                refreshUebersichtsGUI();
+                break;
+            case "Loeschen":
+                EintraegeDetailansichtUseCase.deleteEintrag(uebersichtsGUI.getAusgabenDetailansichtGUI().getEintrag());
                 refreshUebersichtsGUI();
                 break;
         }

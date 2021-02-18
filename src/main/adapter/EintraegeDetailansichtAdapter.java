@@ -1,8 +1,13 @@
 package main.adapter;
 
 import main.model.Eintrag;
+import main.util.CSVReader;
+import main.util.CSVWriter;
 
 import javax.swing.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EintraegeDetailansichtAdapter {
 

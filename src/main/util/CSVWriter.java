@@ -112,56 +112,53 @@ public class CSVWriter {
 
         if( data == null ) throw new IllegalArgumentException( "Data must be given!");
 
-        BufferedWriter writer = new BufferedWriter( new OutputStreamWriter( new FileOutputStream( this.csvFile ), "UTF8" ) );
-        if( data.get( 0 ) == null ) {
-            writer.close();
-            throw new IllegalArgumentException( "first data line is not given!");
-        }
+        try(BufferedWriter writer = new BufferedWriter( new OutputStreamWriter( new FileOutputStream( this.csvFile ), "UTF8" ) )) {
 
-        // write the header
-        if( header != null  &&  header.length > 0 ) {
-            try{
-                writer.write( commentChar );
-                int arrLen = header.length;
-                for( int i = 0 ; i < arrLen ; i++ ){
-                    if( header[i] != null )  // if objArr[i] == null: ignore writing (-> empty value)
-                        writer.write( header[i] );
-                    if( arrLen - i > 1 )
-                        writer.write( delimiter );
-                }
-                writer.newLine();
-            }
-            catch( IOException e ) {
-                writer.flush();
-                writer.close();
-                throw e;
-            }
-        }
-
-        // write the data
-        try{
-            int arrLen = data.get( 0 ).length;
-            data.forEach( e -> {
+            // write the header
+            if (header != null && header.length > 0) {
                 try {
-                    for( int i = 0 ; i < arrLen ; i++ ){
-                        if( e[i] != null )  // if objArr[i] == null: ignore writing (-> empty value)
-                            writer.write( e[i].toString() );
-                        if( arrLen - i > 1 )
-                            writer.write( delimiter );
+                    writer.write(commentChar);
+                    int arrLen = header.length;
+                    for (int i = 0; i < arrLen; i++) {
+                        if (header[i] != null)  // if objArr[i] == null: ignore writing (-> empty value)
+                            writer.write(header[i]);
+                        if (arrLen - i > 1)
+                            writer.write(delimiter);
                     }
                     writer.newLine();
+                } catch (IOException e) {
+                    writer.flush();
+                    writer.close();
+                    throw e;
                 }
-                catch( IOException ex ) {
-                    ex.printStackTrace();
-                }
-            });
+            }
+
+            if (data.size() == 0) {
+                writer.write("");
+                writer.close();
+            } else if (data.get(0) == null) {
+                writer.close();
+                throw new IllegalArgumentException("first data line is not given!");
+            } else {
+                int arrLen = data.get(0).length;
+                data.forEach(e -> {
+                    try {
+                        for (int i = 0; i < arrLen; i++) {
+                            if (e[i] != null)  // if objArr[i] == null: ignore writing (-> empty value)
+                                writer.write(e[i].toString());
+                            if (arrLen - i > 1)
+                                writer.write(delimiter);
+                        }
+                        writer.newLine();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                });
+            }
         }
         catch( Exception e ) {
+            System.out.println(e.getMessage());
             throw e;
-        }
-        finally {
-            writer.flush();
-            writer.close();
         }
     }
 }

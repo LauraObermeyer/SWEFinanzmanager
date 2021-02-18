@@ -89,7 +89,7 @@ public class EintraegeDetailansichtGUI extends JPanel implements IGUIEventSender
         JButton jbLöschen = new JButton("Löschen");
 
         jbBearbeiten.addActionListener(e -> fireEvent(new GUIEvent("Bearbeiten", this)));
-        jbLöschen.addActionListener(e -> fireEvent(new GUIEvent("Löschen", this)));
+        jbLöschen.addActionListener(e -> fireEvent(new GUIEvent("Loeschen", this)));
 
         // Bearbeiten- und Löschen-Button hinzufügen
         JPanel jpButtons = new JPanel(new GridLayout(2, 1));
