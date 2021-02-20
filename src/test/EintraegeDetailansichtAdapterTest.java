@@ -17,7 +17,6 @@ import static org.junit.Assert.*;
 public class EintraegeDetailansichtAdapterTest {
 
     public EintraegeDetailansichtAdapterTest () {
-
     }
 
     @Before
@@ -28,20 +27,6 @@ public class EintraegeDetailansichtAdapterTest {
     @After
     public void tearDown() {
     }
-
-   /* @Test
-    public void getEigenschaften() {
-        //Arrange
-            String[] test = new String[2];
-            test[0] = "Eintrag 1";
-            test[1] = "Eintrag 2";
-
-        //Act
-            int length = test.length;
-
-        //Assert
-        assertThat(length, is(2));
-    }*/
 
     @Test
     public void getEigenschaften() {
@@ -58,7 +43,7 @@ public class EintraegeDetailansichtAdapterTest {
 
         // Act
         String eigenschaften[] = EintraegeDetailansichtAdapter.getEigenschaften(eintrag);
-        
+
         //Assert
         assertThat(eigenschaften[0], is("Bezeichnung: Einnahme1"));
         assertThat(eigenschaften[1], is("Beschreibung: Miete"));
