@@ -67,6 +67,8 @@ public class EintraegeAnzeigenAdapter {
             }
         }
 
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
+
         // Basierend auf Text aus Einnahmen-Datei die entsprechenden Einträge generieren (zeilenweise) und zur Liste "eintraege" hinzufügen
         for (int i = 0; i < dateiInhaltEinnahmen.size(); i++) {
             if(dateiInhaltEinnahmen.get(i).length == 7) {
@@ -76,7 +78,6 @@ public class EintraegeAnzeigenAdapter {
                     String beschreibung = zeile[1];
                     Double betrag = Double.parseDouble(zeile[2]);
                     Kategorie kategorie = new Kategorie(zeile[3]);
-                    SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
                     Date datum = formatter.parse(zeile[4]);
                     String produktliste = zeile[5];
                     //Systemaenderung system = new Systemaenderung(Timestamp.valueOf(zeile[6]));
@@ -102,7 +103,7 @@ public class EintraegeAnzeigenAdapter {
             tabellenInhalt[j][1] = String.valueOf(eintrag.getBetrag());
             tabellenInhalt[j][2] = String.valueOf(eintrag.getArt());
             tabellenInhalt[j][3] = String.valueOf(eintrag.getKategorie().getBezeichnung());
-            tabellenInhalt[j][4] = String.valueOf(eintrag.getDatum());
+            tabellenInhalt[j][4] = formatter.format(eintrag.getDatum());
             tabellenInhalt[j][5] = String.valueOf(eintrag.getProduktliste());
             tabellenInhalt[j][6] = ">";
         }

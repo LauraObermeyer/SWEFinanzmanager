@@ -50,11 +50,9 @@ public class EintraegeDetailansichtAdapterTest {
         assertThat(eigenschaften[2], is("Betrag: 600.0€"));
         assertThat(eigenschaften[3], is("Art: Einnahme"));
         assertThat(eigenschaften[4], is("Kategorie: Einkauf"));
-        // TODO: Datum so wie in getestetem Adapter konvertieren
-        // assertThat(eigenschaften[5], is("Datum: 13.10.2020"));
+        assertThat(eigenschaften[5], is("Datum: 13.10.2020"));
         assertThat(eigenschaften[6], is("Produktliste: Essen"));
-        // TODO: Format Zeitstempel
-        // Zeitstempel kann noch nicht mitgetestet werden, da wie auch im EintraegeAnzeigenAdapter das Format noch richtig hinbekommen werden muss
-        //assertThat(eigenschaften[7], is(Eintrag.getAlleAttributnamen()[7] + ": " + eintrag.getSystemaenderung().getZeitstempel()));
+        // TODO: Besser testen kann man die Systemänderung wahrscheinlich nicht, weil wir den Wert ja nicht kennen, oder?
+        assertThat(eigenschaften[7], is( "Systemaenderung: " + eintrag.getSystemaenderung().getZeitstempel()));
     }
 }
