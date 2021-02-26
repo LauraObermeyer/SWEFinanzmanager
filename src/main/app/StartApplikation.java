@@ -80,9 +80,14 @@ public class StartApplikation {
     }
 
     private static EMail emailDesBenutzersErzeugenAus(String emailString){
-        String[] emailAdresseAufgeteiltInLokalUndDomänenteil = emailString.split("@");
-        String[] domänenteilAufgeteiltInHostnameUndTopLevelDomain = emailAdresseAufgeteiltInLokalUndDomänenteil[1].split("\\.");
-        EMail fertigeEmailAdresse = new EMail(emailAdresseAufgeteiltInLokalUndDomänenteil[0], domänenteilAufgeteiltInHostnameUndTopLevelDomain[0], domänenteilAufgeteiltInHostnameUndTopLevelDomain[1]);
+        String[] emailAdresseAufgeteiltInLokalUndDomänenteil
+                = emailString.split("@");
+        String[] domänenteilAufgeteiltInHostnameUndTopLevelDomain
+                = emailAdresseAufgeteiltInLokalUndDomänenteil[1].split("\\.");
+        EMail fertigeEmailAdresse = new EMail
+                (emailAdresseAufgeteiltInLokalUndDomänenteil[0],
+                domänenteilAufgeteiltInHostnameUndTopLevelDomain[0],
+                domänenteilAufgeteiltInHostnameUndTopLevelDomain[1]);
         return fertigeEmailAdresse;
     }
 
