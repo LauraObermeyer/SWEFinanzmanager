@@ -13,7 +13,7 @@ public class UebersichtsAdapter {
      */
 
     public static EintraegeDetailansichtGUI buildDetailansichtGUI(EintraegeAnzeigenGUI eintraegeAnzeigenGUI){
-        return StartApplikation.buildEintraegeDetailansichtGUI(eintraegeAnzeigenGUI.getClickedEintrag());
+        return StartApplikation.buildEintraegeDetailansichtGuiVon(eintraegeAnzeigenGUI.getClickedEintrag());
     }
 
     public static EintraegeAnzeigenGUI refreshUebersichtsGUI(){

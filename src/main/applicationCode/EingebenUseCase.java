@@ -6,11 +6,8 @@ import main.util.CSVReader;
 import main.util.CSVWriter;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class EingebenUseCase {
     //CSVReader und Writer
@@ -29,8 +26,8 @@ public class EingebenUseCase {
         if(!neuAnlegen){
             EintraegeDetailansichtUseCase.deleteEintrag(eintrag);
         }
-        ausgabenFile = StartApplikation.buildAusgabenFileName();
-        einnahmenFile = StartApplikation.buildEinnahmenFileName();
+        ausgabenFile = StartApplikation.ausgabenFileNameErstellen();
+        einnahmenFile = StartApplikation.einnahmenFileNameErstellen();
 
         // Je nachdem, ob Ausgabe oder Einnahme die entsprechenden csvWriter und Reader erstellen
         if(textfelderInhalt[2] == "Ausgabe") {

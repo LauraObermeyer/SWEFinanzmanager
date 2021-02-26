@@ -20,8 +20,8 @@ public class EintraegeDetailansichtUseCase {
     private static final String[] header = Eintrag.getAlleAttributnamenFürFile();
 
     public static void deleteEintrag(Eintrag eintrag){
-        ausgabenFile = StartApplikation.buildAusgabenFileName();
-        einnahmenFile = StartApplikation.buildEinnahmenFileName();
+        ausgabenFile = StartApplikation.ausgabenFileNameErstellen();
+        einnahmenFile = StartApplikation.einnahmenFileNameErstellen();
 
         if(eintrag.getArt().toString() == "Ausgabe"){
             csvWriter = new CSVWriter(ausgabenFile, true);

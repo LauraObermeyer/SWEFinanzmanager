@@ -18,66 +18,76 @@ import java.util.Optional;
 
 public class StartApplikation {
 
-    // GUI Components
+    // GUI Komponenten
     private static UebersichtsGUI uebersichtsGUI;
     private static BenutzerAnlegenGUI benutzerAnlegenGUI;
     private static EintraegeAnzeigenGUI eintraegeAnzeigenGUI;
     private static EintraegeDetailansichtGUI eintraegeDetailansichtGUI;
 
     // CSV Reader und Files
-    private static CSVReader csvReaderBenutzer;
-
-    // Benutzer
-    private static Benutzer benutzer;
-
-    private static String benutzerFile = "./resources/benutzer.csv";
+    private static CSVReader csvReaderFürBenutzerFile;
+    private static final String benutzerFile = "./resources/benutzer.csv";
     private static String ausgabenFile;
     private static String einnahmenFile;
 
+    // Benutzer des Finanzmanagers
+    private static Benutzer benutzer;
+
     public static void main( String[] args ) throws Exception {
-        if(neuerNutzer() == true){
-            benutzerAnlegenGUI = new BenutzerAnlegenGUI();
-            new GUIController(benutzerAnlegenGUI);
+        startGuiBestimmenUndAufrufen();
+    }
+
+    private static void startGuiBestimmenUndAufrufen() throws Exception {
+        if(nutzerIstNeu() == true){
+            benutzerAnlegenGuiAufrufen();
         } else {
-            buildUebersichtsGUI();
-            new GUIController(uebersichtsGUI);
+            uebersichtsGuiAufrufen();
         }
     }
 
-    private static boolean neuerNutzer() {
+    private static boolean nutzerIstNeu() {
         List<String[]> dateiInhalt = getBenutzerDateiinhalt();
-
         if(dateiInhalt.size() > 0) {
-            benutzerAnlegen(dateiInhalt);
+            benutzerObjektInitialisieren(dateiInhalt);
             return false;
         }
         return true;
     }
 
     private static List<String[]> getBenutzerDateiinhalt(){
-        csvReaderBenutzer = new CSVReader(benutzerFile);
-        // Liste für Inhalt der Raum-Datei
-        List<String[]> dateiInhalt = new ArrayList<>();
+        csvReaderFürBenutzerFile = new CSVReader(benutzerFile);
+        List<String[]> dateiInhaltDesBenutzerFiles = new ArrayList<>();
         try {
-            dateiInhalt = csvReaderBenutzer.readData();
+            dateiInhaltDesBenutzerFiles = csvReaderFürBenutzerFile.readData();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return dateiInhalt;
+        return dateiInhaltDesBenutzerFiles;
     }
 
-    private static void benutzerAnlegen(List<String[]> dateiInhalt) {
-        benutzer = new Benutzer(dateiInhalt.get(0)[0], dateiInhalt.get(0)[1], emailAnlegen(dateiInhalt.get(0)[2]));
+    private static void benutzerAnlegenGuiAufrufen() throws Exception {
+        benutzerAnlegenGUI = new BenutzerAnlegenGUI();
+        new GUIController(benutzerAnlegenGUI);
     }
 
-    private static EMail emailAnlegen(String emailString){
-        String[] emailSplit1 = emailString.split("@");
-        String[] emailSplit2 = emailSplit1[1].split("\\.");
-        return new EMail(emailSplit1[0], emailSplit2[0], emailSplit2[1]);
+    private static void uebersichtsGuiAufrufen() throws Exception {
+        buildUebersichtsGUI();
+        new GUIController(uebersichtsGUI);
+    }
+
+    private static void benutzerObjektInitialisieren(List<String[]> dateiInhaltDesBenutzerFiles) {
+        benutzer = new Benutzer(dateiInhaltDesBenutzerFiles.get(0)[0], dateiInhaltDesBenutzerFiles.get(0)[1], emailDesBenutzersErzeugenAus(dateiInhaltDesBenutzerFiles.get(0)[2]));
+    }
+
+    private static EMail emailDesBenutzersErzeugenAus(String emailString){
+        String[] emailAdresseAufgeteiltInLokalUndDomänenteil = emailString.split("@");
+        String[] domänenteilAufgeteiltInHostnameUndTopLevelDomain = emailAdresseAufgeteiltInLokalUndDomänenteil[1].split("\\.");
+        EMail fertigeEmailAdresse = new EMail(emailAdresseAufgeteiltInLokalUndDomänenteil[0], domänenteilAufgeteiltInHostnameUndTopLevelDomain[0], domänenteilAufgeteiltInHostnameUndTopLevelDomain[1]);
+        return fertigeEmailAdresse;
     }
 
     public static void buildUebersichtsGUI() {
-        benutzerAnlegen(getBenutzerDateiinhalt());
+        benutzerObjektInitialisieren(getBenutzerDateiinhalt());
         try{
             uebersichtsGUI = new UebersichtsGUI(benutzer);
         }
@@ -96,7 +106,7 @@ public class StartApplikation {
         return eintraegeAnzeigenGUI;
     }
 
-    public static EintraegeDetailansichtGUI buildEintraegeDetailansichtGUI(Eintrag eintrag){
+    public static EintraegeDetailansichtGUI buildEintraegeDetailansichtGuiVon(Eintrag eintrag){
         eintraegeDetailansichtGUI = new EintraegeDetailansichtGUI(eintrag);
         return eintraegeDetailansichtGUI;
     }
@@ -105,13 +115,15 @@ public class StartApplikation {
         return new EingebenGUI(neuAnlegen, eintrag);
     }
 
-    public static String buildAusgabenFileName() {
-        ausgabenFile = "resources/ausgaben" + benutzer.getVorname() + benutzer.getNachname() + ".csv";
+    public static String ausgabenFileNameErstellen() {
+        String ausgabenFilePrefix = "resources/ausgaben";
+        ausgabenFile = ausgabenFilePrefix + benutzer.getVorname() + benutzer.getNachname() + ".csv";
         return ausgabenFile;
     }
 
-    public static String buildEinnahmenFileName() {
-        einnahmenFile = "resources/einnahmen" + benutzer.getVorname() + benutzer.getNachname() + ".csv";
+    public static String einnahmenFileNameErstellen() {
+        String einnahmenFilePrefix = "resources/einnahmen";
+        einnahmenFile = einnahmenFilePrefix + benutzer.getVorname() + benutzer.getNachname() + ".csv";
         return einnahmenFile;
     }
 }
