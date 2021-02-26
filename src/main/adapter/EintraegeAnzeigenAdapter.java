@@ -4,11 +4,9 @@ import main.model.Art;
 import main.model.Benutzer;
 import main.model.Eintrag;
 import main.model.Kategorie;
-import main.model.Systemaenderung;
 import main.util.CSVReader;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,42 +15,37 @@ import java.util.Locale;
 
 public class EintraegeAnzeigenAdapter {
 
-    private static CSVReader csvReaderAusgaben;
-    private static CSVReader csvReaderEinnahmen;
-    private static String ausgabenFile;
-    private static String einnahmenFile;
+    private static String ausgabenDateiName, einnahmenDateiName;
+    private static final SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
+    private static List<Eintrag> eintraege  = new ArrayList<>();
 
-    // Liste aller Einträge (die werden in der Tabelle angezeigt)
-    private static List<Eintrag> eintraege;
-
-    public static void buildFileName(Benutzer benutzer) {
-        ausgabenFile = "resources/ausgaben" + benutzer.getVorname() + benutzer.getNachname() + ".csv";
-        einnahmenFile = "resources/einnahmen" + benutzer.getVorname() + benutzer.getNachname() + ".csv";
+    public static void dateiNamenErstellenVon(Benutzer benutzer) {
+        ausgabenDateiName = "resources/ausgaben" + benutzer.getVorname() + benutzer.getNachname() + ".csv";
+        einnahmenDateiName = "resources/einnahmen" + benutzer.getVorname() + benutzer.getNachname() + ".csv";
     }
 
-    public static String[][] getEintragListe(){
-        // csvReader initialisieren
-        csvReaderAusgaben = new CSVReader(ausgabenFile);
-        csvReaderEinnahmen = new CSVReader(einnahmenFile);
-        // Liste für Inhalt der Ausgaben-Datei
-        List<String[]> dateiInhaltAusgaben = new ArrayList<>();
-        List<String[]> dateiInhaltEinnahmen = new ArrayList<>();
+    public static String[][] getTabelleninhalt(){
+        eintraegeGenerierenBasierendAuf(auslesenAusCsvDatei("Ausgaben"));
+        eintraegeGenerierenBasierendAuf(auslesenAusCsvDatei("Einnahmen"));
+        return tabelleninhaltAufbauen();
+    }
 
-        // Einträge aus entsprechenden csv-Datei auslesen
+    private static List<String[]> auslesenAusCsvDatei(String art) {
+        CSVReader csvReader = (art == "Ausgaben") ? new CSVReader(ausgabenDateiName) : new CSVReader(einnahmenDateiName);
+        List<String[]> dateiInhalt = new ArrayList<>();
         try {
-            dateiInhaltAusgaben = csvReaderAusgaben.readData();
-            dateiInhaltEinnahmen = csvReaderEinnahmen.readData();
+            dateiInhalt = csvReader.readData();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return dateiInhalt;
+    }
 
-        eintraege = new ArrayList<>();
-
-        // Basierend auf Text aus Ausgaben-Datei die entsprechenden Einträge generieren (zeilenweise) und zur Liste "eintraege" hinzufügen
-        for (int i = 0; i < dateiInhaltAusgaben.size(); i++) {
-            if(dateiInhaltAusgaben.get(i).length == 7) {
+    private static void eintraegeGenerierenBasierendAuf(List<String[]> dateiInhalt) {
+        for (int i = 0; i < dateiInhalt.size(); i++) {
+            if(dateiInhalt.get(i).length == 7) {
                 try {
-                    String[] zeile = dateiInhaltAusgaben.get(i);
+                    String[] zeile = dateiInhalt.get(i);
                     String bezeichnung = zeile[0];
                     String beschreibung = zeile[1];
                     Double betrag = Double.parseDouble(zeile[2]);
@@ -66,37 +59,27 @@ public class EintraegeAnzeigenAdapter {
                 }
             }
         }
+    }
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
-
-        // Basierend auf Text aus Einnahmen-Datei die entsprechenden Einträge generieren (zeilenweise) und zur Liste "eintraege" hinzufügen
-        for (int i = 0; i < dateiInhaltEinnahmen.size(); i++) {
-            if(dateiInhaltEinnahmen.get(i).length == 7) {
-                try {
-                    String[] zeile = dateiInhaltEinnahmen.get(i);
-                    String bezeichnung = zeile[0];
-                    String beschreibung = zeile[1];
-                    Double betrag = Double.parseDouble(zeile[2]);
-                    Kategorie kategorie = new Kategorie(zeile[3]);
-                    Date datum = formatter.parse(zeile[4]);
-                    String produktliste = zeile[5];
-                    //Systemaenderung system = new Systemaenderung(Timestamp.valueOf(zeile[6]));
-                    eintraege.add(new Eintrag(bezeichnung, beschreibung, betrag, Art.valueOf("Einnahme"), kategorie, datum, produktliste/*, system*/));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        // Tabelleninhalt aufbauen
-        String tabellenInhalt[][];
-        if(eintraege.size() > 0) { // nur wenn Ausgaben vorhanden sind
-            tabellenInhalt = new String[eintraege.size()][10];
+    private static String[][] tabelleninhaltAufbauen() {
+        String tabelleninhalt[][];
+        if(eintraege.size() > 0) {
+            tabelleninhalt = new String[eintraege.size()][10];
         } else{
-            tabellenInhalt = new String[0][10];
+            tabelleninhalt = new String[0][10];
         }
+        tabelleninhalt = tabelleninhaltZeilenweiseFüllen(tabelleninhalt);
+        return tabelleninhalt;
+    }
 
-        // Für jeden erstellten Eintrag die anzuzeigenden Attribute hinzufügen. Es werden alle Attribute, außer Beschreibung und Systemänderung angezeigt
+    /**
+     * Für jeden erstellten Eintrag die in der Tabelle anzuzeigenden Attribute zum Tabelleninhalt hinzufügen.
+     * Es sollen alle Attribute, außer Beschreibung und Systemänderung angezeigt werden.
+     * In der letzten Spalte steht in jeder Zeile das Zeichen ">",
+     * um anzudeuten, dass man die Spalte anklicken kann, um zur jeweiligen Detailansicht zu gelangen.
+     * @return Tabelleninhalt
+     */
+    private static String[][] tabelleninhaltZeilenweiseFüllen(String[][] tabellenInhalt) {
         for(int j = 0; j < eintraege.size(); j++) {
             Eintrag eintrag = eintraege.get(j);
             tabellenInhalt[j][0] = eintrag.getBezeichnung();
@@ -107,7 +90,6 @@ public class EintraegeAnzeigenAdapter {
             tabellenInhalt[j][5] = String.valueOf(eintrag.getProduktliste());
             tabellenInhalt[j][6] = ">";
         }
-
         return tabellenInhalt;
     }
 

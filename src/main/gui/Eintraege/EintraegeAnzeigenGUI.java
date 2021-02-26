@@ -41,7 +41,7 @@ public class EintraegeAnzeigenGUI extends JPanel implements IGUIEventSender {
 
     public EintraegeAnzeigenGUI(Benutzer benutzer) {
         this.benutzer = benutzer;
-        EintraegeAnzeigenAdapter.buildFileName(benutzer);
+        EintraegeAnzeigenAdapter.dateiNamenErstellenVon(benutzer);
 
         this.setLayout(new BorderLayout());
         buildTabelle();
@@ -51,13 +51,13 @@ public class EintraegeAnzeigenGUI extends JPanel implements IGUIEventSender {
     private void buildTabelle() {
         jpTabelle = new JPanel(new BorderLayout());
 
-        String data[][] = EintraegeAnzeigenAdapter.getEintragListe();
+        String tabelleninhalt[][] = EintraegeAnzeigenAdapter.getTabelleninhalt();
 
         // Spaltennamen holen
         String column[] = Eintrag.getAlleAttributnamenFürTabelle();
 
-        // Tabelle mit Model mit Daten (data) und Spaltennamen (column) aufbauen
-        model = new DefaultTableModel(data, column);
+        // Tabelle mit Model mit Daten (tabelleninhalt) und Spaltennamen (column) aufbauen
+        model = new DefaultTableModel(tabelleninhalt, column);
         sorter = new TableRowSorter<>(model); // Nötig für Suche
         jtAusgaben = new JTable(model);
         jtAusgaben.setRowSorter(sorter); // Nötig für Suche
