@@ -1,4 +1,4 @@
-package test;
+package test.adapter;
 
 import main.adapter.EintraegeDetailansichtAdapter;
 import main.model.Art;
