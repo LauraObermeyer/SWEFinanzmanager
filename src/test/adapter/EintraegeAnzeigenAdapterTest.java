@@ -40,7 +40,7 @@ public class EintraegeAnzeigenAdapterTest {
 
 
         // when(mockedList.get(0)).thenReturn("first");
-        List<Eintrag> eintraege  = new ArrayList<>();
+        List<Eintrag> eintraege  = new ArrayList<Eintrag>();
         Eintrag eintrag1 = new  Eintrag("Einnahme1", "Miete", 600, Art.Einnahme, new Kategorie("Einkauf"), datum, "Essen");
         Eintrag eintrag2 = new Eintrag("Ausgabe1", "Möbel", 1000, Art.Ausgabe, new Kategorie("Einkauf"), datum, "Möbel");
         eintraege.add(eintrag1);
@@ -55,7 +55,7 @@ public class EintraegeAnzeigenAdapterTest {
     @Test
     public void tabelleninhaltZeilenweiseFüllen() {
         // Arrange
-        List<Eintrag> eintraege  = new ArrayList<>();
+        List<Eintrag> eintraege  = new ArrayList<Eintrag>();
         Eintrag eintrag1 = new  Eintrag("Einnahme1", "Miete", 600, Art.Einnahme, new Kategorie("Einkauf"), datum, "Essen");
         Eintrag eintrag2 = new Eintrag("Ausgabe1", "Möbel", 1000, Art.Ausgabe, new Kategorie("Einkauf"), datum, "Möbel");
         eintraege.add(eintrag1);

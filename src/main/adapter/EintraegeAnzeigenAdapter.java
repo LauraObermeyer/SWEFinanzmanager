@@ -17,7 +17,7 @@ public class EintraegeAnzeigenAdapter {
 
     private static String ausgabenDateiName, einnahmenDateiName;
     private static final SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
-    public static List<Eintrag> eintraege  = new ArrayList<>();
+    public static List<Eintrag> eintraege  = new ArrayList<Eintrag>();
 
     public static void dateiNamenErstellenVon(Benutzer benutzer) {
         ausgabenDateiName = "resources/ausgaben" + benutzer.getVorname() + benutzer.getNachname() + ".csv";
@@ -32,7 +32,7 @@ public class EintraegeAnzeigenAdapter {
 
     private static List<String[]> auslesenAusCsvDatei(String art) {
         CSVReader csvReader = (art == "Ausgaben") ? new CSVReader(ausgabenDateiName) : new CSVReader(einnahmenDateiName);
-        List<String[]> dateiInhalt = new ArrayList<>();
+        List<String[]> dateiInhalt = new ArrayList<String[]>();
         try {
             dateiInhalt = csvReader.readData();
         } catch (IOException e) {
