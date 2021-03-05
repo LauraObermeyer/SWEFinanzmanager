@@ -17,7 +17,7 @@ public class EintraegeAnzeigenAdapter {
 
     private static String ausgabenDateiName, einnahmenDateiName;
     private static final SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
-    public static List<Eintrag> eintraege  = new ArrayList<Eintrag>();
+    private static List<Eintrag> eintraege  = new ArrayList<Eintrag>();
 
     public static void dateiNamenErstellenVon(Benutzer benutzer) {
         ausgabenDateiName = "resources/ausgaben" + benutzer.getVorname() + benutzer.getNachname() + ".csv";
@@ -80,8 +80,9 @@ public class EintraegeAnzeigenAdapter {
      * @return Tabelleninhalt
      */
     public static String[][] tabelleninhaltZeilenweiseFüllen(String[][] tabellenInhalt) {
-        for(int j = 0; j < eintraege.size(); j++) {
-            Eintrag eintrag = eintraege.get(j);
+        List<Eintrag> eintragListe = getEintraege();
+        for(int j = 0; j < eintragListe.size(); j++) {
+            Eintrag eintrag = eintragListe.get(j);
             tabellenInhalt[j][0] = eintrag.getBezeichnung();
             tabellenInhalt[j][1] = String.valueOf(eintrag.getBetrag());
             tabellenInhalt[j][2] = String.valueOf(eintrag.getArt());
