@@ -16,8 +16,7 @@ import java.util.List;
 import java.util.Locale;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
-//import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertThat;
 
 public class EintraegeAnzeigenAdapterTest {
 
@@ -35,11 +34,10 @@ public class EintraegeAnzeigenAdapterTest {
             datum = new Date();
         }
 
-        // TODO: Mockito oder anderes Mocking Framework einbinden, damit die eintrag Liste gemocked werden kann
         //List<Eintrag> mockedEintraege = mock(List.class);
 
 
-        // when(mockedList.get(0)).thenReturn("first");
+        //when(mockedList.get(0)).thenReturn("first");
         List<Eintrag> eintraege  = new ArrayList<Eintrag>();
         Eintrag eintrag1 = new  Eintrag("Einnahme1", "Miete", 600, Art.Einnahme, new Kategorie("Einkauf"), datum, "Essen");
         Eintrag eintrag2 = new Eintrag("Ausgabe1", "Möbel", 1000, Art.Ausgabe, new Kategorie("Einkauf"), datum, "Möbel");
