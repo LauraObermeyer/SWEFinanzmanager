@@ -21,7 +21,6 @@ public class EintraegeDetailansichtAdapterTest {
 
     @Before
     public void setUp() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
     }
 
     @After
