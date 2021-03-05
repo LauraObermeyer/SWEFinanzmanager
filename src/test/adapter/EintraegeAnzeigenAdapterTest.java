@@ -34,15 +34,21 @@ public class EintraegeAnzeigenAdapterTest {
             datum = new Date();
         }
 
-        //List<Eintrag> mockedEintraege = mock(List.class);
-
-
-        //when(mockedList.get(0)).thenReturn("first");
-        List<Eintrag> eintraege  = new ArrayList<Eintrag>();
+        List<Eintrag> eintraegeList  = new ArrayList<Eintrag>();
         Eintrag eintrag1 = new  Eintrag("Einnahme1", "Miete", 600, Art.Einnahme, new Kategorie("Einkauf"), datum, "Essen");
         Eintrag eintrag2 = new Eintrag("Ausgabe1", "Möbel", 1000, Art.Ausgabe, new Kategorie("Einkauf"), datum, "Möbel");
-        eintraege.add(eintrag1);
-        eintraege.add(eintrag2);
+        eintraegeList.add(eintrag1);
+        eintraegeList.add(eintrag2);
+
+        // Wäre die getEintraege Methode nicht static, sollte das so funktionieren.
+        // EintraegeAnzeigenAdapter adapterMock = mock(EintraegeAnzeigenAdapter.class);
+        // when(adapterMock.getEintraege()).thenReturn(eintraege);
+
+        // TODO: Bin mir nicht sicher, ob Mockito static Methoden mocken kann. Dieser Ansatz hat nicht funktioniert.
+        // TODO: Dafür musste ich das Sprachlevel schon von 5 auf 8 setzen und Mockito-inline anstatt mockito-core als dependency hinzufügen
+        // MockedStatic<EintraegeAnzeigenAdapter> adapterMock = Mockito.mockStatic(EintraegeAnzeigenAdapter.class);
+        // adapterMock.when(EintraegeAnzeigenAdapter::getEintraege).thenReturn(eintraege);
+
     }
 
     @After
