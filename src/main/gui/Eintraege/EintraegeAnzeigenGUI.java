@@ -29,6 +29,7 @@ public class EintraegeAnzeigenGUI extends JPanel implements IGUIEventSender {
     // Ausgaben-Tabelle
     private JTable jtAusgaben;
     private JPanel jpTabelle;
+
     private JPanel jpHeader;
 
     // Liste aller Einträge (die werden in der Tabelle angezeigt)
@@ -54,7 +55,6 @@ public class EintraegeAnzeigenGUI extends JPanel implements IGUIEventSender {
 
     private void buildHeader() {
         jpHeader = new JPanel();
-
         jpHeader.add(new JLabel("Suche: "));
 
         // Suchfeld
@@ -88,6 +88,19 @@ public class EintraegeAnzeigenGUI extends JPanel implements IGUIEventSender {
             }
         });
 
+
+        /*BufferedImage image = null;
+        try {
+            image = ImageIO.read(getClass().getResource("/filter2.png"));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon(image).getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        JButton jbFilter = new JButton(imageIcon);
+        jpHeader.add(jbFilter);
+        */
         this.add(jpHeader, BorderLayout.NORTH);
     }
 

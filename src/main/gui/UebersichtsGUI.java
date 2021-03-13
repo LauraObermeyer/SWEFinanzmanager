@@ -69,7 +69,6 @@ public class UebersichtsGUI  implements IGUIEventSender {
         jtaTextArea.setBackground(jpHeader.getBackground());
         jpHeader.add(jtaTextArea);
 
-
         jfMainFrame.add(jpHeader, BorderLayout.NORTH);
     }
 
