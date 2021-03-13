@@ -1,6 +1,9 @@
 package main.gui;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -23,6 +26,8 @@ public class UebersichtsGUI  implements IGUIEventSender {
 
     private JFrame jfMainFrame;
     private JPanel jpHeader;
+    private JTextField jtfSearchbar;
+    private TableRowSorter sorter;
 
     private JTabbedPane jtbTabbedPane;
     private JPanel jpTestPanel;
@@ -55,7 +60,38 @@ public class UebersichtsGUI  implements IGUIEventSender {
     private void buildHeader() {
         jpHeader = new JPanel();
 
-        jpHeader.add(new JLabel("Hallo, ich bin ein Header"));
+        jpHeader.add(new JLabel("Suche: "));
+
+        // Suchfeld
+        jtfSearchbar = new JTextField();
+        // Größe des Suchfelds setzen
+        jtfSearchbar.setPreferredSize(new Dimension(100, 20));
+        jtfSearchbar.setToolTipText("Gib einen Suchbegriff ein (Groß- und Kleinschreibung wird beachtet)");
+        jpHeader.add(jtfSearchbar);
+
+        // TODO: Setzen der Listener an richtiger Stelle bzw. in richtigem File
+        // Suchfunktionalität
+        jtfSearchbar.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                search(jtfSearchbar.getText());
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                search(jtfSearchbar.getText());
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                search(jtfSearchbar.getText());
+            }
+            public void search(String str) {
+                if (str.length() == 0) {
+                    sorter.setRowFilter(null);
+                } else {
+                    sorter.setRowFilter(RowFilter.regexFilter(str));
+                }
+            }
+        });
 
         jfMainFrame.add(jpHeader, BorderLayout.NORTH);
     }
