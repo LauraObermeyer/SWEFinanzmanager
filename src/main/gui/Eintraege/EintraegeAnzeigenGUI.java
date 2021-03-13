@@ -8,6 +8,8 @@ import main.model.Benutzer;
 import main.model.Eintrag;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -27,6 +29,7 @@ public class EintraegeAnzeigenGUI extends JPanel implements IGUIEventSender {
     // Ausgaben-Tabelle
     private JTable jtAusgaben;
     private JPanel jpTabelle;
+    private JPanel jpHeader;
 
     // Liste aller Einträge (die werden in der Tabelle angezeigt)
     List<Eintrag> ausgaben;
@@ -44,8 +47,48 @@ public class EintraegeAnzeigenGUI extends JPanel implements IGUIEventSender {
         EintraegeAnzeigenAdapter.dateiNamenErstellenVon(benutzer);
 
         this.setLayout(new BorderLayout());
+        buildHeader();
         buildTabelle();
         buildButtons();
+    }
+
+    private void buildHeader() {
+        jpHeader = new JPanel();
+
+        jpHeader.add(new JLabel("Suche: "));
+
+        // Suchfeld
+        jtfSearchbar = new JTextField();
+        // Größe des Suchfelds setzen
+        jtfSearchbar.setPreferredSize(new Dimension(100, 20));
+        jtfSearchbar.setToolTipText("Gib einen Suchbegriff ein (Groß- und Kleinschreibung wird beachtet)");
+        jpHeader.add(jtfSearchbar);
+
+        // TODO: Setzen der Listener an richtiger Stelle bzw. in richtigem File
+        // Suchfunktionalität
+        jtfSearchbar.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                search(jtfSearchbar.getText());
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                search(jtfSearchbar.getText());
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                search(jtfSearchbar.getText());
+            }
+            public void search(String str) {
+                if (str.length() == 0) {
+                    sorter.setRowFilter(null);
+                } else {
+                    sorter.setRowFilter(RowFilter.regexFilter(str));
+                }
+            }
+        });
+
+        this.add(jpHeader, BorderLayout.NORTH);
     }
 
     private void buildTabelle() {

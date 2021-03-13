@@ -29,6 +29,9 @@ public class UebersichtsGUI  implements IGUIEventSender {
     private JTextField jtfSearchbar;
     private TableRowSorter sorter;
 
+    private JTextArea jtaTextArea;
+    private final static Font headerFont = new Font( "SansSerif", Font.ITALIC, 30 );
+
     private JTabbedPane jtbTabbedPane;
     private JPanel jpTestPanel;
 
@@ -60,38 +63,12 @@ public class UebersichtsGUI  implements IGUIEventSender {
     private void buildHeader() {
         jpHeader = new JPanel();
 
-        jpHeader.add(new JLabel("Suche: "));
+        jtaTextArea = new JTextArea("Finanzverwaltung");
+        jtaTextArea.setFont(headerFont);
+        jtaTextArea.setEditable(false);
+        jtaTextArea.setBackground(jpHeader.getBackground());
+        jpHeader.add(jtaTextArea);
 
-        // Suchfeld
-        jtfSearchbar = new JTextField();
-        // Größe des Suchfelds setzen
-        jtfSearchbar.setPreferredSize(new Dimension(100, 20));
-        jtfSearchbar.setToolTipText("Gib einen Suchbegriff ein (Groß- und Kleinschreibung wird beachtet)");
-        jpHeader.add(jtfSearchbar);
-
-        // TODO: Setzen der Listener an richtiger Stelle bzw. in richtigem File
-        // Suchfunktionalität
-        jtfSearchbar.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                search(jtfSearchbar.getText());
-            }
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                search(jtfSearchbar.getText());
-            }
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                search(jtfSearchbar.getText());
-            }
-            public void search(String str) {
-                if (str.length() == 0) {
-                    sorter.setRowFilter(null);
-                } else {
-                    sorter.setRowFilter(RowFilter.regexFilter(str));
-                }
-            }
-        });
 
         jfMainFrame.add(jpHeader, BorderLayout.NORTH);
     }
