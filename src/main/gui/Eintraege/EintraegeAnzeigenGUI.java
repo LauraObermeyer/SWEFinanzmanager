@@ -34,15 +34,16 @@ public class EintraegeAnzeigenGUI extends JPanel implements IGUIEventSender {
     private JTable jtAusgaben;
     private JPanel jpTabelle;
 
-    private JPanel jpHeader;
-
     // Liste aller Einträge (die werden in der Tabelle angezeigt)
     List<Eintrag> ausgaben;
 
     // Suche
+    private JPanel jpHeader;
     private JTextField jtfSearchbar;
     private TableModel model;
     private TableRowSorter sorter;
+    private JButton jbFilter;
+    private JButton jbWecker;
 
     // Eintrag, der bei Klick auf die entsprechende Zeile in der Tabelle der DetailansichtGUI übergeben wird
     private Eintrag clickedEintrag;
@@ -104,8 +105,11 @@ public class EintraegeAnzeigenGUI extends JPanel implements IGUIEventSender {
 
         //TODO: Größe des Buttons an den Rest anpassen
         ImageIcon imageIcon = new ImageIcon(new ImageIcon(image).getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
-        JButton jbFilter = new JButton(imageIcon);
+        jbFilter = new JButton(imageIcon);
         jpHeader.add(jbFilter);
+
+        jbWecker = new JButton("Wecker");
+        jpHeader.add(jbWecker);
 
         this.add(jpHeader, BorderLayout.NORTH);
     }
