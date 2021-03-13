@@ -7,6 +7,7 @@ import main.event.IGUIEventSender;
 import main.model.Benutzer;
 import main.model.Eintrag;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -15,6 +16,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,18 +93,20 @@ public class EintraegeAnzeigenGUI extends JPanel implements IGUIEventSender {
         });
 
 
-        /*BufferedImage image = null;
+        BufferedImage image = null;
         try {
-            image = ImageIO.read(getClass().getResource("/filter2.png"));
+            image = ImageIO.read(new File("resources/filter2.png"));
+            //image = ImageIO.read(getClass().getClassLoader().getResource("/resources/filter2.png"));
         }
         catch (IOException e) {
             e.printStackTrace();
         }
 
+        //TODO: Größe des Buttons an den Rest anpassen
         ImageIcon imageIcon = new ImageIcon(new ImageIcon(image).getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
         JButton jbFilter = new JButton(imageIcon);
         jpHeader.add(jbFilter);
-        */
+
         this.add(jpHeader, BorderLayout.NORTH);
     }
 
