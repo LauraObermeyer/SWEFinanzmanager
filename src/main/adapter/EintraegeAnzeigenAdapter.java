@@ -25,8 +25,9 @@ public class EintraegeAnzeigenAdapter {
     }
 
     public static String[][] getTabelleninhalt(){
-        eintraegeGenerierenBasierendAuf(auslesenAusCsvDatei("Ausgaben"));
-        eintraegeGenerierenBasierendAuf(auslesenAusCsvDatei("Einnahmen"));
+        eintraege  = new ArrayList<Eintrag>();
+        eintraegeGenerierenBasierendAuf(auslesenAusCsvDatei("Ausgaben"), "Ausgabe");
+        eintraegeGenerierenBasierendAuf(auslesenAusCsvDatei("Einnahmen"), "Einnahme");
         return tabelleninhaltAufbauen();
     }
 
@@ -41,7 +42,7 @@ public class EintraegeAnzeigenAdapter {
         return dateiInhalt;
     }
 
-    private static void eintraegeGenerierenBasierendAuf(List<String[]> dateiInhalt) {
+    private static void eintraegeGenerierenBasierendAuf(List<String[]> dateiInhalt, String art) {
         for (int i = 0; i < dateiInhalt.size(); i++) {
             if(dateiInhalt.get(i).length == 7) {
                 try {
@@ -53,7 +54,7 @@ public class EintraegeAnzeigenAdapter {
                     SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
                     Date datum = formatter.parse(zeile[4]);
                     String produktliste = zeile[5];
-                    eintraege.add(new Eintrag(bezeichnung, beschreibung, betrag, Art.valueOf("Ausgabe"), kategorie, datum, produktliste));
+                    eintraege.add(new Eintrag(bezeichnung, beschreibung, betrag, Art.valueOf(art), kategorie, datum, produktliste));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
