@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EingebenUseCase {
+public class Eingeben {
     //CSVReader und Writer
     private static CSVReader csvReader;
     private static CSVWriter csvWriter;
@@ -24,7 +24,7 @@ public class EingebenUseCase {
 
     public static void anlegen(String[] textfelderInhalt, boolean neuAnlegen, Eintrag eintrag) {
         if(!neuAnlegen){
-            EintraegeDetailansichtUseCase.deleteEintrag(eintrag);
+            EintraegeDetailansicht.deleteEintrag(eintrag);
         }
         ausgabenFile = StartApplikation.ausgabenFileNameErstellen();
         einnahmenFile = StartApplikation.einnahmenFileNameErstellen();

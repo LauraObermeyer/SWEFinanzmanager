@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.applicationCode.BenutzerAnlegenUseCase;
+import main.applicationCode.BenutzerAnlegen;
 import main.event.GUIEvent;
 import main.event.IGUIEventListener;
 import main.event.IGUIEventSender;
@@ -117,7 +117,7 @@ public class BenutzerAnlegenGUI  implements IGUIEventSender {
         jfBenutzerAnlegen.dispose();
 
         if(event.getMessage() == "Speichern") {
-            BenutzerAnlegenUseCase.benutzerSpeichern(jtfVorname, jtfNachname, jtfEmail);
+            BenutzerAnlegen.benutzerSpeichern(jtfVorname, jtfNachname, jtfEmail);
             // GUIController triggern
             listeners.forEach(listener -> listener.eventFired(event));
         }

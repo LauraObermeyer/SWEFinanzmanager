@@ -1,6 +1,6 @@
 package main.gui.Eintraege;
 
-import main.applicationCode.EingebenUseCase;
+import main.applicationCode.Eingeben;
 import main.event.GUIEvent;
 import main.event.IGUIEventListener;
 import main.event.IGUIEventSender;
@@ -173,7 +173,7 @@ public class EingebenGUI implements IGUIEventSender {
     public void fireEvent(GUIEvent event) throws Exception  {
         if(event.getMessage() == "Anlegen") {
             if(checkIfAllFilled()){
-                EingebenUseCase.anlegen(getTextfelderInhalt(), neuAnlegen, eintrag);
+                Eingeben.anlegen(getTextfelderInhalt(), neuAnlegen, eintrag);
             }
             else {
             JOptionPane.showMessageDialog(null,

@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EintraegeDetailansichtUseCase {
+public class EintraegeDetailansicht {
 
     private static CSVReader csvReader;
     private static CSVWriter csvWriter;
