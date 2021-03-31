@@ -1,14 +1,6 @@
 package main.gui;
 
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.table.TableRowSorter;
-import java.awt.*;
-import java.util.ArrayList;
-
 import main.adapter.UebersichtsAdapter;
-import main.app.StartApplikation;
 import main.app.StartApplikation;
 import main.event.GUIEvent;
 import main.event.IGUIEventListener;
@@ -16,6 +8,11 @@ import main.event.IGUIEventSender;
 import main.gui.Eintraege.EintraegeAnzeigenGUI;
 import main.gui.Eintraege.EintraegeDetailansichtGUI;
 import main.model.Benutzer;
+
+import javax.swing.*;
+import javax.swing.table.TableRowSorter;
+import java.awt.*;
+import java.util.ArrayList;
 
 public class UebersichtsGUI  implements IGUIEventSender {
 
@@ -91,7 +88,8 @@ public class UebersichtsGUI  implements IGUIEventSender {
     }
 
     public void buildDetailansichtGUI(){
-        eintraegeDetailansichtGUI = UebersichtsAdapter.buildDetailansichtGUI(eintraegeAnzeigenGUI);
+        UebersichtsAdapter uebersichtsAdapter = new UebersichtsAdapter();
+        eintraegeDetailansichtGUI = uebersichtsAdapter.buildDetailansichtGUI(eintraegeAnzeigenGUI);
         jtbTabbedPane.setComponentAt(0, eintraegeDetailansichtGUI);
     }
 
@@ -100,7 +98,8 @@ public class UebersichtsGUI  implements IGUIEventSender {
     }
 
     public void refreshUebersichtsGUI(){
-        eintraegeAnzeigenGUI = UebersichtsAdapter.refreshUebersichtsGUI();
+        UebersichtsAdapter uebersichtsAdapter = new UebersichtsAdapter();
+        eintraegeAnzeigenGUI = uebersichtsAdapter.refreshUebersichtsGUI();
         jtbTabbedPane.setComponentAt(0, eintraegeAnzeigenGUI);
     }
 

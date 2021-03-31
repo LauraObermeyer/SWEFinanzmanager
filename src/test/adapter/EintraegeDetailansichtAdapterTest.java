@@ -39,9 +39,10 @@ public class EintraegeDetailansichtAdapterTest {
             datum = new Date();
         }
         Eintrag eintrag = new Eintrag("Einnahme1", "Miete", 600, Art.Einnahme, new Kategorie("Einkauf"), datum, "Essen");
+        EintraegeDetailansichtAdapter eintraegeDetailansichtAdapter = new EintraegeDetailansichtAdapter();
 
         // Act
-        String eigenschaften[] = EintraegeDetailansichtAdapter.getEigenschaften(eintrag);
+        String eigenschaften[] = eintraegeDetailansichtAdapter.getEigenschaften(eintrag);
 
         //Assert
         assertThat(eigenschaften[0], is("Bezeichnung: Einnahme1"));

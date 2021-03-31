@@ -15,23 +15,23 @@ import java.util.Locale;
 
 public class EintraegeAnzeigenAdapter {
 
-    private static String ausgabenDateiName, einnahmenDateiName;
-    private static final SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
-    private static List<Eintrag> eintraege  = new ArrayList<Eintrag>();
+    private String ausgabenDateiName, einnahmenDateiName;
+    private final SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
+    private List<Eintrag> eintraege  = new ArrayList<Eintrag>();
 
-    public static void dateiNamenErstellenVon(Benutzer benutzer) {
+    public void dateiNamenErstellenVon(Benutzer benutzer) {
         ausgabenDateiName = "resources/ausgaben" + benutzer.getVorname() + benutzer.getNachname() + ".csv";
         einnahmenDateiName = "resources/einnahmen" + benutzer.getVorname() + benutzer.getNachname() + ".csv";
     }
 
-    public static String[][] getTabelleninhalt(){
+    public String[][] getTabelleninhalt(){
         eintraege  = new ArrayList<Eintrag>();
         eintraegeGenerierenBasierendAuf(auslesenAusCsvDatei("Ausgaben"), "Ausgabe");
         eintraegeGenerierenBasierendAuf(auslesenAusCsvDatei("Einnahmen"), "Einnahme");
         return tabelleninhaltAufbauen();
     }
 
-    private static List<String[]> auslesenAusCsvDatei(String art) {
+    private List<String[]> auslesenAusCsvDatei(String art) {
         CSVReader csvReader = (art == "Ausgaben") ? new CSVReader(ausgabenDateiName) : new CSVReader(einnahmenDateiName);
         List<String[]> dateiInhalt = new ArrayList<String[]>();
         try {
@@ -42,7 +42,7 @@ public class EintraegeAnzeigenAdapter {
         return dateiInhalt;
     }
 
-    private static void eintraegeGenerierenBasierendAuf(List<String[]> dateiInhalt, String art) {
+    private void eintraegeGenerierenBasierendAuf(List<String[]> dateiInhalt, String art) {
         for (int i = 0; i < dateiInhalt.size(); i++) {
             if(dateiInhalt.get(i).length == 7) {
                 try {
@@ -62,7 +62,7 @@ public class EintraegeAnzeigenAdapter {
         }
     }
 
-    private static String[][] tabelleninhaltAufbauen() {
+    private String[][] tabelleninhaltAufbauen() {
         String tabelleninhalt[][];
         if(eintraege.size() > 0) {
             tabelleninhalt = new String[eintraege.size()][10];
@@ -80,7 +80,7 @@ public class EintraegeAnzeigenAdapter {
      * um anzudeuten, dass man die Spalte anklicken kann, um zur jeweiligen Detailansicht zu gelangen.
      * @return Tabelleninhalt
      */
-    public static String[][] tabelleninhaltZeilenweiseFüllen(String[][] tabellenInhalt) {
+    public String[][] tabelleninhaltZeilenweiseFüllen(String[][] tabellenInhalt) {
         // List<Eintrag> eintragListe = getEintraege();
         // System.out.println(eintragListe.size());
         for(int j = 0; j < eintraege.size(); j++) {
@@ -98,7 +98,7 @@ public class EintraegeAnzeigenAdapter {
 
     }
 
-    public static List<Eintrag> getEintraege() {
+    public List<Eintrag> getEintraege() {
         return eintraege;
     }
 }

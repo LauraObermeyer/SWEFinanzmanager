@@ -1,17 +1,17 @@
 package main.gui;
 
-import javax.swing.*;
-import java.awt.*;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import main.applicationCode.BenutzerAnlegen;
 import main.event.GUIEvent;
 import main.event.IGUIEventListener;
 import main.event.IGUIEventSender;
 import main.util.CSVReader;
 import main.util.CSVWriter;
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BenutzerAnlegenGUI  implements IGUIEventSender {
 
@@ -117,7 +117,8 @@ public class BenutzerAnlegenGUI  implements IGUIEventSender {
         jfBenutzerAnlegen.dispose();
 
         if(event.getMessage() == "Speichern") {
-            BenutzerAnlegen.benutzerSpeichern(jtfVorname, jtfNachname, jtfEmail);
+            BenutzerAnlegen benutzerAnlegen = new BenutzerAnlegen();
+            benutzerAnlegen.benutzerSpeichern(jtfVorname, jtfNachname, jtfEmail);
             // GUIController triggern
             listeners.forEach(listener -> listener.eventFired(event));
         }

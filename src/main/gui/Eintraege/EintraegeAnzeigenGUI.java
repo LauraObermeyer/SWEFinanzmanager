@@ -48,9 +48,12 @@ public class EintraegeAnzeigenGUI extends JPanel implements IGUIEventSender {
     // Eintrag, der bei Klick auf die entsprechende Zeile in der Tabelle der DetailansichtGUI übergeben wird
     private Eintrag clickedEintrag;
 
+    private EintraegeAnzeigenAdapter eintraegeAnzeigenAdapter;
+
     public EintraegeAnzeigenGUI(Benutzer benutzer) {
         this.benutzer = benutzer;
-        EintraegeAnzeigenAdapter.dateiNamenErstellenVon(benutzer);
+        eintraegeAnzeigenAdapter = new EintraegeAnzeigenAdapter();
+        eintraegeAnzeigenAdapter.dateiNamenErstellenVon(benutzer);
 
         this.setLayout(new BorderLayout());
         buildHeader();
@@ -117,7 +120,7 @@ public class EintraegeAnzeigenGUI extends JPanel implements IGUIEventSender {
     private void buildTabelle() {
         jpTabelle = new JPanel(new BorderLayout());
 
-        String tabelleninhalt[][] = EintraegeAnzeigenAdapter.getTabelleninhalt();
+        String tabelleninhalt[][] = eintraegeAnzeigenAdapter.getTabelleninhalt();
 
         // Spaltennamen holen
         String column[] = Eintrag.getAlleAttributnamenFürTabelle();
@@ -135,7 +138,7 @@ public class EintraegeAnzeigenGUI extends JPanel implements IGUIEventSender {
 
         // Action Listener für Tabelle hinzufügen, damit Zeilen klickbar sind, um zur jeweiligen Detailansicht zu gelangen
         jtAusgaben.getSelectionModel().addListSelectionListener(e -> {
-            clickedEintrag = EintraegeAnzeigenAdapter.getEintraege().get(jtAusgaben.getSelectedRow());
+            clickedEintrag = eintraegeAnzeigenAdapter.getEintraege().get(jtAusgaben.getSelectedRow());
             fireEvent(new GUIEvent("DetailansichtOeffnen", this));
         });
 

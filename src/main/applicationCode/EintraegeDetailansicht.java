@@ -11,15 +11,15 @@ import java.util.List;
 
 public class EintraegeDetailansicht {
 
-    private static CSVReader csvReader;
-    private static CSVWriter csvWriter;
-    private static String ausgabenFile;
-    private static String einnahmenFile;
-    private static List<String[]> dateiInhalt, neuerDateiInhalt;
+    private CSVReader csvReader;
+    private CSVWriter csvWriter;
+    private String ausgabenFile;
+    private String einnahmenFile;
+    private List<String[]> dateiInhalt, neuerDateiInhalt;
     // Header für Datei
-    private static final String[] header = Eintrag.getAlleAttributnamenFürFile();
+    private final String[] header = Eintrag.getAlleAttributnamenFürFile();
 
-    public static void deleteEintrag(Eintrag eintrag){
+    public void deleteEintrag(Eintrag eintrag){
         ausgabenFile = StartApplikation.ausgabenFileNameErstellen();
         einnahmenFile = StartApplikation.einnahmenFileNameErstellen();
 

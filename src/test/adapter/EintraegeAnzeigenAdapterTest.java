@@ -66,9 +66,10 @@ public class EintraegeAnzeigenAdapterTest {
         eintraege.add(eintrag2);
 
         String[][] tabellenInhalt = new String[eintraege.size()][10];
+        EintraegeAnzeigenAdapter eintraegeAnzeigenAdapter = new EintraegeAnzeigenAdapter();
 
         // Act
-        String[][] tabellenInhalt1 = EintraegeAnzeigenAdapter.tabelleninhaltZeilenweiseFüllen(tabellenInhalt);
+        String[][] tabellenInhalt1 = eintraegeAnzeigenAdapter.tabelleninhaltZeilenweiseFüllen(tabellenInhalt);
 
         // Assert
         assertThat(tabellenInhalt1[0][0], is("Bezeichnung: Einnahme1"));

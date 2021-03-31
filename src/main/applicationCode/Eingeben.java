@@ -11,20 +11,21 @@ import java.util.List;
 
 public class Eingeben {
     //CSVReader und Writer
-    private static CSVReader csvReader;
-    private static CSVWriter csvWriter;
+    private CSVReader csvReader;
+    private CSVWriter csvWriter;
 
-    private static String ausgabenFile;
-    private static String einnahmenFile;
+    private String ausgabenFile;
+    private String einnahmenFile;
 
-    private static List<String[]> dateiInhalt;
+    private List<String[]> dateiInhalt;
 
     // Header für Datei
-    private static final String[] header = Eintrag.getAlleAttributnamenFürFile();
+    private final String[] header = Eintrag.getAlleAttributnamenFürFile();
 
-    public static void anlegen(String[] textfelderInhalt, boolean neuAnlegen, Eintrag eintrag) {
+    public void anlegen(String[] textfelderInhalt, boolean neuAnlegen, Eintrag eintrag) {
         if(!neuAnlegen){
-            EintraegeDetailansicht.deleteEintrag(eintrag);
+            EintraegeDetailansicht eintraegeDetailansicht = new EintraegeDetailansicht();
+            eintraegeDetailansicht.deleteEintrag(eintrag);
         }
         ausgabenFile = StartApplikation.ausgabenFileNameErstellen();
         einnahmenFile = StartApplikation.einnahmenFileNameErstellen();

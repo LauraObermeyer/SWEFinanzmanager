@@ -12,11 +12,11 @@ public class UebersichtsAdapter {
         Sind Methodenaufrufe überhaupt Logik, also Adapter Sache?
      */
 
-    public static EintraegeDetailansichtGUI buildDetailansichtGUI(EintraegeAnzeigenGUI eintraegeAnzeigenGUI){
+    public EintraegeDetailansichtGUI buildDetailansichtGUI(EintraegeAnzeigenGUI eintraegeAnzeigenGUI){
         return StartApplikation.buildEintraegeDetailansichtGuiVon(eintraegeAnzeigenGUI.getClickedEintrag());
     }
 
-    public static EintraegeAnzeigenGUI refreshUebersichtsGUI(){
+    public EintraegeAnzeigenGUI refreshUebersichtsGUI(){
         return StartApplikation.buildEintraegeAnzeigenGUI();
     }
 }

@@ -10,13 +10,13 @@ import java.util.List;
 
 public class BenutzerAnlegen {
 
-    private static CSVReader csvReader;
-    private static CSVWriter csvWriter;
-    private static String benutzerFile = "resources/benutzer.csv";
-    private static List<String[]> dateiInhalt;
-    private static final String[] header = {"Vorname", "Nachname", "EMail"};
+    private CSVReader csvReader;
+    private CSVWriter csvWriter;
+    private String benutzerFile = "resources/benutzer.csv";
+    private List<String[]> dateiInhalt;
+    private final String[] header = {"Vorname", "Nachname", "EMail"};
 
-    public static void benutzerSpeichern(JTextField jtfVorname, JTextField jtfNachname, JTextField jtfEmail) {
+    public void benutzerSpeichern(JTextField jtfVorname, JTextField jtfNachname, JTextField jtfEmail) {
         try {
             csvWriter = new CSVWriter(benutzerFile, true);
             dateiInhalt = Collections.singletonList(new String[]{jtfVorname.getText(), jtfNachname.getText(), jtfEmail.getText()});

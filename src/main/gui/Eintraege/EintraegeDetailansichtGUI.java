@@ -103,7 +103,8 @@ public class EintraegeDetailansichtGUI extends JPanel implements IGUIEventSender
         // Layout des "jpEigenschaften"-Panel setzen
         jpEigenschaften.setLayout(new GridLayout(17, 1));
 
-        String eigenschaften[] = EintraegeDetailansichtAdapter.getEigenschaften(eintrag);
+        EintraegeDetailansichtAdapter eintraegeDetailansichtAdapter = new EintraegeDetailansichtAdapter();
+        String eigenschaften[] = eintraegeDetailansichtAdapter.getEigenschaften(eintrag);
         for(int i = 0; i < eigenschaften.length; i++){
             jpEigenschaften.add(new JLabel(eigenschaften[i]));
         }

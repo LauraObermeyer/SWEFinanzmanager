@@ -1,21 +1,13 @@
 package main.adapter;
 
 import main.model.Eintrag;
-import main.util.CSVReader;
-import main.util.CSVWriter;
 
-import javax.swing.*;
-import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class EintraegeDetailansichtAdapter {
 
-    public static String[] getEigenschaften(Eintrag eintrag){
+    public String[] getEigenschaften(Eintrag eintrag){
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
         String datum = formatter.format(eintrag.getDatum());
 

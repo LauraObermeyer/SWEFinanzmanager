@@ -173,7 +173,8 @@ public class EingebenGUI implements IGUIEventSender {
     public void fireEvent(GUIEvent event) throws Exception  {
         if(event.getMessage() == "Anlegen") {
             if(checkIfAllFilled()){
-                Eingeben.anlegen(getTextfelderInhalt(), neuAnlegen, eintrag);
+                Eingeben eingeben = new Eingeben();
+                eingeben.anlegen(getTextfelderInhalt(), neuAnlegen, eintrag);
             }
             else {
             JOptionPane.showMessageDialog(null,

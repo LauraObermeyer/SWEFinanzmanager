@@ -48,7 +48,8 @@ public class GUIController implements IGUIEventListener {
                 refreshUebersichtsGUI();
                 break;
             case "Loeschen":
-                EintraegeDetailansicht.deleteEintrag(uebersichtsGUI.getAusgabenDetailansichtGUI().getEintrag());
+                EintraegeDetailansicht eintraegeDetailansicht = new EintraegeDetailansicht();
+                eintraegeDetailansicht.deleteEintrag(uebersichtsGUI.getAusgabenDetailansichtGUI().getEintrag());
                 refreshUebersichtsGUI();
                 break;
             case "Bearbeiten":
