@@ -1,15 +1,15 @@
-package model;
+package main.model;
 
 import java.util.Optional;
 
 public interface EintragRepository {
-    void fuegeHinzu(main.model.Eintrag eintrag);
-    void entferne(main.model.Eintrag eintrag);
-    boolean pruefeObVorhanden(main.model.Eintrag eintrag);
-    Iterable<main.model.Eintrag>findeAlle();
-    Optional<main.model.Eintrag> findeÜber(String bezeichnung);
-    Iterable<main.model.Eintrag>findeAlleAus(main.model.Kategorie kateogrie);
-    Iterable<main.model.Eintrag>findeAlleNach(main.model.Art art);
-    Iterable<main.model.Eintrag>findeAlleMitBetragGroeßer(Double betrag);
-    Iterable<main.model.Eintrag>findeAlleMitBetragKleiner(Double betrag);
+    void fuegeHinzu(Eintrag eintrag);
+    void entferne(Eintrag eintrag);
+    boolean pruefeObVorhanden(Eintrag eintrag);
+    Iterable<Eintrag>findeAlle();
+    Optional<Eintrag> findeÜber(String bezeichnung);
+    Iterable<Eintrag>findeAlleAus(Kategorie kateogrie);
+    Iterable<Eintrag>findeAlleNach(Art art);
+    Iterable<Eintrag>findeAlleMitBetragGroeßer(Double betrag);
+    Iterable<Eintrag>findeAlleMitBetragKleiner(Double betrag);
 }

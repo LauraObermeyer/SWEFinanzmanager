@@ -1,10 +1,10 @@
-package adapter.repositories;
+package main.adapter.repositories;
 
 import main.model.Benutzer;
 import java.util.HashSet;
 import java.util.Optional;
 
-public class BenutzerRepository implements model.BenutzerRepository {
+public class BenutzerRepository implements main.model.BenutzerRepository {
     private HashSet<Benutzer> alleBenutzer = new HashSet<Benutzer>();
     public BenutzerRepository(){
 
