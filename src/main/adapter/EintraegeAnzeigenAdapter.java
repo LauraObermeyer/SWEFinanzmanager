@@ -1,5 +1,6 @@
 package main.adapter;
 
+import main.adapter.repositories.EintragRepository;
 import main.model.Art;
 import main.model.Benutzer;
 import main.model.Eintrag;
@@ -18,6 +19,11 @@ public class EintraegeAnzeigenAdapter {
     private String ausgabenDateiName, einnahmenDateiName;
     private final SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
     private List<Eintrag> eintraege  = new ArrayList<Eintrag>();
+    private EintragRepository eintragVerwaltung;
+
+    public EintraegeAnzeigenAdapter (EintragRepository eintragVerwaltung) {
+        this.eintragVerwaltung = eintragVerwaltung;
+    }
 
     public void dateiNamenErstellenVon(Benutzer benutzer) {
         ausgabenDateiName = "resources/ausgaben" + benutzer.getVorname() + benutzer.getNachname() + ".csv";
@@ -54,7 +60,10 @@ public class EintraegeAnzeigenAdapter {
                     SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
                     Date datum = formatter.parse(zeile[4]);
                     String produktliste = zeile[5];
-                    eintraege.add(new Eintrag(bezeichnung, beschreibung, betrag, Art.valueOf(art), kategorie, datum, produktliste));
+                    Eintrag eintrag = new Eintrag(bezeichnung, beschreibung, betrag, Art.valueOf(art), kategorie, datum, produktliste);
+                    eintraege.add(eintrag);
+
+                    eintragVerwaltung.fuegeHinzu(eintrag);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -64,8 +73,8 @@ public class EintraegeAnzeigenAdapter {
 
     private String[][] tabelleninhaltAufbauen() {
         String tabelleninhalt[][];
-        if(eintraege.size() > 0) {
-            tabelleninhalt = new String[eintraege.size()][10];
+        if(this.eintragVerwaltung.liefereAnzahlEintraege() > 0) {
+            tabelleninhalt = new String[this.eintragVerwaltung.liefereAnzahlEintraege()][10];
         } else{
             tabelleninhalt = new String[0][10];
         }

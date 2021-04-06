@@ -12,4 +12,5 @@ public interface EintragRepository {
     Iterable<Eintrag>findeAlleNach(Art art);
     Iterable<Eintrag>findeAlleMitBetragGroeßer(Double betrag);
     Iterable<Eintrag>findeAlleMitBetragKleiner(Double betrag);
+    int liefereAnzahlEintraege();
 }

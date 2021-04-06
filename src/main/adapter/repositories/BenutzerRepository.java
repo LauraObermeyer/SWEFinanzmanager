@@ -1,8 +1,10 @@
 package main.adapter.repositories;
 
 import main.model.Benutzer;
+
 import java.util.HashSet;
 import java.util.Optional;
+import java.util.UUID;
 
 public class BenutzerRepository implements main.model.BenutzerRepository {
     private HashSet<Benutzer> alleBenutzer = new HashSet<Benutzer>();
@@ -23,18 +25,25 @@ public class BenutzerRepository implements main.model.BenutzerRepository {
 
     @Override
     public boolean pruefeObVorhanden(Benutzer benutzer) {
-        return this.alleBenutzer.contains(benutzer);
+        for(Benutzer vorhandenerBenutzer : this.alleBenutzer) {
+            int value = vorhandenerBenutzer.getId().compareTo(benutzer.getId());
+            if(value == 0) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
-    public Optional<Benutzer> findeÜberId(String id) {
+    public Optional<Benutzer> findeÜberId(UUID id) {
         for(Benutzer benutzer : this.alleBenutzer) {
-            if(id == benutzer.getId()){
+            if(id.compareTo(benutzer.getId()) == 0) {
                 return Optional.of(benutzer);
             }
         }
         return Optional.empty();
     }
+
 
     @Override
     public Iterable<Benutzer> findeAlle() {

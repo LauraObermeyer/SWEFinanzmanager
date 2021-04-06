@@ -1,6 +1,7 @@
 package main.gui.Eintraege;
 
 import main.adapter.EintraegeAnzeigenAdapter;
+import main.adapter.repositories.EintragRepository;
 import main.event.GUIEvent;
 import main.event.IGUIEventListener;
 import main.event.IGUIEventSender;
@@ -50,9 +51,9 @@ public class EintraegeAnzeigenGUI extends JPanel implements IGUIEventSender {
 
     private EintraegeAnzeigenAdapter eintraegeAnzeigenAdapter;
 
-    public EintraegeAnzeigenGUI(Benutzer benutzer) {
+    public EintraegeAnzeigenGUI(Benutzer benutzer, EintragRepository eintragVerwaltung) {
         this.benutzer = benutzer;
-        eintraegeAnzeigenAdapter = new EintraegeAnzeigenAdapter();
+        eintraegeAnzeigenAdapter = new EintraegeAnzeigenAdapter(eintragVerwaltung);
         eintraegeAnzeigenAdapter.dateiNamenErstellenVon(benutzer);
 
         this.setLayout(new BorderLayout());

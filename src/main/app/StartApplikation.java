@@ -1,9 +1,11 @@
 package main.app;
 
+import main.adapter.repositories.BenutzerRepository;
+import main.adapter.repositories.EintragRepository;
+import main.gui.BenutzerAnlegenGUI;
+import main.gui.Eintraege.EingebenGUI;
 import main.gui.Eintraege.EintraegeAnzeigenGUI;
 import main.gui.Eintraege.EintraegeDetailansichtGUI;
-import main.gui.Eintraege.EingebenGUI;
-import main.gui.BenutzerAnlegenGUI;
 import main.gui.GUIController;
 import main.gui.UebersichtsGUI;
 import main.model.Benutzer;
@@ -15,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class StartApplikation {
 
@@ -32,8 +35,12 @@ public class StartApplikation {
 
     // Benutzer des Finanzmanagers
     private static Benutzer benutzer;
+    private static BenutzerRepository benutzerVerwaltung;
+    private static EintragRepository eintragVerwaltung;
 
     public static void main( String[] args ) throws Exception {
+        benutzerVerwaltung = new BenutzerRepository();
+        eintragVerwaltung = new EintragRepository();
         startGuiBestimmenUndAufrufen();
     }
 
@@ -76,7 +83,14 @@ public class StartApplikation {
     }
 
     private static void benutzerObjektInitialisieren(List<String[]> dateiInhaltDesBenutzerFiles) {
-        benutzer = new Benutzer(dateiInhaltDesBenutzerFiles.get(0)[0], dateiInhaltDesBenutzerFiles.get(0)[1], emailDesBenutzersErzeugenAus(dateiInhaltDesBenutzerFiles.get(0)[2]));
+        benutzer = new Benutzer(UUID.fromString(dateiInhaltDesBenutzerFiles.get(0)[0]), dateiInhaltDesBenutzerFiles.get(0)[1], dateiInhaltDesBenutzerFiles.get(0)[2], emailDesBenutzersErzeugenAus(dateiInhaltDesBenutzerFiles.get(0)[3]));
+        try {
+            if(benutzerVerwaltung.pruefeObVorhanden(benutzer)==false) {
+                benutzerVerwaltung.fuegeBenutzerHinzu(benutzer);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private static EMail emailDesBenutzersErzeugenAus(String emailString){
@@ -107,7 +121,7 @@ public class StartApplikation {
     }
 
     public static EintraegeAnzeigenGUI buildEintraegeAnzeigenGUI(){
-        eintraegeAnzeigenGUI = new EintraegeAnzeigenGUI(benutzer);
+        eintraegeAnzeigenGUI = new EintraegeAnzeigenGUI(benutzer, eintragVerwaltung);
         return eintraegeAnzeigenGUI;
     }
 

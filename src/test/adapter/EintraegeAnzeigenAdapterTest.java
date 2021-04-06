@@ -1,6 +1,7 @@
 package test.adapter;
 
 import main.adapter.EintraegeAnzeigenAdapter;
+import main.adapter.repositories.EintragRepository;
 import main.model.Art;
 import main.model.Eintrag;
 import main.model.Kategorie;
@@ -66,7 +67,8 @@ public class EintraegeAnzeigenAdapterTest {
         eintraege.add(eintrag2);
 
         String[][] tabellenInhalt = new String[eintraege.size()][10];
-        EintraegeAnzeigenAdapter eintraegeAnzeigenAdapter = new EintraegeAnzeigenAdapter();
+        EintragRepository eintragVerwaltung = new EintragRepository();
+        EintraegeAnzeigenAdapter eintraegeAnzeigenAdapter = new EintraegeAnzeigenAdapter(eintragVerwaltung);
 
         // Act
         String[][] tabellenInhalt1 = eintraegeAnzeigenAdapter.tabelleninhaltZeilenweiseFüllen(tabellenInhalt);

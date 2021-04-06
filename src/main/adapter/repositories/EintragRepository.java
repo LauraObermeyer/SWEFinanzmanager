@@ -85,4 +85,9 @@ public class EintragRepository implements main.model.EintragRepository {
         }
         return eintraegeNachBetrag;
     }
+
+    @Override
+    public int liefereAnzahlEintraege() {
+        return this.alleEintraege.size();
+    }
 }
