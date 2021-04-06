@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public class BenutzerRepository implements model.BenutzerRepository {
     private HashSet<Benutzer> alleBenutzer = new HashSet<Benutzer>();
-    public BenutzerRepository{
+    public BenutzerRepository(){
 
     }
     @Override

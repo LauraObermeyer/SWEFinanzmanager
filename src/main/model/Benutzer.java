@@ -36,7 +36,7 @@ public class Benutzer {
         this.email = email;
     }
 
-    public String getId(){ return this.vorname + " " + this.nachname };
+    public String getId(){ return this.vorname + " " + this.nachname; };
 
     public String getTitle() {
         return "SWE-Finanzverwalter von " + this.getVorname() + " " + this.getNachname();
