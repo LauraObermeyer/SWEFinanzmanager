@@ -1,3 +1,2 @@
-#Bezeichnung;Beschreibung;Betrag;Kategorie;Datum;Produktliste;Systemaenderung
-Ausgabe1;GroßeAusgabe;143;Einkauf;13.10.2020;Essen;Sun Mar 14 13:28:20 CET 2021
-Ausgabe2;GroßeAusgabe;100.656;Einkauf;13.10.2020;Essen;Sun Mar 14 13:28:28 CET 2021
+#Id;Bezeichnung;Beschreibung;Betrag;Kategorie;Datum;Produktliste;Systemaenderung
+9b44509e-3dac-4dd6-9617-57777c08f91f;Ausgabe2;GroßeAusgabe;100.656;Einkauf;13.10.2020;Essen;Sun Mar 14 13:28:28 CET 2021

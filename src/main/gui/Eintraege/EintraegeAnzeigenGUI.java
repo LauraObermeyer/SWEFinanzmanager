@@ -21,7 +21,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class EintraegeAnzeigenGUI extends JPanel implements IGUIEventSender {
 
@@ -31,12 +30,9 @@ public class EintraegeAnzeigenGUI extends JPanel implements IGUIEventSender {
     // Events
     private ArrayList<IGUIEventListener> listeners = new ArrayList<IGUIEventListener>();
 
-    // Ausgaben-Tabelle
-    private JTable jtAusgaben;
+    // Einträge-Tabelle
+    private JTable jtEintraege;
     private JPanel jpTabelle;
-
-    // Liste aller Einträge (die werden in der Tabelle angezeigt)
-    List<Eintrag> ausgaben;
 
     // Suche
     private JPanel jpHeader;
@@ -97,7 +93,6 @@ public class EintraegeAnzeigenGUI extends JPanel implements IGUIEventSender {
             }
         });
 
-
         BufferedImage image = null;
         try {
             image = ImageIO.read(new File("resources/filter2.png"));
@@ -107,7 +102,6 @@ public class EintraegeAnzeigenGUI extends JPanel implements IGUIEventSender {
             e.printStackTrace();
         }
 
-        //TODO: Größe des Buttons an den Rest anpassen
         ImageIcon imageIcon = new ImageIcon(new ImageIcon(image).getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
         jbFilter = new JButton(imageIcon);
         jpHeader.add(jbFilter);
@@ -129,22 +123,22 @@ public class EintraegeAnzeigenGUI extends JPanel implements IGUIEventSender {
         // Tabelle mit Model mit Daten (tabelleninhalt) und Spaltennamen (column) aufbauen
         model = new DefaultTableModel(tabelleninhalt, column);
         sorter = new TableRowSorter<>(model); // Nötig für Suche
-        jtAusgaben = new JTable(model);
-        jtAusgaben.setRowSorter(sorter); // Nötig für Suche
+        jtEintraege = new JTable(model);
+        jtEintraege.setRowSorter(sorter); // Nötig für Suche
 
         // ">" in der letzten Spalte zentrieren, um anzudeuten, dass man auf die jeweiligen Zeilen klicken kann
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment( JLabel.CENTER );
-        jtAusgaben.getColumnModel().getColumn(6).setCellRenderer( centerRenderer );
+        jtEintraege.getColumnModel().getColumn(7).setCellRenderer( centerRenderer );
 
         // Action Listener für Tabelle hinzufügen, damit Zeilen klickbar sind, um zur jeweiligen Detailansicht zu gelangen
-        jtAusgaben.getSelectionModel().addListSelectionListener(e -> {
-            clickedEintrag = eintraegeAnzeigenAdapter.getEintraege().get(jtAusgaben.getSelectedRow());
+        jtEintraege.getSelectionModel().addListSelectionListener(e -> {
+            clickedEintrag = eintraegeAnzeigenAdapter.getEintraege().get(jtEintraege.getSelectedRow());
             fireEvent(new GUIEvent("DetailansichtOeffnen", this));
         });
 
         // Scrollpane mit Tabelle zum Panel jpCenter hinzufügen
-        jpTabelle.add(new JScrollPane(jtAusgaben), BorderLayout.CENTER);
+        jpTabelle.add(new JScrollPane(jtEintraege), BorderLayout.CENTER);
         this.add(jpTabelle, BorderLayout.CENTER);
     }
 

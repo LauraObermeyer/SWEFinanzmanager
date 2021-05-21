@@ -11,10 +11,7 @@ import org.junit.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -36,8 +33,8 @@ public class EintraegeAnzeigenAdapterTest {
         }
 
         List<Eintrag> eintraegeList  = new ArrayList<Eintrag>();
-        Eintrag eintrag1 = new  Eintrag("Einnahme1", "Miete", 600, Art.Einnahme, new Kategorie("Einkauf"), datum, "Essen");
-        Eintrag eintrag2 = new Eintrag("Ausgabe1", "Möbel", 1000, Art.Ausgabe, new Kategorie("Einkauf"), datum, "Möbel");
+        Eintrag eintrag1 = new Eintrag(UUID.randomUUID(), "Einnahme1", "Miete", 600, Art.Einnahme, new Kategorie("Einkauf"), datum, "Essen");
+        Eintrag eintrag2 = new Eintrag(UUID.randomUUID(), "Ausgabe1", "Möbel", 1000, Art.Ausgabe, new Kategorie("Einkauf"), datum, "Möbel");
         eintraegeList.add(eintrag1);
         eintraegeList.add(eintrag2);
 
@@ -61,8 +58,8 @@ public class EintraegeAnzeigenAdapterTest {
     public void tabelleninhaltZeilenweiseFüllen() {
         // Arrange
         List<Eintrag> eintraege  = new ArrayList<Eintrag>();
-        Eintrag eintrag1 = new  Eintrag("Einnahme1", "Miete", 600, Art.Einnahme, new Kategorie("Einkauf"), datum, "Essen");
-        Eintrag eintrag2 = new Eintrag("Ausgabe1", "Möbel", 1000, Art.Ausgabe, new Kategorie("Einkauf"), datum, "Möbel");
+        Eintrag eintrag1 = new Eintrag(UUID.randomUUID(), "Einnahme1", "Miete", 600, Art.Einnahme, new Kategorie("Einkauf"), datum, "Essen");
+        Eintrag eintrag2 = new Eintrag(UUID.randomUUID(), "Ausgabe1", "Möbel", 1000, Art.Ausgabe, new Kategorie("Einkauf"), datum, "Möbel");
         eintraege.add(eintrag1);
         eintraege.add(eintrag2);
 

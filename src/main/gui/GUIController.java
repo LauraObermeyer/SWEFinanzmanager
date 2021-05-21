@@ -1,5 +1,6 @@
 package main.gui;
 
+import main.adapter.repositories.EintragRepository;
 import main.app.StartApplikation;
 import main.applicationCode.EintraegeDetailansicht;
 import main.event.GUIEvent;
@@ -17,13 +18,16 @@ public class GUIController implements IGUIEventListener {
     private BenutzerAnlegenGUI benutzerAnlegenGUI;
     private EintraegeDetailansichtGUI eintraegeDetailansichtGUI;
     private EingebenGUI eingebenGUI;
+    private EintragRepository eintragVerwaltung;
 
-    public GUIController(BenutzerAnlegenGUI benutzerAnlegenGUI) throws Exception {
+    public GUIController(BenutzerAnlegenGUI benutzerAnlegenGUI, EintragRepository eintragVerwaltung) throws Exception {
+        this.eintragVerwaltung = eintragVerwaltung;
         this.benutzerAnlegenGUI = benutzerAnlegenGUI;
         benutzerAnlegenGUI.addListener(this);
     }
 
-    public GUIController(UebersichtsGUI uebersichtsGUI) throws Exception {
+    public GUIController(UebersichtsGUI uebersichtsGUI, EintragRepository eintragVerwaltung) throws Exception {
+        this.eintragVerwaltung = eintragVerwaltung;
         this.uebersichtsGUI = uebersichtsGUI;
         uebersichtsGUI.addListener(this);
     }
@@ -48,7 +52,7 @@ public class GUIController implements IGUIEventListener {
                 refreshUebersichtsGUI();
                 break;
             case "Loeschen":
-                EintraegeDetailansicht eintraegeDetailansicht = new EintraegeDetailansicht();
+                EintraegeDetailansicht eintraegeDetailansicht = new EintraegeDetailansicht(this.eintragVerwaltung);
                 eintraegeDetailansicht.deleteEintrag(uebersichtsGUI.getAusgabenDetailansichtGUI().getEintrag());
                 refreshUebersichtsGUI();
                 break;

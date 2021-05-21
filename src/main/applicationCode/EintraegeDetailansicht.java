@@ -2,12 +2,14 @@ package main.applicationCode;
 
 import main.app.StartApplikation;
 import main.model.Eintrag;
+import main.model.EintragRepository;
 import main.util.CSVReader;
 import main.util.CSVWriter;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class EintraegeDetailansicht {
 
@@ -18,6 +20,11 @@ public class EintraegeDetailansicht {
     private List<String[]> dateiInhalt, neuerDateiInhalt;
     // Header für Datei
     private final String[] header = Eintrag.getAlleAttributnamenFürFile();
+    private EintragRepository eintragVerwaltung;
+
+    public EintraegeDetailansicht(EintragRepository eintragVerwaltung){
+        this.eintragVerwaltung = eintragVerwaltung;
+    }
 
     public void deleteEintrag(Eintrag eintrag){
         ausgabenFile = StartApplikation.ausgabenFileNameErstellen();
@@ -42,14 +49,19 @@ public class EintraegeDetailansicht {
             e.printStackTrace();
         }
 
-        // Das zu löschende Exponat suchen und löschen
+        this.eintragVerwaltung.entferne(eintrag);
+
+        // Den zu löschenden Eintrag suchen und löschen
         for(int i = 0; i < dateiInhalt.size(); i++){
-            if(dateiInhalt.get(i)[0].equals(eintrag.getBezeichnung())) {
+            if(UUID.fromString(dateiInhalt.get(i)[0]) == eintrag.getId()); {
                 neuerDateiInhalt.remove(i);
+                break;
             }
         }
 
+
         // Datei mit neuem Inhalt füllen, der alles bis auf die Zeile des zu löschenden Eintrags enthält
+        // TODO: File muss zuerst geleert werden oder?
         try {
             csvWriter.writeDataToFile(neuerDateiInhalt, header);
         } catch (IOException e) {

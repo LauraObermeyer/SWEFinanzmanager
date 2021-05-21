@@ -9,10 +9,7 @@ import main.util.CSVReader;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class EintraegeAnzeigenAdapter {
 
@@ -50,17 +47,18 @@ public class EintraegeAnzeigenAdapter {
 
     private void eintraegeGenerierenBasierendAuf(List<String[]> dateiInhalt, String art) {
         for (int i = 0; i < dateiInhalt.size(); i++) {
-            if(dateiInhalt.get(i).length == 7) {
+            if(dateiInhalt.get(i).length == 8) {
                 try {
                     String[] zeile = dateiInhalt.get(i);
-                    String bezeichnung = zeile[0];
-                    String beschreibung = zeile[1];
-                    Double betrag = Double.parseDouble(zeile[2]);
-                    Kategorie kategorie = new Kategorie(zeile[3]);
+                    UUID id = UUID.fromString(zeile[0]);
+                    String bezeichnung = zeile[1];
+                    String beschreibung = zeile[2];
+                    Double betrag = Double.parseDouble(zeile[3]);
+                    Kategorie kategorie = new Kategorie(zeile[4]);
                     SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
-                    Date datum = formatter.parse(zeile[4]);
-                    String produktliste = zeile[5];
-                    Eintrag eintrag = new Eintrag(bezeichnung, beschreibung, betrag, Art.valueOf(art), kategorie, datum, produktliste);
+                    Date datum = formatter.parse(zeile[5]);
+                    String produktliste = zeile[6];
+                    Eintrag eintrag = new Eintrag(id, bezeichnung, beschreibung, betrag, Art.valueOf(art), kategorie, datum, produktliste);
                     eintraege.add(eintrag);
 
                     eintragVerwaltung.fuegeHinzu(eintrag);
@@ -94,17 +92,17 @@ public class EintraegeAnzeigenAdapter {
         // System.out.println(eintragListe.size());
         for(int j = 0; j < eintraege.size(); j++) {
             Eintrag eintrag = eintraege.get(j);
-            tabellenInhalt[j][0] = eintrag.getBezeichnung();
-            tabellenInhalt[j][1] = String.valueOf(eintrag.getBetrag());
-            tabellenInhalt[j][2] = String.valueOf(eintrag.getArt());
-            tabellenInhalt[j][3] = String.valueOf(eintrag.getKategorie().getBezeichnung());
-            tabellenInhalt[j][4] = formatter.format(eintrag.getDatum());
-            tabellenInhalt[j][5] = String.valueOf(eintrag.getProduktliste());
-            tabellenInhalt[j][6] = ">";
+            tabellenInhalt[j][0] = eintrag.getId().toString();
+            tabellenInhalt[j][1] = eintrag.getBezeichnung();
+            tabellenInhalt[j][2] = String.valueOf(eintrag.getBetrag());
+            tabellenInhalt[j][3] = String.valueOf(eintrag.getArt());
+            tabellenInhalt[j][4] = String.valueOf(eintrag.getKategorie().getBezeichnung());
+            tabellenInhalt[j][5] = formatter.format(eintrag.getDatum());
+            tabellenInhalt[j][6] = String.valueOf(eintrag.getProduktliste());
+            tabellenInhalt[j][7] = ">";
         }
 
         return tabellenInhalt;
-
     }
 
     public List<Eintrag> getEintraege() {

@@ -1,8 +1,10 @@
 package main.model;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class Eintrag {
+    private final UUID id;
     private String bezeichnung;
     private String beschreibung;
     private double betrag;
@@ -12,7 +14,8 @@ public class Eintrag {
     private String produktliste; //TODO: Produkt als eigene Klasse modellieren?
     private Systemaenderung systemaenderung;
 
-    public Eintrag(String bezeichnung, String beschreibung, double betrag, Art art, Kategorie kategorie, Date datum, String produktliste) {
+    public Eintrag(UUID id,String bezeichnung, String beschreibung, double betrag, Art art, Kategorie kategorie, Date datum, String produktliste) {
+        this.id = id;
         this.bezeichnung = bezeichnung;
         this.beschreibung = beschreibung;
         this.betrag = betrag;
@@ -24,7 +27,8 @@ public class Eintrag {
     }
 
     // Konstruktor zum Auslesen der csv Dateien. Die Systemaenderung wird übergeben
-    public Eintrag(String bezeichnung, String beschreibung, double betrag, Art art, Kategorie kategorie, Date datum, String produktliste, Systemaenderung systemaenderung) {
+    public Eintrag(UUID id, String bezeichnung, String beschreibung, double betrag, Art art, Kategorie kategorie, Date datum, String produktliste, Systemaenderung systemaenderung) {
+        this.id = id;
         this.bezeichnung = bezeichnung;
         this.beschreibung = beschreibung;
         this.betrag = betrag;
@@ -36,19 +40,21 @@ public class Eintrag {
     }
 
     public static final String[] getAlleAttributnamen() {
-        String alleAttributnamen[] = {"Bezeichnung", "Beschreibung", "Betrag", "Art", "Kategorie", "Datum", "Produktliste", "Systemaenderung"};
+        String alleAttributnamen[] = {"Id", "Bezeichnung", "Beschreibung", "Betrag", "Art", "Kategorie", "Datum", "Produktliste", "Systemaenderung"};
         return alleAttributnamen;
     }
 
     public static final String[] getAlleAttributnamenFürFile() {
-        String alleAttributnamen[] = {"Bezeichnung", "Beschreibung", "Betrag", "Kategorie", "Datum", "Produktliste", "Systemaenderung"};
+        String alleAttributnamen[] = {"Id", "Bezeichnung", "Beschreibung", "Betrag", "Kategorie", "Datum", "Produktliste", "Systemaenderung"};
         return alleAttributnamen;
     }
 
     public static final String[] getAlleAttributnamenFürTabelle() {
-        String alleAttributnamen[] = {"Bezeichnung", "Betrag in €", "Art", "Kategorie", "Datum", "Produktliste", "..."};
+        String alleAttributnamen[] = {"Id", "Bezeichnung", "Betrag in €", "Art", "Kategorie", "Datum", "Produktliste", "..."};
         return alleAttributnamen;
     }
+
+    public UUID getId() { return id; }
 
     public String getBezeichnung() {
         return bezeichnung;

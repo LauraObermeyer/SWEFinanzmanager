@@ -22,9 +22,14 @@ public class Eingeben {
     // Header für Datei
     private final String[] header = Eintrag.getAlleAttributnamenFürFile();
 
+    private EintragRepository eintragVerwaltung;
+    public Eingeben(EintragRepository eintragVerwaltung) {
+        this.eintragVerwaltung = eintragVerwaltung;
+    }
+
     public void anlegen(String[] textfelderInhalt, boolean neuAnlegen, Eintrag eintrag) {
         if(!neuAnlegen){
-            EintraegeDetailansicht eintraegeDetailansicht = new EintraegeDetailansicht();
+            EintraegeDetailansicht eintraegeDetailansicht = new EintraegeDetailansicht(this.eintragVerwaltung);
             eintraegeDetailansicht.deleteEintrag(eintrag);
         }
         ausgabenFile = StartApplikation.ausgabenFileNameErstellen();

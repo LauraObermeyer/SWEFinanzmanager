@@ -31,6 +31,7 @@ public class EintragErbauer {
 
     public Eintrag build() {
         return new Eintrag(
+                this.id,
                 this.bezeichnung,
                 this.beschreibung,
                 this.betrag,

@@ -39,6 +39,9 @@ public class StartApplikation {
     private static EintragRepository eintragVerwaltung;
 
     public static void main( String[] args ) throws Exception {
+        for(int i=1; i<4; i++) {
+            System.out.println(UUID.randomUUID());
+        }
         benutzerVerwaltung = new BenutzerRepository();
         eintragVerwaltung = new EintragRepository();
         startGuiBestimmenUndAufrufen();
@@ -74,12 +77,12 @@ public class StartApplikation {
 
     private static void benutzerAnlegenGuiAufrufen() throws Exception {
         benutzerAnlegenGUI = new BenutzerAnlegenGUI();
-        new GUIController(benutzerAnlegenGUI);
+        new GUIController(benutzerAnlegenGUI, eintragVerwaltung);
     }
 
     private static void uebersichtsGuiAufrufen() throws Exception {
         buildUebersichtsGUI();
-        new GUIController(uebersichtsGUI);
+        new GUIController(uebersichtsGUI, eintragVerwaltung);
     }
 
     private static void benutzerObjektInitialisieren(List<String[]> dateiInhaltDesBenutzerFiles) {
@@ -131,7 +134,7 @@ public class StartApplikation {
     }
 
     public static EingebenGUI buildEingebenGUI(boolean neuAnlegen, Optional<Eintrag> eintrag) {
-        return new EingebenGUI(neuAnlegen, eintrag);
+        return new EingebenGUI(eintragVerwaltung, neuAnlegen, eintrag);
     }
 
     public static String ausgabenFileNameErstellen() {

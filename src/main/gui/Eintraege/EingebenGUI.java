@@ -1,5 +1,6 @@
 package main.gui.Eintraege;
 
+import main.adapter.repositories.EintragRepository;
 import main.applicationCode.Eingeben;
 import main.event.GUIEvent;
 import main.event.IGUIEventListener;
@@ -30,7 +31,10 @@ public class EingebenGUI implements IGUIEventSender {
     //Events
     private ArrayList<IGUIEventListener> listeners = new ArrayList<IGUIEventListener>();
 
-    public EingebenGUI(boolean neuAnlegen, Optional<Eintrag> eintrag) {
+    private EintragRepository eintragVerwaltung;
+
+    public EingebenGUI(EintragRepository eintragVerwaltung, boolean neuAnlegen, Optional<Eintrag> eintrag) {
+        this.eintragVerwaltung = eintragVerwaltung;
         this.neuAnlegen = neuAnlegen;
 
         jfEingebenFrame = new JFrame(this.getClass().getSimpleName());
@@ -173,7 +177,7 @@ public class EingebenGUI implements IGUIEventSender {
     public void fireEvent(GUIEvent event) throws Exception  {
         if(event.getMessage() == "Anlegen") {
             if(checkIfAllFilled()){
-                Eingeben eingeben = new Eingeben();
+                Eingeben eingeben = new Eingeben(this.eintragVerwaltung);
                 eingeben.anlegen(getTextfelderInhalt(), neuAnlegen, eintrag);
             }
             else {
