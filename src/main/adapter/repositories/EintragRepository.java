@@ -1,10 +1,11 @@
 package main.adapter.repositories;
 
+import main.model.Art;
 import main.model.Eintrag;
 import main.model.Kategorie;
-import main.model.Art;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Optional;
 
 public class EintragRepository implements main.model.EintragRepository {
@@ -20,13 +21,22 @@ public class EintragRepository implements main.model.EintragRepository {
 
     @Override
     public void entferne(Eintrag eintrag) {
-        this.alleEintraege.remove(eintrag);
-
+        for (Iterator<Eintrag> iter = this.alleEintraege.iterator(); iter.hasNext();) {
+            Eintrag vorhandenerEintrag = iter.next();
+            if (vorhandenerEintrag.getId().compareTo(eintrag.getId())==0) {
+                iter.remove();
+            }
+        }
     }
 
     @Override
     public boolean pruefeObVorhanden(Eintrag eintrag) {
-        return this.alleEintraege.contains(eintrag);
+        for (Eintrag vorhandenerEintrag : this.alleEintraege) {
+            if(vorhandenerEintrag.getId().compareTo(eintrag.getId())==0){
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

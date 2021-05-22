@@ -53,15 +53,13 @@ public class EintraegeDetailansicht {
 
         // Den zu löschenden Eintrag suchen und löschen
         for(int i = 0; i < dateiInhalt.size(); i++){
-            if(UUID.fromString(dateiInhalt.get(i)[0]) == eintrag.getId()); {
+            if(UUID.fromString(dateiInhalt.get(i)[0]).compareTo(eintrag.getId())==0){
                 neuerDateiInhalt.remove(i);
                 break;
             }
         }
 
-
         // Datei mit neuem Inhalt füllen, der alles bis auf die Zeile des zu löschenden Eintrags enthält
-        // TODO: File muss zuerst geleert werden oder?
         try {
             csvWriter.writeDataToFile(neuerDateiInhalt, header);
         } catch (IOException e) {

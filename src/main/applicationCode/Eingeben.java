@@ -19,6 +19,8 @@ public class Eingeben {
 
     private List<String[]> dateiInhalt;
 
+    private String[] neueZeile;
+
     private final SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
 
     // Header für Datei
@@ -27,12 +29,16 @@ public class Eingeben {
     private EintragRepository eintragVerwaltung;
     public Eingeben(EintragRepository eintragVerwaltung) {
         this.eintragVerwaltung = eintragVerwaltung;
+        this.neueZeile = new String[8];
     }
 
     public void anlegen(String[] textfelderInhalt, boolean neuAnlegen, Eintrag eintrag) {
+
         if(!neuAnlegen){
             EintraegeDetailansicht eintraegeDetailansicht = new EintraegeDetailansicht(this.eintragVerwaltung);
             eintraegeDetailansicht.deleteEintrag(eintrag);
+            eintragEigenschaftenUpdaten(textfelderInhalt, eintrag);
+            this.zeilenInhaltAufbauen(textfelderInhalt, neuAnlegen, eintrag);
         }else{
             try {
                 Art art;
@@ -50,8 +56,9 @@ public class Eingeben {
                 SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
                 Date datum = formatter.parse(textfelderInhalt[5]);
                 String produktliste = textfelderInhalt[6];
-                eintrag = new Eintrag(id, bezeichnung, beschreibung, betrag, art, kategorie, datum, produktliste);
-                this.eintragVerwaltung.fuegeHinzu(eintrag);
+                Eintrag neuerEintrag = new Eintrag(id, bezeichnung, beschreibung, betrag, art, kategorie, datum, produktliste);
+                this.eintragVerwaltung.fuegeHinzu(neuerEintrag);
+                this.zeilenInhaltAufbauen(textfelderInhalt, neuAnlegen, neuerEintrag);
             } catch(Exception e){
                 e.printStackTrace();
             }
@@ -68,17 +75,6 @@ public class Eingeben {
             csvReader = new CSVReader(einnahmenFile);
         }
 
-        // Neue Zeile für Datei bauen
-        String[] neueZeile = new String[8];
-        neueZeile[0] = eintrag.getId().toString();
-        neueZeile[1] = eintrag.getBezeichnung();
-        neueZeile[2] = eintrag.getBeschreibung();
-        neueZeile[3] = String.valueOf(eintrag.getBetrag());
-        neueZeile[4] = String.valueOf(eintrag.getKategorie().getBezeichnung());
-        neueZeile[5] = formatter.format(eintrag.getDatum());
-        neueZeile[6] = String.valueOf(eintrag.getProduktliste());
-        neueZeile[7] = eintrag.getSystemaenderung().toString();
-
         // Bisherigen Inhalt aus der csv Datei auslesen
         dateiInhalt = new ArrayList<>();
         try {
@@ -88,10 +84,48 @@ public class Eingeben {
         }
 
         // Neuen Eintrag der csv Datei hinzufügen
-        dateiInhalt.add(neueZeile);
+        dateiInhalt.add(this.neueZeile);
         try {
             csvWriter.writeDataToFile(dateiInhalt, header);
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void zeilenInhaltAufbauen(String[] textfelderInhalt, boolean neuAnlegen, Eintrag eintrag) {
+        if(neuAnlegen){
+            this.neueZeile[0] = eintrag.getId().toString();
+            this.neueZeile[7] = eintrag.getSystemaenderung().getZeitstempel().toString();
+        }else {
+            this.neueZeile[0] = eintrag.getId().toString();
+            this.neueZeile[7] = eintrag.getSystemaenderung().getZeitstempel().toString();
+        }
+        this.neueZeile[1] = textfelderInhalt[0];
+        this.neueZeile[2] = textfelderInhalt[1];
+        this.neueZeile[3] = textfelderInhalt[3];
+        this.neueZeile[4] = textfelderInhalt[4];
+        this.neueZeile[5] = textfelderInhalt[5];
+        this.neueZeile[6] = textfelderInhalt[6];
+    }
+
+    public void eintragEigenschaftenUpdaten(String[] textfelderInhalt, Eintrag eintrag){
+        try{
+            eintrag.setBezeichnung(textfelderInhalt[0]);
+            eintrag.setBeschreibung(textfelderInhalt[1]);
+            if (textfelderInhalt[2] == "Ausgabe") {
+                eintrag.setArt(Art.Ausgabe);
+            } else {
+                eintrag.setArt(Art.Einnahme);
+            }
+            eintrag.setBetrag(Double.parseDouble(textfelderInhalt[3]));
+            eintrag.setKategorie(new Kategorie(textfelderInhalt[4]));
+            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
+            eintrag.setDatum(formatter.parse(textfelderInhalt[5]));
+            eintrag.setProduktliste(textfelderInhalt[6]);
+            eintrag.setSystemaenderung(new Systemaenderung());
+
+            this.eintragVerwaltung.fuegeHinzu(eintrag);
+        } catch(Exception e){
             e.printStackTrace();
         }
     }

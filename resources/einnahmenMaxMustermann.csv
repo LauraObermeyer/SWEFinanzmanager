@@ -1,4 +1,2 @@
 #Id;Bezeichnung;Beschreibung;Betrag;Kategorie;Datum;Produktliste;Systemaenderung
-3abc12bc-83d5-413d-80ab-f8be7dd61bdf;Einnahme1;Miete;600;Einkauf;13.10.2020;Essen;Tue Aug 18 16:36:07 CEST 2020
-40917487-8e3a-432d-9d1b-d3414164fed9;Bezeichnung;Beschreibung;10.0;main.model.Kategorie@75e3cd95;10.10.2010;Miete;main.model.Systemaenderung@4f804aea
-5dece1c0-2abd-491f-b660-7121783ac484;Neu;Neue BEschreibung;101.01;Einkauf;10.08.2021;Essen;main.model.Systemaenderung@2cad9b3a
+692ba772-9baa-4475-bff5-9cd99d364261;Bezeichnung;Beschreibung;1.990;Einkauf;10.10.2021;Neues Produkt;Sat May 22 18:54:06 CEST 2021

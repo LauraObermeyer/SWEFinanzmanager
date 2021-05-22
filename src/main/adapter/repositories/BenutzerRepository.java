@@ -14,7 +14,7 @@ public class BenutzerRepository implements main.model.BenutzerRepository {
     @Override
     public void fuegeBenutzerHinzu(Benutzer benutzer) throws Exception {
         if(this.pruefeObVorhanden( benutzer ) )
-            throw new Exception( "Benutzer existiert bereits! " );
+            throw new Exception( "Benutzer existiert bereits!" );
         this.alleBenutzer.add(benutzer);
     }
 
