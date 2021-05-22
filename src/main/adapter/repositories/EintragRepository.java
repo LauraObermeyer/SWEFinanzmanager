@@ -13,7 +13,9 @@ public class EintragRepository implements main.model.EintragRepository {
 
     @Override
     public void fuegeHinzu(Eintrag eintrag) {
-        this.alleEintraege.add(eintrag);
+        if(!this.pruefeObVorhanden(eintrag)){
+            this.alleEintraege.add(eintrag);
+        }
     }
 
     @Override

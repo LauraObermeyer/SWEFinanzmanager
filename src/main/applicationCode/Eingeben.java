@@ -6,8 +6,8 @@ import main.util.CSVReader;
 import main.util.CSVWriter;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class Eingeben {
     //CSVReader und Writer
@@ -18,6 +18,8 @@ public class Eingeben {
     private String einnahmenFile;
 
     private List<String[]> dateiInhalt;
+
+    private final SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
 
     // Header für Datei
     private final String[] header = Eintrag.getAlleAttributnamenFürFile();
@@ -31,6 +33,28 @@ public class Eingeben {
         if(!neuAnlegen){
             EintraegeDetailansicht eintraegeDetailansicht = new EintraegeDetailansicht(this.eintragVerwaltung);
             eintraegeDetailansicht.deleteEintrag(eintrag);
+        }else{
+            try {
+                Art art;
+                if (textfelderInhalt[2] == "Ausgabe") {
+                    art = Art.Ausgabe;
+                } else {
+                    art = Art.Einnahme;
+                }
+
+                UUID id = UUID.randomUUID();
+                String bezeichnung = textfelderInhalt[0];
+                String beschreibung = textfelderInhalt[1];
+                Double betrag = Double.parseDouble(textfelderInhalt[3]);
+                Kategorie kategorie = new Kategorie(textfelderInhalt[4]);
+                SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
+                Date datum = formatter.parse(textfelderInhalt[5]);
+                String produktliste = textfelderInhalt[6];
+                eintrag = new Eintrag(id, bezeichnung, beschreibung, betrag, art, kategorie, datum, produktliste);
+                this.eintragVerwaltung.fuegeHinzu(eintrag);
+            } catch(Exception e){
+                e.printStackTrace();
+            }
         }
         ausgabenFile = StartApplikation.ausgabenFileNameErstellen();
         einnahmenFile = StartApplikation.einnahmenFileNameErstellen();
@@ -45,14 +69,15 @@ public class Eingeben {
         }
 
         // Neue Zeile für Datei bauen
-        String[] neueZeile = new String[7];
-        neueZeile[0] = textfelderInhalt[0];
-        neueZeile[1] = textfelderInhalt[1];
-        neueZeile[2] = textfelderInhalt[3];
-        neueZeile[3] = textfelderInhalt[4];
-        neueZeile[4] = textfelderInhalt[5];
-        neueZeile[5] = textfelderInhalt[6];
-        neueZeile[6] = new Systemaenderung().getZeitstempel().toString();
+        String[] neueZeile = new String[8];
+        neueZeile[0] = eintrag.getId().toString();
+        neueZeile[1] = eintrag.getBezeichnung();
+        neueZeile[2] = eintrag.getBeschreibung();
+        neueZeile[3] = String.valueOf(eintrag.getBetrag());
+        neueZeile[4] = String.valueOf(eintrag.getKategorie().getBezeichnung());
+        neueZeile[5] = formatter.format(eintrag.getDatum());
+        neueZeile[6] = String.valueOf(eintrag.getProduktliste());
+        neueZeile[7] = eintrag.getSystemaenderung().toString();
 
         // Bisherigen Inhalt aus der csv Datei auslesen
         dateiInhalt = new ArrayList<>();
