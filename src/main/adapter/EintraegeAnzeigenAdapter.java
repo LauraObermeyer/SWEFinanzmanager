@@ -88,10 +88,9 @@ public class EintraegeAnzeigenAdapter {
      * @return Tabelleninhalt
      */
     public String[][] tabelleninhaltZeilenweiseFüllen(String[][] tabellenInhalt) {
-        // List<Eintrag> eintragListe = getEintraege();
-        // System.out.println(eintragListe.size());
-        for(int j = 0; j < eintraege.size(); j++) {
-            Eintrag eintrag = eintraege.get(j);
+        List<Eintrag> eintragListe = this.getEintraege();
+        for(int j = 0; j < eintragListe.size(); j++) {
+            Eintrag eintrag = eintragListe.get(j);
             tabellenInhalt[j][0] = eintrag.getId().toString();
             tabellenInhalt[j][1] = eintrag.getBezeichnung();
             tabellenInhalt[j][2] = String.valueOf(eintrag.getBetrag());
