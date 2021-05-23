@@ -20,14 +20,6 @@ public class EintraegeDetailansichtAdapterTest {
     public EintraegeDetailansichtAdapterTest () {
     }
 
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
-
     @Test
     public void getEigenschaften() {
         // Arrange
@@ -39,21 +31,24 @@ public class EintraegeDetailansichtAdapterTest {
             e.printStackTrace();
             datum = new Date();
         }
-        Eintrag eintrag = new Eintrag(UUID.randomUUID(), "Einnahme1", "Miete", 600, Art.Einnahme, new Kategorie("Einkauf"), datum, "Essen");
+
+        UUID id = UUID.randomUUID();
+        Eintrag eintrag = new Eintrag(id, "Einnahme1", "Miete", 600, Art.Einnahme, new Kategorie("Einkauf"), datum, "Essen");
         EintraegeDetailansichtAdapter eintraegeDetailansichtAdapter = new EintraegeDetailansichtAdapter();
 
         // Act
         String eigenschaften[] = eintraegeDetailansichtAdapter.getEigenschaften(eintrag);
 
         //Assert
-        assertThat(eigenschaften[0], is("Bezeichnung: Einnahme1"));
-        assertThat(eigenschaften[1], is("Beschreibung: Miete"));
-        assertThat(eigenschaften[2], is("Betrag: 600.0€"));
-        assertThat(eigenschaften[3], is("Art: Einnahme"));
-        assertThat(eigenschaften[4], is("Kategorie: Einkauf"));
-        assertThat(eigenschaften[5], is("Datum: 13.10.2020"));
-        assertThat(eigenschaften[6], is("Produktliste: Essen"));
+        assertThat(eigenschaften[0], is("Id: " + id));
+        assertThat(eigenschaften[1], is("Bezeichnung: Einnahme1"));
+        assertThat(eigenschaften[2], is("Beschreibung: Miete"));
+        assertThat(eigenschaften[3], is("Betrag: 600.0€"));
+        assertThat(eigenschaften[4], is("Art: Einnahme"));
+        assertThat(eigenschaften[5], is("Kategorie: Einkauf"));
+        assertThat(eigenschaften[6], is("Datum: 13.10.2020"));
+        assertThat(eigenschaften[7], is("Produktliste: Essen"));
         // TODO: Besser testen kann man die Systemänderung wahrscheinlich nicht, weil wir den Wert ja nicht kennen, oder?
-        assertThat(eigenschaften[7], is( "Systemaenderung: " + eintrag.getSystemaenderung().getZeitstempel()));
+        assertThat(eigenschaften[8], is( "Systemaenderung: " + eintrag.getSystemaenderung().getZeitstempel()));
     }
 }
