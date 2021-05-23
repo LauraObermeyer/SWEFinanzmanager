@@ -16,12 +16,18 @@ import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.mockito.Mockito.when;
 
 public class EintraegeAnzeigenAdapterTest {
 
-    Date datum;
-    public EintraegeAnzeigenAdapterTest () {
-    }
+    private List<Eintrag> eintraege;
+    private UUID id1;
+    private UUID id2;
+    private Eintrag eintrag1;
+    private Eintrag eintrag2;
+    private Date datum;
+
+    public EintraegeAnzeigenAdapterTest () { }
 
     @Before
     public void setUp() {
@@ -32,6 +38,13 @@ public class EintraegeAnzeigenAdapterTest {
             e.printStackTrace();
             this.datum = new Date();
         }
+        this.eintraege  = new ArrayList<Eintrag>();
+        this.id1 = UUID.randomUUID();
+        this.id2 = UUID.randomUUID();
+        this.eintrag1 = new Eintrag(id1, "Einnahme1", "Miete", 600, Art.Einnahme, new Kategorie("Einkauf"), this.datum, "Essen");
+        this.eintrag2 = new Eintrag(id2, "Ausgabe1", "Möbel", 1000, Art.Ausgabe, new Kategorie("Einkauf"), this.datum, "Möbel");
+        this.eintraege.add(eintrag1);
+        this.eintraege.add(eintrag2);
     }
 
     @After
@@ -40,28 +53,57 @@ public class EintraegeAnzeigenAdapterTest {
     }
 
     @Test
+    public void tabellenInhaltAufbauenMitVorhandenenEintraegen() {
+        //Arrange
+        EintragRepository eintragVerwaltungMock = Mockito.mock(EintragRepository.class);
+        when(eintragVerwaltungMock.liefereAnzahlEintraege()).thenReturn(this.eintraege.size());
+
+        EintraegeAnzeigenAdapter eintraegeAnzeigenAdapter = new EintraegeAnzeigenAdapter(eintragVerwaltungMock);
+        EintraegeAnzeigenAdapter spy= Mockito.spy(eintraegeAnzeigenAdapter);
+        Mockito.doReturn(this.eintraege).when(spy).getEintraege();
+
+        //Act
+        String[][] tabellenInhalt = spy.tabelleninhaltAufbauen();
+
+        //Assert
+        assertThat(tabellenInhalt.length, is(this.eintraege.size()));
+        Mockito.verify(eintragVerwaltungMock, Mockito.times(2)).liefereAnzahlEintraege();
+    }
+
+    @Test
+    public void tabellenInhaltAufbauenOhneVorhandeneEintraege() {
+        //Arrange
+        List<Eintrag> listeOhneEintraege  = new ArrayList<Eintrag>();
+
+        EintragRepository eintragVerwaltungMock = Mockito.mock(EintragRepository.class);
+        when(eintragVerwaltungMock.liefereAnzahlEintraege()).thenReturn(listeOhneEintraege.size());
+
+        EintraegeAnzeigenAdapter eintraegeAnzeigenAdapter = new EintraegeAnzeigenAdapter(eintragVerwaltungMock);
+        EintraegeAnzeigenAdapter spy = Mockito.spy(eintraegeAnzeigenAdapter);
+        Mockito.doReturn(listeOhneEintraege).when(spy).getEintraege();
+
+        //Act
+        String[][] tabellenInhalt = spy.tabelleninhaltAufbauen();
+
+        //Assert
+        assertThat(tabellenInhalt.length, is(0));
+        Mockito.verify(eintragVerwaltungMock, Mockito.times(1)).liefereAnzahlEintraege();
+    }
+
+    @Test
     public void tabelleninhaltZeilenweiseFüllen() {
         // Arrange
-        List<Eintrag> eintraege  = new ArrayList<Eintrag>();
-        UUID id1 = UUID.randomUUID();
-        UUID id2 = UUID.randomUUID();
-        Eintrag eintrag1 = new Eintrag(id1, "Einnahme1", "Miete", 600, Art.Einnahme, new Kategorie("Einkauf"), this.datum, "Essen");
-        Eintrag eintrag2 = new Eintrag(id2, "Ausgabe1", "Möbel", 1000, Art.Ausgabe, new Kategorie("Einkauf"), this.datum, "Möbel");
-        eintraege.add(eintrag1);
-        eintraege.add(eintrag2);
+        String[][] tabellenInhalt = new String[this.eintraege.size()][10];
+        EintraegeAnzeigenAdapter eintraegeAnzeigenAdapter = new EintraegeAnzeigenAdapter(new EintragRepository());
 
-        String[][] tabellenInhalt = new String[eintraege.size()][10];
-        EintragRepository eintragVerwaltung = new EintragRepository();
-        EintraegeAnzeigenAdapter eintraegeAnzeigenAdapter = new EintraegeAnzeigenAdapter(eintragVerwaltung);
-
-        EintraegeAnzeigenAdapter spy= Mockito.spy(eintraegeAnzeigenAdapter);
-        Mockito.doReturn(eintraege).when(spy).getEintraege();
+        EintraegeAnzeigenAdapter spy = Mockito.spy(eintraegeAnzeigenAdapter);
+        Mockito.doReturn(this.eintraege).when(spy).getEintraege();
 
         // Act
         String[][] tabellenInhalt1 = spy.tabelleninhaltZeilenweiseFüllen(tabellenInhalt);
 
         // Assert
-        assertThat(tabellenInhalt1[0][0], is(id1.toString()));
+        assertThat(tabellenInhalt1[0][0], is(this.id1.toString()));
         assertThat(tabellenInhalt1[0][1], is("Einnahme1"));
         assertThat(tabellenInhalt1[0][2], is("600.0"));
         assertThat(tabellenInhalt1[0][3], is("Einnahme"));
@@ -70,7 +112,7 @@ public class EintraegeAnzeigenAdapterTest {
         assertThat(tabellenInhalt1[0][6], is("Essen"));
         assertThat(tabellenInhalt1[0][7], is(">"));
 
-        assertThat(tabellenInhalt1[1][0], is(id2.toString()));
+        assertThat(tabellenInhalt1[1][0], is(this.id2.toString()));
         assertThat(tabellenInhalt1[1][1], is("Ausgabe1"));
         assertThat(tabellenInhalt1[1][2], is("1000.0"));
         assertThat(tabellenInhalt1[1][3], is("Ausgabe"));
@@ -78,6 +120,5 @@ public class EintraegeAnzeigenAdapterTest {
         assertThat(tabellenInhalt1[1][5], is("13.10.2020"));
         assertThat(tabellenInhalt1[1][6], is("Möbel"));
         assertThat(tabellenInhalt[1][7], is(">"));
-
     }
 }

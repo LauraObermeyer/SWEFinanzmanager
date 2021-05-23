@@ -69,7 +69,7 @@ public class EintraegeAnzeigenAdapter {
         }
     }
 
-    private String[][] tabelleninhaltAufbauen() {
+    public String[][] tabelleninhaltAufbauen() {
         String tabelleninhalt[][];
         if(this.eintragVerwaltung.liefereAnzahlEintraege() > 0) {
             tabelleninhalt = new String[this.eintragVerwaltung.liefereAnzahlEintraege()][10];
