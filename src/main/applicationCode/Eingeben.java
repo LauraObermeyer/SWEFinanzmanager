@@ -21,8 +21,6 @@ public class Eingeben {
 
     private String[] neueZeile;
 
-    private final SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
-
     // Header für Datei
     private final String[] header = Eintrag.getAlleAttributnamenFürFile();
 

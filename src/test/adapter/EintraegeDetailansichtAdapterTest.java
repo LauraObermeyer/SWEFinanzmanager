@@ -48,7 +48,6 @@ public class EintraegeDetailansichtAdapterTest {
         assertThat(eigenschaften[5], is("Kategorie: Einkauf"));
         assertThat(eigenschaften[6], is("Datum: 13.10.2020"));
         assertThat(eigenschaften[7], is("Produktliste: Essen"));
-        // TODO: Besser testen kann man die Systemänderung wahrscheinlich nicht, weil wir den Wert ja nicht kennen, oder?
         assertThat(eigenschaften[8], is( "Systemaenderung: " + eintrag.getSystemaenderung().getZeitstempel()));
     }
 }
