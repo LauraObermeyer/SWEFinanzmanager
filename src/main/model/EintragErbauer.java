@@ -1,6 +1,9 @@
 package main.model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
 
 public class EintragErbauer {
@@ -14,6 +17,7 @@ public class EintragErbauer {
     private Date datum;
     private String produktliste; //TODO: Produkt als eigene Klasse modellieren?
     private Systemaenderung systemaenderung;
+    private SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
 
     // Erbauer, der zu Testzwecken verwendet werden kann und einen default Eintrag zurückliefert
     public EintragErbauer() {
@@ -24,9 +28,30 @@ public class EintragErbauer {
         this.betrag = 59.99;
         this.art = Art.Ausgabe;
         this.kategorie = new Kategorie("Lebensmittel", "Diese Kategorie dient der Lebensmittelausgaben.");
-        //this.datum = Calendar.set(2021, 2, 16);
         this.produktliste = "Kartoffeln, Milch, Shampoo, Toilettenpapier";
         this.systemaenderung = new Systemaenderung();
+        try {
+            this.datum = formatter.parse("13.10.2020");
+        } catch (ParseException e) {
+            e.printStackTrace();
+            this.datum = new Date();
+        }
+    }
+
+    public EintragErbauer mitAllenEigenschaften(String bezeichnung, String beschreibung, double betrag, Art art, Kategorie kategorie, String datum, String produktliste){
+        this.bezeichnung = bezeichnung;
+        this.beschreibung = beschreibung;
+        this.betrag = betrag;
+        this.art = art;
+        this.kategorie = kategorie;
+        try {
+            this.datum = formatter.parse(datum);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            this.datum = new Date();
+        }
+        this.produktliste = produktliste;
+        return this;
     }
 
     public Eintrag build() {

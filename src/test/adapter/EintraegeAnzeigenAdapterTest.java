@@ -2,15 +2,13 @@ package test.adapter;
 
 import main.adapter.EintraegeAnzeigenAdapter;
 import main.adapter.repositories.EintragRepository;
-import main.model.Art;
 import main.model.Eintrag;
-import main.model.Kategorie;
+import main.model.EintragErbauer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -21,35 +19,25 @@ import static org.mockito.Mockito.when;
 public class EintraegeAnzeigenAdapterTest {
 
     private List<Eintrag> eintraege;
-    private UUID id1;
-    private UUID id2;
-    private Eintrag eintrag1;
-    private Eintrag eintrag2;
-    private Date datum;
+    private Eintrag ersterEintragZumTesten;
+    private Eintrag zweiterEintragZumTesten;
+    private SimpleDateFormat formatter;
 
     public EintraegeAnzeigenAdapterTest () { }
 
     @Before
     public void setUp() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
-        try {
-            this.datum = formatter.parse("13.10.2020");
-        } catch (ParseException e) {
-            e.printStackTrace();
-            this.datum = new Date();
-        }
+        formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
         this.eintraege  = new ArrayList<Eintrag>();
-        this.id1 = UUID.randomUUID();
-        this.id2 = UUID.randomUUID();
-        this.eintrag1 = new Eintrag(id1, "Einnahme1", "Miete", 600, Art.Einnahme, new Kategorie("Einkauf"), this.datum, "Essen");
-        this.eintrag2 = new Eintrag(id2, "Ausgabe1", "Möbel", 1000, Art.Ausgabe, new Kategorie("Einkauf"), this.datum, "Möbel");
-        this.eintraege.add(eintrag1);
-        this.eintraege.add(eintrag2);
+        this.ersterEintragZumTesten = new EintragErbauer().build();
+        this.zweiterEintragZumTesten = new EintragErbauer().build();
+        this.eintraege.add(ersterEintragZumTesten);
+        this.eintraege.add(zweiterEintragZumTesten);
     }
 
     @After
     public void tearDown() {
-
+        this.eintraege.clear();
     }
 
     @Test
@@ -103,22 +91,22 @@ public class EintraegeAnzeigenAdapterTest {
         String[][] tabellenInhalt1 = spy.tabelleninhaltZeilenweiseFüllen(tabellenInhalt);
 
         // Assert
-        assertThat(tabellenInhalt1[0][0], is(this.id1.toString()));
-        assertThat(tabellenInhalt1[0][1], is("Einnahme1"));
-        assertThat(tabellenInhalt1[0][2], is("600.0"));
-        assertThat(tabellenInhalt1[0][3], is("Einnahme"));
-        assertThat(tabellenInhalt1[0][4], is("Einkauf"));
-        assertThat(tabellenInhalt1[0][5], is("13.10.2020"));
-        assertThat(tabellenInhalt1[0][6], is("Essen"));
+        assertThat(tabellenInhalt1[0][0], is(this.ersterEintragZumTesten.getId().toString()));
+        assertThat(tabellenInhalt1[0][1], is(this.ersterEintragZumTesten.getBezeichnung()));
+        assertThat(tabellenInhalt1[0][2], is(String.valueOf(this.ersterEintragZumTesten.getBetrag())));
+        assertThat(tabellenInhalt1[0][3], is(String.valueOf(this.ersterEintragZumTesten.getArt())));
+        assertThat(tabellenInhalt1[0][4], is(this.ersterEintragZumTesten.getKategorie().getBezeichnung()));
+        assertThat(tabellenInhalt1[0][5], is(formatter.format(this.ersterEintragZumTesten.getDatum())));
+        assertThat(tabellenInhalt1[0][6], is(this.ersterEintragZumTesten.getProduktliste()));
         assertThat(tabellenInhalt1[0][7], is(">"));
 
-        assertThat(tabellenInhalt1[1][0], is(this.id2.toString()));
-        assertThat(tabellenInhalt1[1][1], is("Ausgabe1"));
-        assertThat(tabellenInhalt1[1][2], is("1000.0"));
-        assertThat(tabellenInhalt1[1][3], is("Ausgabe"));
-        assertThat(tabellenInhalt1[1][4], is("Einkauf"));
-        assertThat(tabellenInhalt1[1][5], is("13.10.2020"));
-        assertThat(tabellenInhalt1[1][6], is("Möbel"));
-        assertThat(tabellenInhalt[1][7], is(">"));
+        assertThat(tabellenInhalt1[1][0], is(this.zweiterEintragZumTesten.getId().toString()));
+        assertThat(tabellenInhalt1[1][1], is(this.zweiterEintragZumTesten.getBezeichnung()));
+        assertThat(tabellenInhalt1[1][2], is(String.valueOf(this.zweiterEintragZumTesten.getBetrag())));
+        assertThat(tabellenInhalt1[1][3], is(String.valueOf(this.zweiterEintragZumTesten.getArt())));
+        assertThat(tabellenInhalt1[1][4], is(this.zweiterEintragZumTesten.getKategorie().getBezeichnung()));
+        assertThat(tabellenInhalt1[1][5], is(formatter.format(this.zweiterEintragZumTesten.getDatum())));
+        assertThat(tabellenInhalt1[1][6], is(this.zweiterEintragZumTesten.getProduktliste()));
+        assertThat(tabellenInhalt1[1][7], is(">"));
     }
 }
