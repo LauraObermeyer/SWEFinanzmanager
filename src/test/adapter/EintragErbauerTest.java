@@ -2,7 +2,7 @@ package test.adapter;
 
 import main.model.Art;
 import main.model.Eintrag;
-import main.model.EintragErbauer;
+import main.adapter.EintragErbauer;
 import main.model.Kategorie;
 import org.junit.Before;
 import org.junit.Test;

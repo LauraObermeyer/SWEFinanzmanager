@@ -3,7 +3,7 @@ package test.adapter;
 import main.adapter.EintraegeAnzeigenAdapter;
 import main.adapter.repositories.EintragRepository;
 import main.model.Eintrag;
-import main.model.EintragErbauer;
+import main.adapter.EintragErbauer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

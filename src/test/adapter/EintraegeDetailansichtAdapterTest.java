@@ -2,7 +2,7 @@ package test.adapter;
 
 import main.adapter.EintraegeDetailansichtAdapter;
 import main.model.Eintrag;
-import main.model.EintragErbauer;
+import main.adapter.EintragErbauer;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
@@ -14,7 +14,7 @@ import static org.junit.Assert.assertThat;
 public class EintraegeDetailansichtAdapterTest {
 
     public EintraegeDetailansichtAdapterTest () {
-        
+
     }
 
     @Test

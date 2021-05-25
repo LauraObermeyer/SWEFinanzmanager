@@ -1,4 +1,9 @@
-package main.model;
+package main.adapter;
+
+import main.model.Art;
+import main.model.Eintrag;
+import main.model.Kategorie;
+import main.model.Systemaenderung;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
