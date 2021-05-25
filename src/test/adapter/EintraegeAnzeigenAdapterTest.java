@@ -47,15 +47,16 @@ public class EintraegeAnzeigenAdapterTest {
         when(eintragVerwaltungMock.liefereAnzahlEintraege()).thenReturn(this.eintraege.size());
 
         EintraegeAnzeigenAdapter eintraegeAnzeigenAdapter = new EintraegeAnzeigenAdapter(eintragVerwaltungMock);
-        EintraegeAnzeigenAdapter spy= Mockito.spy(eintraegeAnzeigenAdapter);
-        Mockito.doReturn(this.eintraege).when(spy).getEintraege();
+        EintraegeAnzeigenAdapter eintraegeAnzeigenAdapterSpy = Mockito.spy(eintraegeAnzeigenAdapter);
+        Mockito.doReturn(this.eintraege).when(eintraegeAnzeigenAdapterSpy).getEintraege();
 
         //Act
-        String[][] tabellenInhalt = spy.tabelleninhaltAufbauen();
+        String[][] tabellenInhalt = eintraegeAnzeigenAdapterSpy.tabelleninhaltAufbauen();
 
         //Assert
         assertThat(tabellenInhalt.length, is(this.eintraege.size()));
         Mockito.verify(eintragVerwaltungMock, Mockito.times(2)).liefereAnzahlEintraege();
+        Mockito.verify(eintraegeAnzeigenAdapterSpy).getEintraege();
     }
 
     @Test
@@ -67,15 +68,16 @@ public class EintraegeAnzeigenAdapterTest {
         when(eintragVerwaltungMock.liefereAnzahlEintraege()).thenReturn(listeOhneEintraege.size());
 
         EintraegeAnzeigenAdapter eintraegeAnzeigenAdapter = new EintraegeAnzeigenAdapter(eintragVerwaltungMock);
-        EintraegeAnzeigenAdapter spy = Mockito.spy(eintraegeAnzeigenAdapter);
-        Mockito.doReturn(listeOhneEintraege).when(spy).getEintraege();
+        EintraegeAnzeigenAdapter eintraegeAnzeigenAdapterSpy = Mockito.spy(eintraegeAnzeigenAdapter);
+        Mockito.doReturn(listeOhneEintraege).when(eintraegeAnzeigenAdapterSpy).getEintraege();
 
         //Act
-        String[][] tabellenInhalt = spy.tabelleninhaltAufbauen();
+        String[][] tabellenInhalt = eintraegeAnzeigenAdapterSpy.tabelleninhaltAufbauen();
 
         //Assert
         assertThat(tabellenInhalt.length, is(0));
         Mockito.verify(eintragVerwaltungMock, Mockito.times(1)).liefereAnzahlEintraege();
+        Mockito.verify(eintraegeAnzeigenAdapterSpy).getEintraege();
     }
 
     @Test
@@ -84,11 +86,11 @@ public class EintraegeAnzeigenAdapterTest {
         String[][] tabellenInhalt = new String[this.eintraege.size()][10];
         EintraegeAnzeigenAdapter eintraegeAnzeigenAdapter = new EintraegeAnzeigenAdapter(new EintragRepository());
 
-        EintraegeAnzeigenAdapter spy = Mockito.spy(eintraegeAnzeigenAdapter);
-        Mockito.doReturn(this.eintraege).when(spy).getEintraege();
+        EintraegeAnzeigenAdapter eintraegeAnzeigenAdapterSpy = Mockito.spy(eintraegeAnzeigenAdapter);
+        Mockito.doReturn(this.eintraege).when(eintraegeAnzeigenAdapterSpy).getEintraege();
 
         // Act
-        String[][] tabellenInhalt1 = spy.tabelleninhaltZeilenweiseFüllen(tabellenInhalt);
+        String[][] tabellenInhalt1 = eintraegeAnzeigenAdapterSpy.tabelleninhaltZeilenweiseFüllen(tabellenInhalt);
 
         // Assert
         assertThat(tabellenInhalt1[0][0], is(this.ersterEintragZumTesten.getId().toString()));
@@ -108,5 +110,6 @@ public class EintraegeAnzeigenAdapterTest {
         assertThat(tabellenInhalt1[1][5], is(formatter.format(this.zweiterEintragZumTesten.getDatum())));
         assertThat(tabellenInhalt1[1][6], is(this.zweiterEintragZumTesten.getProduktliste()));
         assertThat(tabellenInhalt1[1][7], is(">"));
+        Mockito.verify(eintraegeAnzeigenAdapterSpy).getEintraege();
     }
 }

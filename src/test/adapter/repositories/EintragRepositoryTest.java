@@ -182,26 +182,6 @@ public class EintragRepositoryTest {
         Mockito.verify(this.eintragRepositoryZumTestenSpy).findeAlle();
     }
 
-    /*@Test
-    public void findeAlleEintraegeMitBetragKleinerAlsWert() {
-        // Arrange
-        double gesetzterBetrag = 500.0;
-        int anzahlErwarteterEintraege = 2;
-        List erhalteneEintraege = new ArrayList<Eintrag>();
-
-        // Act
-        Iterable<Eintrag> eintraege = this.eintragRepositoryZumTestenSpy.findeAlleMitBetragGroeßer(gesetzterBetrag);
-        for (Eintrag eintrag: eintraege) {
-            erhalteneEintraege.add(eintrag);
-        }
-
-        // Assert
-        assertThat(erhalteneEintraege.size(), is(anzahlErwarteterEintraege));
-        assertThat(erhalteneEintraege.contains(this.ersterEintragZumTesten), is(true));
-        assertThat(erhalteneEintraege.contains(this.zweiterEintragZumTesten), is(true));
-        Mockito.verify(this.eintragRepositoryZumTestenSpy).findeAlle();
-    }*/
-
     @Test
     public void findeAlleAusgaben() {
         // Arrange

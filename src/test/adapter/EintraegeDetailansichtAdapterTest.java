@@ -13,7 +13,9 @@ import static org.junit.Assert.assertThat;
 
 public class EintraegeDetailansichtAdapterTest {
 
-    public EintraegeDetailansichtAdapterTest () { }
+    public EintraegeDetailansichtAdapterTest () {
+        
+    }
 
     @Test
     public void getEigenschaften() {
