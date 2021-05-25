@@ -15,13 +15,13 @@ public class EintragRepository implements main.model.EintragRepository {
     @Override
     public void fuegeHinzu(Eintrag eintrag) {
         if(!this.pruefeObVorhanden(eintrag)){
-            this.alleEintraege.add(eintrag);
+            this.findeAlle().add(eintrag);
         }
     }
 
     @Override
     public void entferne(Eintrag eintrag) {
-        for (Iterator<Eintrag> iter = this.alleEintraege.iterator(); iter.hasNext();) {
+        for (Iterator<Eintrag> iter = this.findeAlle().iterator(); iter.hasNext();) {
             Eintrag vorhandenerEintrag = iter.next();
             if (vorhandenerEintrag.getId().compareTo(eintrag.getId())==0) {
                 iter.remove();
@@ -31,7 +31,7 @@ public class EintragRepository implements main.model.EintragRepository {
 
     @Override
     public boolean pruefeObVorhanden(Eintrag eintrag) {
-        for (Eintrag vorhandenerEintrag : this.alleEintraege) {
+        for (Eintrag vorhandenerEintrag : this.findeAlle()) {
             if(vorhandenerEintrag.getId().compareTo(eintrag.getId())==0){
                 return true;
             }
@@ -40,13 +40,13 @@ public class EintragRepository implements main.model.EintragRepository {
     }
 
     @Override
-    public Iterable<Eintrag> findeAlle() {
+    public HashSet<Eintrag> findeAlle() {
         return this.alleEintraege;
     }
 
     @Override
     public Optional<Eintrag> findeÜber(String bezeichnung) {
-        for(Eintrag eintrag: this.alleEintraege) {
+        for(Eintrag eintrag: this.findeAlle()) {
             if(eintrag.getBezeichnung() == bezeichnung) {
                 return Optional.of(eintrag);
             }
@@ -57,7 +57,7 @@ public class EintragRepository implements main.model.EintragRepository {
     @Override
     public Iterable<Eintrag> findeAlleAus(Kategorie kategorie) {
         HashSet<Eintrag> eintraegeNachKategorie = new HashSet<Eintrag>();
-        for(Eintrag eintrag : this.alleEintraege) {
+        for(Eintrag eintrag : this.findeAlle()) {
             if(eintrag.getKategorie() == kategorie) {
                 eintraegeNachKategorie.add(eintrag);
             }
@@ -68,7 +68,7 @@ public class EintragRepository implements main.model.EintragRepository {
     @Override
     public Iterable<Eintrag> findeAlleNach(Art art) {
         HashSet<Eintrag> eintraegeNachArt = new HashSet<Eintrag>();
-        for(Eintrag eintrag : this.alleEintraege) {
+        for(Eintrag eintrag : this.findeAlle()) {
             if(art == eintrag.getArt() ) {
                 eintraegeNachArt.add(eintrag);
             }
@@ -79,8 +79,8 @@ public class EintragRepository implements main.model.EintragRepository {
     @Override
     public Iterable<Eintrag> findeAlleMitBetragGroeßer(Double betrag) {
         HashSet<Eintrag> eintraegeNachBetrag = new HashSet<Eintrag>();
-        for(Eintrag eintrag : this.alleEintraege) {
-            if(betrag > eintrag.getBetrag() ) {
+        for(Eintrag eintrag : this.findeAlle()) {
+            if(eintrag.getBetrag() > betrag) {
                 eintraegeNachBetrag.add(eintrag);
             }
         }
@@ -90,8 +90,8 @@ public class EintragRepository implements main.model.EintragRepository {
     @Override
     public Iterable<Eintrag> findeAlleMitBetragKleiner(Double betrag) {
         HashSet<Eintrag> eintraegeNachBetrag = new HashSet<Eintrag>();
-        for(Eintrag eintrag : this.alleEintraege) {
-            if(betrag < eintrag.getBetrag()) {
+        for(Eintrag eintrag : this.findeAlle()) {
+            if(eintrag.getBetrag() < betrag) {
                 eintraegeNachBetrag.add(eintrag);
             }
         }
@@ -100,6 +100,6 @@ public class EintragRepository implements main.model.EintragRepository {
 
     @Override
     public int liefereAnzahlEintraege() {
-        return this.alleEintraege.size();
+        return this.findeAlle().size();
     }
 }

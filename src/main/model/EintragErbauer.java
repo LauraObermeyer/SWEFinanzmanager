@@ -15,11 +15,11 @@ public class EintragErbauer {
     private Art art;
     private Kategorie kategorie;
     private Date datum;
-    private String produktliste; //TODO: Produkt als eigene Klasse modellieren?
+    private String produktliste;
     private Systemaenderung systemaenderung;
     private SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
 
-    // Erbauer, der zu Testzwecken verwendet werden kann und einen default Eintrag zurückliefert
+    // Erbauer, der einen default Eintrag zurückliefert
     public EintragErbauer() {
         super();
         this.id = UUID.randomUUID();
@@ -51,6 +51,26 @@ public class EintragErbauer {
             this.datum = new Date();
         }
         this.produktliste = produktliste;
+        return this;
+    }
+
+    public EintragErbauer mitBezeichnung(String bezeichnung) {
+        this.bezeichnung = bezeichnung;
+        return this;
+    }
+
+    public EintragErbauer mitBeschreibung(String beschreibung) {
+        this.beschreibung = beschreibung;
+        return this;
+    }
+
+    public EintragErbauer mitBetrag(double betrag) {
+        this.betrag = betrag;
+        return this;
+    }
+
+    public EintragErbauer mitArt(Art art) {
+        this.art = art;
         return this;
     }
 
