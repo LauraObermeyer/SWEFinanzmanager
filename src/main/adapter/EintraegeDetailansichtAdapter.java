@@ -11,9 +11,6 @@ public class EintraegeDetailansichtAdapter {
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
         String datum = formatter.format(eintrag.getDatum());
 
-        //TODO: Wie wollen wir den Zeitstempel darstellen, in welchem Format?
-        //String zeitstempel = formatter.format(eintrag.getSystemaenderung().getZeitstempel());
-
         String eigenschaften[] = new String[9];
 
         eigenschaften[0] = Eintrag.getAlleAttributnamen()[0] + ": " + eintrag.getId();
@@ -25,7 +22,6 @@ public class EintraegeDetailansichtAdapter {
         eigenschaften[6] = Eintrag.getAlleAttributnamen()[6] + ": " + datum;
         eigenschaften[7] = Eintrag.getAlleAttributnamen()[7] + ": " + eintrag.getProduktliste();
         eigenschaften[8] = Eintrag.getAlleAttributnamen()[8] + ": " + eintrag.getSystemaenderung().getZeitstempel();
-        //eigenschaften[7] = Eintrag.getAlleAttributnamen()[7] + ": " + zeitstempel;
 
         return eigenschaften;
     }
