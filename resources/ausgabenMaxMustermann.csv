@@ -1,3 +1,4 @@
 #Id;Bezeichnung;Beschreibung;Betrag;Kategorie;Datum;Produktliste;Systemaenderung
-b4781c33-dcdf-4a64-aa7f-559e53d1c9b3;Ausgabe1;GroßeAusgabe;143;Einkauf;13.10.2020;Essen;SunMar1413:28:20CET2021
-9b44509e-3dac-4dd6-9617-57777c08f91f;Ausgabe2;GroßeAusgabe;100.656;Einkauf;13.10.2020;Essen;SunMar1413:28:28CET2021
+b4781c33-dcdf-4a64-aa7f-559e53d1c9b3;Ausgabe1;Wocheneinkauf;143;Einkauf;13.10.2020;Lebensmittel;Tue May 25 12:00:26 CEST 2021
+9b44509e-3dac-4dd6-9617-57777c08f91f;Ausgabe2;Hauskauf;100.656;Grossausgabe;13.10.2020;Haus;Tue May 25 12:00:26 CEST 2021
+3b7608d7-954e-46d2-a062-db21616bdd20;Kreditzahlung;monatliche Kreditrate;500.0;Kredit;15.02.2021;Hauskredit;Tue May 25 12:00:26 CEST 2021

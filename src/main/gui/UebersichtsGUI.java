@@ -73,15 +73,9 @@ public class UebersichtsGUI  implements IGUIEventSender {
         jpTestPanel = new JPanel();
         jpTestPanel.setLayout(new BorderLayout());
 
-        /* Erzeugung eines JTabbedPane-Objektes
-           JTabbedPane.TOP -> Tabs sind oberhalb der TabInhalte gesetzt
-           JTabbedPane.SCROLL_TAB_LAYOUT -> Wenn zu viele Tabs vorhanden sind, dass nicht alle angezeigt werden können, wird automatisch eine Scrollbar eingefügt */
         jtbTabbedPane = new JTabbedPane (JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 
-        // Panels hinzufügen
         jtbTabbedPane.addTab("Einträge", eintraegeAnzeigenGUI);
-
-        //TODO: rausnehmen:
         jtbTabbedPane.addTab("Statistiken", new main.gui.Statistiken.StatistikenAnzeigenGUI());
 
         jfMainFrame.getContentPane().add(jtbTabbedPane, BorderLayout.CENTER);

@@ -26,8 +26,7 @@ public class BenutzerRepository implements main.model.BenutzerRepository {
     @Override
     public boolean pruefeObVorhanden(Benutzer benutzer) {
         for(Benutzer vorhandenerBenutzer : this.alleBenutzer) {
-            int value = vorhandenerBenutzer.getId().compareTo(benutzer.getId());
-            if(value == 0) {
+            if(vorhandenerBenutzer.getId().compareTo(benutzer.getId()) == 0) {
                 return true;
             }
         }
@@ -44,6 +43,15 @@ public class BenutzerRepository implements main.model.BenutzerRepository {
         return Optional.empty();
     }
 
+    @Override
+    public Optional<Benutzer> findeÜberNamen(String vorname, String nachname) {
+        for(Benutzer benutzer : this.alleBenutzer) {
+            if(benutzer.getNachname() == nachname && benutzer.getVorname() == vorname) {
+                return Optional.of(benutzer);
+            }
+        }
+        return Optional.empty();
+    }
 
     @Override
     public Iterable<Benutzer> findeAlle() {

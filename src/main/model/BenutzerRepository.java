@@ -9,5 +9,6 @@ public interface BenutzerRepository {
     void entferne(Benutzer benutzer);
     boolean pruefeObVorhanden(Benutzer benutzer);
     Optional<Benutzer> findeÜberId(UUID id);
+    Optional<Benutzer> findeÜberNamen(String vorname, String nachname);
     Iterable<Benutzer> findeAlle();
 }

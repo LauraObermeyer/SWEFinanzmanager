@@ -1,5 +1,8 @@
 package main.applicationCode;
 
+import main.adapter.repositories.BenutzerRepository;
+import main.model.Benutzer;
+import main.model.EMail;
 import main.util.CSVReader;
 import main.util.CSVWriter;
 
@@ -14,15 +17,35 @@ public class BenutzerAnlegen {
     private CSVWriter csvWriter;
     private String benutzerFile = "resources/benutzer.csv";
     private List<String[]> dateiInhalt;
-    private final String[] header = {"Vorname", "Nachname", "EMail"};
+    private final String[] header = {"Id", "Vorname", "Nachname", "EMail"};
+    private BenutzerRepository benutzerVerwaltung;
 
-    public void benutzerSpeichern(JTextField jtfVorname, JTextField jtfNachname, JTextField jtfEmail) {
+    public BenutzerAnlegen(BenutzerRepository benutzerVerwaltung) {
+        this.benutzerVerwaltung = benutzerVerwaltung;
+    }
+
+    public void benutzerSpeichern(JTextField jtfVorname, JTextField jtfNachname, JTextField jtfEmail) throws Exception {
+        Benutzer benutzer = new Benutzer(jtfVorname.getText(), jtfNachname.getText(), emailDesBenutzersErzeugenAus(jtfEmail.getText()));
         try {
             csvWriter = new CSVWriter(benutzerFile, true);
-            dateiInhalt = Collections.singletonList(new String[]{jtfVorname.getText(), jtfNachname.getText(), jtfEmail.getText()});
+            dateiInhalt = Collections.singletonList(new String[]{benutzer.getId().toString(), jtfVorname.getText(), jtfNachname.getText(), jtfEmail.getText()});
             csvWriter.writeDataToFile(dateiInhalt, header);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        this.benutzerVerwaltung.fuegeBenutzerHinzu(benutzer);
+    }
+
+    private static EMail emailDesBenutzersErzeugenAus(String emailString){
+        String[] emailAdresseAufgeteiltInLokalUndDomänenteil
+                = emailString.split("@");
+        String[] domänenteilAufgeteiltInHostnameUndTopLevelDomain
+                = emailAdresseAufgeteiltInLokalUndDomänenteil[1].split("\\.");
+        EMail fertigeEmailAdresse = new EMail
+                (emailAdresseAufgeteiltInLokalUndDomänenteil[0],
+                        domänenteilAufgeteiltInHostnameUndTopLevelDomain[0],
+                        domänenteilAufgeteiltInHostnameUndTopLevelDomain[1]);
+        return fertigeEmailAdresse;
     }
 }

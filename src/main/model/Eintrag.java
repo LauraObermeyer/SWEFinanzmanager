@@ -11,7 +11,7 @@ public class Eintrag {
     private Art art;
     private Kategorie kategorie;
     private Date datum;
-    private String produktliste; //TODO: Produkt als eigene Klasse modellieren?
+    private String produktliste;
     private Systemaenderung systemaenderung;
 
     public Eintrag(UUID id,String bezeichnung, String beschreibung, double betrag, Art art, Kategorie kategorie, Date datum, String produktliste) {

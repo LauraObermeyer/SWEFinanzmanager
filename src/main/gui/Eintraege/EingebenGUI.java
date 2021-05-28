@@ -113,8 +113,6 @@ public class EingebenGUI implements IGUIEventSender {
             jcArt.setSelectedItem("Ausgabe");
         }
         jtfBetrag.setText(Double.toString(eintrag.getBetrag()));
-        // TODO: beim Bearbeiten wird das Komma beim Betrag verschoben
-        // TODO: set Kategorie
         SimpleDateFormat formatterDatum = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
         jtfDatum.setText(formatterDatum.format(eintrag.getDatum()));
         jtfProduktliste.setText(eintrag.getProduktliste());

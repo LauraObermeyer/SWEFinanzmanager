@@ -1,5 +1,6 @@
 package main.gui;
 
+import main.adapter.repositories.BenutzerRepository;
 import main.applicationCode.BenutzerAnlegen;
 import main.event.GUIEvent;
 import main.event.IGUIEventListener;
@@ -27,11 +28,13 @@ public class BenutzerAnlegenGUI  implements IGUIEventSender {
     private String benutzerFile = "resources/benutzer.csv";
     private List<String[]> dateiInhalt;
     private static final String[] header = {"Vorname", "Nachname", "EMail"};
+    private BenutzerRepository benutzerVerwaltung;
 
     //Events
     private ArrayList<IGUIEventListener> listeners = new ArrayList<IGUIEventListener>();
 
-    public BenutzerAnlegenGUI() throws IOException {
+    public BenutzerAnlegenGUI(BenutzerRepository benutzerVerwaltung) throws IOException {
+        this.benutzerVerwaltung = benutzerVerwaltung;
         buildGui();
     }
 
@@ -101,23 +104,13 @@ public class BenutzerAnlegenGUI  implements IGUIEventSender {
         jfBenutzerAnlegen.add(jpButtons, BorderLayout.SOUTH);
     }
 
-   /* private void benutzerSpeichern() {
-        try {
-            csvWriter = new CSVWriter(benutzerFile, true);
-            dateiInhalt = Collections.singletonList(new String[]{jtfVorname.getText(), jtfNachname.getText(), jtfEmail.getText()});
-            csvWriter.writeDataToFile(dateiInhalt, header);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-
     @Override
     public void fireEvent(GUIEvent event) throws Exception {
         // Benutzer-Anlegen-Fenster schließen
         jfBenutzerAnlegen.dispose();
 
         if(event.getMessage() == "Speichern") {
-            BenutzerAnlegen benutzerAnlegen = new BenutzerAnlegen();
+            BenutzerAnlegen benutzerAnlegen = new BenutzerAnlegen(this.benutzerVerwaltung);
             benutzerAnlegen.benutzerSpeichern(jtfVorname, jtfNachname, jtfEmail);
             // GUIController triggern
             listeners.forEach(listener -> listener.eventFired(event));

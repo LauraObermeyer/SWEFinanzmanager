@@ -73,7 +73,7 @@ public class StartApplikation {
     }
 
     private static void benutzerAnlegenGuiAufrufen() throws Exception {
-        benutzerAnlegenGUI = new BenutzerAnlegenGUI();
+        benutzerAnlegenGUI = new BenutzerAnlegenGUI(benutzerVerwaltung);
         new GUIController(benutzerAnlegenGUI, eintragVerwaltung);
     }
 

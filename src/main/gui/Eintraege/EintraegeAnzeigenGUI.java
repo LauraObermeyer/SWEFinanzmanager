@@ -69,7 +69,6 @@ public class EintraegeAnzeigenGUI extends JPanel implements IGUIEventSender {
         jtfSearchbar.setToolTipText("Gib einen Suchbegriff ein (Groß- und Kleinschreibung wird beachtet)");
         jpHeader.add(jtfSearchbar);
 
-        // TODO: Setzen der Listener an richtiger Stelle bzw. in richtigem File
         // Suchfunktionalität
         jtfSearchbar.getDocument().addDocumentListener(new DocumentListener() {
             @Override
