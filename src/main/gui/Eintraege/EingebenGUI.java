@@ -79,7 +79,6 @@ public class EingebenGUI implements IGUIEventSender {
         jcArt = new JComboBox<String>(art);
         jlBetrag = new JLabel("Betrag:");
         jtfBetrag = new JFormattedTextField(formatterDouble);
-        //jtfBetrag = new JFormattedTextField(new DecimalFormat());git pusll
         jlKategorie = new JLabel("Kategorie:");
         String[] kategorien = { "Einkauf", "Kategorie 2", "Kategorie 3", "Kategorie 4", "Kategorie 5", "Kategorie 6"};
         jcKategorie = new JComboBox<String>(kategorien);
